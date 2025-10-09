@@ -21,7 +21,7 @@ public class ConexionBD {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error de conexion");
             alert.setHeaderText(null); // Opcional: texto de encabezado
-            alert.setContentText("No se logra hacer realizar la conexion a la Base de datos");
+            alert.setContentText("No se logra establecer la conexion a la Base de datos");
             alert.showAndWait();
         }
     }

@@ -1,6 +1,8 @@
 com\polygraph\dao\ServicioDAO.class
 com\polygraph\controlador\ControladorServicios.class
+com\polygraph\modelo\Poligrafias.class
 module-info.class
+com\polygraph\modelo\Poligrafistas.class
 com\polygraph\AplicacionPrincipal.class
 com\polygraph\util\ConexionBD.class
 com\polygraph\modelo\Servicio.class
