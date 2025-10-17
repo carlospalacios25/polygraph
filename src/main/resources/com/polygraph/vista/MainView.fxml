@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.MainController"
+            style="-fx-background-color: #f0f4f8;">
+    <left>
+        <VBox spacing="10" styleClass="sidebar">
+            <!-- Encabezado con foto de perfil -->
+            <HBox alignment="CENTER" spacing="10" styleClass="profile-header">
+                <ImageView fx:id="profileImage" fitHeight="50" fitWidth="50" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0.3, 0, 1);"/>
+                <VBox>
+                    <Label text="Jimmy Fallon" styleClass="profile-name"/>
+                    <Label text="Admin" styleClass="profile-role"/>
+                </VBox>
+            </HBox>
+            
+            <!-- Menú de navegación -->
+            <Button text="Overview" onAction="#loadOverview" styleClass="menu-button"/>
+            <Button text="Orders" onAction="#loadOrders" styleClass="menu-button"/>
+            <Button text="Customers" onAction="#loadCustomers" styleClass="menu-button"/>
+            <Button text="Menus" onAction="#loadMenus" styleClass="menu-button"/>
+            <Button text="Packages" onAction="#loadPackages" styleClass="menu-button"/>
+            <Button text="Settings" onAction="#loadSettings" styleClass="menu-button"/>
+            <Button text="Sign Out" onAction="#signOut" styleClass="menu-button"/>
+        </VBox>
+    </left>
+    
+    <!-- Área central para cargar vistas dinámicas -->
+    <center>
+        <AnchorPane fx:id="contentArea" styleClass="content-area"/>
+    </center>
+</BorderPane>

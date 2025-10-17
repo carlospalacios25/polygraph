@@ -1,0 +1,92 @@
+package com.polygraph.controlador;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import java.io.IOException;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class MainController {
+
+    @FXML private ImageView profileImage;
+    @FXML private AnchorPane contentArea;
+
+    @FXML
+    public void initialize() {
+        try {
+            profileImage.setImage(new Image("/com/polygraph/images/profile-placeholder.png")); // Ajusta la ruta
+        } catch (IllegalArgumentException e) {
+            System.err.println("No se pudo cargar la imagen de perfil: " + e.getMessage());
+            // Opcional: Usa una imagen por defecto o deja el ImageView vacío
+        }
+    }
+
+    public void loadOverview(ActionEvent event) {
+        loadView("/com/polygraph/vista/UsuarioForm.fxml", (Button) event.getSource());
+    }
+
+    public void loadOrders(ActionEvent event) {
+        loadView("/com/polygraph/vista/VistaServicios.fxml", (Button) event.getSource());
+    }
+
+    public void loadCustomers(ActionEvent event) {
+        loadView("/com/polygraph/vista/Customers.fxml", (Button) event.getSource());
+    }
+
+    public void loadMenus(ActionEvent event) {
+        loadView("/com/polygraph/vista/Menus.fxml", (Button) event.getSource());
+    }
+
+    public void loadPackages(ActionEvent event) {
+        loadView("/com/polygraph/vista/Packages.fxml", (Button) event.getSource());
+    }
+
+    public void loadSettings(ActionEvent event) {
+        loadView("/com/polygraph/vista/Settings.fxml", (Button) event.getSource());
+    }
+
+    public void signOut(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/LoginView.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root, 400, 400));
+            stage.setTitle("Aplicación Polygraph - Login");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadView(String fxmlPath, Button button) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(root);
+            AnchorPane.setTopAnchor(root, 0.0);
+            AnchorPane.setBottomAnchor(root, 0.0);
+            AnchorPane.setLeftAnchor(root, 0.0);
+            AnchorPane.setRightAnchor(root, 0.0);
+
+            // Resaltar el botón activo (simplificado, sin clase "active" por ahora)
+            button.setStyle("-fx-background-color: #3b82f6; -fx-text-fill: white;");
+            for (javafx.scene.Node node : ((VBox) button.getParent()).getChildren()) {
+                if (node instanceof Button && node != button) {
+                    ((Button) node).setStyle("-fx-background-color: transparent; -fx-text-fill: #d1d1d1;");
+                }
+            }
+
+            contentArea.getScene().getStylesheets().add(getClass().getResource("/com/polygraph/styles.css").toExternalForm());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.LoginController"
+            style="-fx-background-color: #e0e7ff;">
+    <center>
+        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 20;">
+            <Label text="Polygraph" style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #1e3a8a;"/>
+            <VBox fx:id="loginContainer" styleClass="login-container">
+                <Label text="Iniciar Sesión" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
+                <GridPane hgap="10" vgap="10" style="-fx-padding: 20;">
+                    <Label text="Usuario:" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="label"/>
+                    <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="text-field"/>
+                    
+                    <Label text="Contraseña:" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="label"/>
+                    <HBox spacing="5" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                        <PasswordField fx:id="passwordField" styleClass="text-field" HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="passwordVisibleField" styleClass="text-field" visible="false" managed="false" HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                    
+                    <CheckBox fx:id="showPasswordCheck" text="Mostrar contraseña" onAction="#togglePasswordVisibility" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    
+                    <Button text="Iniciar Sesión" onAction="#login" GridPane.rowIndex="3" GridPane.columnIndex="1" styleClass="button"/>
+                </GridPane>
+                <Label fx:id="errorLabel" text="" styleClass="error-label"/>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>
