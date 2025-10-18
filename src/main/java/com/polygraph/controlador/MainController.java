@@ -28,7 +28,15 @@ public class MainController {
            // profileImage.setImage(new Image("/com/polygraph/imgs/default-profile.png"));
         }
     }
-
+    
+    /*    @FXML
+    private void cargarPerfil(ActionEvent event) {
+        try {
+            loadView("/com/polygraph/vista/PerfilForm.fxml", (Node) event.getSource());
+        } catch (Exception e) {
+            showAlert("Error", "" + e.getMessage());
+        }
+    }*/
     public void loadOverview(ActionEvent event) {
         loadView("/com/polygraph/vista/UsuarioForm.fxml", (Node) event.getSource());
     }

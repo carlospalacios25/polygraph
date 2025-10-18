@@ -6,8 +6,7 @@ public class Permisos {
     private String nombrePermiso;
     private String descripcionPermiso;
 
-    public Permisos(int idPermiso, String nombrePermiso, String descripcionPermiso) {
-        this.idPermiso = idPermiso;
+    public Permisos(String nombrePermiso, String descripcionPermiso) {
         this.nombrePermiso = nombrePermiso;
         this.descripcionPermiso = descripcionPermiso;
     }

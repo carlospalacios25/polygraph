@@ -6,8 +6,7 @@ public class Perfiles {
     private String nombrePerfil;
     private String descripcion;
 
-    public Perfiles(int idPerfil, String nombrePerfil, String descripcion) {
-        this.idPerfil = idPerfil;
+    public Perfiles(String nombrePerfil, String descripcion) {
         this.nombrePerfil = nombrePerfil;
         this.descripcion = descripcion;
     }

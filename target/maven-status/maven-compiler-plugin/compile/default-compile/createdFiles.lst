@@ -1,6 +1,7 @@
 com\polygraph\modelo\Clientes.class
 com\polygraph\modelo\Perfiles.class
 com\polygraph\modelo\Poligrafias.class
+com\polygraph\controlador\PermisoController.class
 com\polygraph\modelo\Poligrafistas.class
 com\polygraph\AplicacionPrincipal.class
 com\polygraph\util\ConexionBD.class
@@ -16,13 +17,16 @@ com\polygraph\modelo\Procesos.class
 com\polygraph\controlador\LoginController.class
 com\polygraph\dao\ServicioDAO.class
 com\polygraph\modelo\TiposProgreso.class
+com\polygraph\controlador\PerfilController.class
 com\polygraph\modelo\Analisis.class
 com\polygraph\modelo\Usuarios.class
+com\polygraph\dao\PermisosDAO.class
 com\polygraph\controlador\MainController.class
 com\polygraph\dao\UsuarioDAO.class
 com\polygraph\modelo\Candidatos.class
 com\polygraph\controlador\UsuarioController.class
 com\polygraph\modelo\Ciudades.class
 com\polygraph\modelo\Permisos.class
+com\polygraph\dao\PerfilesDAO.class
 com\polygraph\modelo\Visitadores.class
 com\polygraph\modelo\Sucursales.class

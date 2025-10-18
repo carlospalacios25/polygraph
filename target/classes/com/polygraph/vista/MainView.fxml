@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="747.0" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="999.0" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.MainController">
    <children>
       <Pane styleClass="sidebar">
          <children>
@@ -95,6 +95,6 @@
             </VBox>
          </children>
       </Pane>
-      <AnchorPane fx:id="contentArea" layoutX="207.0" prefHeight="530.0" prefWidth="549.0" />
+      <AnchorPane fx:id="contentArea" layoutX="207.0" prefHeight="522.0" prefWidth="790.0" />
    </children>
 </AnchorPane>
