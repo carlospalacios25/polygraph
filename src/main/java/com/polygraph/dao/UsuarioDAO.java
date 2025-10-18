@@ -14,7 +14,7 @@ public class UsuarioDAO {
 
     public void insertarUsuario(Usuarios usuario) throws SQLException, NoSuchAlgorithmException {
         Connection conn = ConexionBD.getInstancia().getConexion();
-        String sql = "INSERT INTO usuarios (Nombre_Emp1, Apellido_Emp1, Nombre_usuario, Correo_Usu, Contraseña_Usu, Fecha_Creacion, Activo_Usu, Id_perfil) " +
+        String sql = "INSERT INTO usuarios (Nombre_Emp1, Apellido_Emp1, Nombre_usuario, Correo_Usu, Contrasena_Usu, Fecha_Creacion, Activo_Usu, Id_perfil) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {

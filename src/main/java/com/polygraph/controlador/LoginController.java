@@ -70,19 +70,26 @@ public class LoginController {
 
     private boolean authenticate(String username, String password) {
         Connection conn = ConexionBD.getInstancia().getConexion();
-        String sql = "SELECT Contraseña_Usu FROM usuarios WHERE Nombre_usuario = ?";
+        String sql = "SELECT Contrasena_Usu, Activo_Usu FROM usuarios WHERE Nombre_usuario = ?";
         
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
             ResultSet rs = pstmt.executeQuery();
             
             if (rs.next()) {
-                String storedHash = rs.getString("Contraseña_Usu");
+                boolean isActive = rs.getBoolean("Activo_Usu");
+                if (!isActive) {
+                    errorLabel.setText("La cuenta no está activa.");
+                    return false;
+                }
+                String storedHash = rs.getString("Contrasena_Usu");
                 String inputHash = hashPassword(password);
                 return storedHash.equals(inputHash);
+            } else {
+                errorLabel.setText("Usuario no encontrado.");
             }
         } catch (SQLException | NoSuchAlgorithmException e) {
-            errorLabel.setText("Error en la base de datos.");
+            errorLabel.setText("Error en la base de datos: " + e.getMessage());
             e.printStackTrace(); // Para depuración
         }
         return false;

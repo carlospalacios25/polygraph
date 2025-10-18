@@ -10,12 +10,10 @@ public class AplicacionPrincipal extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // Carga el FXML del login
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/LoginView.fxml"));
         Parent root = loader.load();
         
-        // Aplica el archivo CSS
-        Scene scene = new Scene(root, 400, 400); // Ajusté el tamaño para mejor proporción
+        Scene scene = new Scene(root, 400, 500);
         scene.getStylesheets().add(getClass().getResource("/com/polygraph/styles.css").toExternalForm());
         
         primaryStage.setTitle("Aplicación Polygraph - Login");
