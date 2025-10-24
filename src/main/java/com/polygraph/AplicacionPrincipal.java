@@ -1,5 +1,6 @@
 package com.polygraph;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,16 +10,16 @@ import javafx.stage.Stage;
 public class AplicacionPrincipal extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/MainView.fxml"));
-        Parent root = loader.load();
-        
-        Scene scene = new Scene(root, 400, 500);
-        scene.getStylesheets().add(getClass().getResource("/com/polygraph/styles.css").toExternalForm());
-        
-        primaryStage.setTitle("Aplicación Polygraph - Login");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    public void start(Stage primaryStage) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/com/polygraph/vista/LoginView.fxml"));
+            Scene scene = new Scene(root, 400, 400); // Tamaño fijo para el login
+            primaryStage.setTitle("Aplicación Polygraph - Login");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

@@ -2,99 +2,115 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="530.0" prefWidth="999.0" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.MainController">
-   <children>
-      <Pane styleClass="sidebar">
-         <children>
-            <VBox prefHeight="530.0" prefWidth="207.0">
-               <children>
-                  <ImageView fitWidth="207.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/logo.png" />
-                     </image>
-                  </ImageView>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadOverview" prefHeight="37.0" prefWidth="210.0" styleClass="sidebar-button" text="Dashboard">
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../imgs/icons8_details_24px_3.png" />
-                           </image>
+<AnchorPane prefHeight="415.0" prefWidth="419.0" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.MainController">
+    <children>
+        <Pane prefHeight="415.0" prefWidth="205.0" styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+            <children>
+                <VBox prefHeight="412.0" prefWidth="162.0">
+                    <children>
+                        <ImageView fitHeight="161.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../imgs/logo.png" />
+                            </image>
                         </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadDiscovery" prefHeight="37.0" prefWidth="210.0" styleClass="sidebar-button" text="Discovery">
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../imgs/icons8_compass_24px_1.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadReports" prefHeight="37.0" prefWidth="210.0" styleClass="sidebar-button" text="Reports">
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../imgs/icons8_pie_chart_24px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadAnalytics" prefHeight="37.0" prefWidth="210.0" styleClass="sidebar-button" text="Analytics">
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../imgs/icons8_analytics_24px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadNotifications" prefHeight="37.0" prefWidth="210.0" styleClass="sidebar-button" text="Notifications">
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../imgs/icons8_notifications_24px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadSettings" prefHeight="37.0" prefWidth="210.0" styleClass="sidebar-button" text="Settings">
-                     <padding>
-                        <Insets left="40.0" />
-                     </padding>
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../imgs/icons8_settings_32px.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children>
-            </VBox>
-         </children>
-      </Pane>
-      <AnchorPane fx:id="contentArea" layoutX="207.0" prefHeight="522.0" prefWidth="790.0" />
-   </children>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarCliente" prefHeight="40.0" styleClass="sidebar-button" text="Cliente">
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <graphic>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../imgs/icons_cliente.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadReports" prefHeight="40.0" styleClass="sidebar-button" text="Candidato">
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <graphic>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../imgs/incon_candidato.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadAnalytics" prefHeight="40.0" styleClass="sidebar-button" text="Analytics">
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <graphic>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../imgs/icons8_analytics_24px.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadNotifications" prefHeight="40.0" styleClass="sidebar-button" text="Notifications">
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <graphic>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../imgs/icons8_notifications_24px.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadSettings" prefHeight="40.0" styleClass="sidebar-button" text="Settings">
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <graphic>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../imgs/icons8_settings_32px.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarUsuario" prefHeight="40.0" styleClass="sidebar-button" text="Usuarios">
+                            <padding>
+                                <Insets left="20.0" />
+                            </padding>
+                            <graphic>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../imgs/icons8_details_24px_3.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+        <VBox layoutX="205.0" prefHeight="415.0" prefWidth="214.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="205.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+            <children>
+                <HBox fx:id="breadcrumbBar" prefHeight="30.0" styleClass="breadcrumb-bar">
+                    <children>
+                        <Label fx:id="homeCrumb" onMouseClicked="#navigateToHome" styleClass="breadcrumb-item" text="Home" />
+                        <Label styleClass="breadcrumb-separator" text="&gt;" />
+                        <Label fx:id="currentCrumb" styleClass="breadcrumb-item" />
+                    </children>
+                    <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                    </padding>
+                </HBox>
+                <AnchorPane fx:id="contentArea" prefHeight="385.0" prefWidth="214.0" VBox.vgrow="ALWAYS" />
+            </children>
+        </VBox>
+    </children>
 </AnchorPane>

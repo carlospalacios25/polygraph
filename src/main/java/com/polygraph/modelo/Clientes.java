@@ -7,6 +7,7 @@ public class Clientes {
     private String telefonoCliente;
     private String direccionCliente;
     private int idCiudad;
+    private String nombreCiudad;
 
     public Clientes(long nitCliente, String nombreCliente, String telefonoCliente, String direccionCliente, int idCiudad) {
         this.nitCliente = nitCliente;
@@ -16,6 +17,13 @@ public class Clientes {
         this.idCiudad = idCiudad;
     }
 
+    public Clientes(long nitCliente, String nombreCliente, String telefonoCliente, String nombreCiudad) {
+        this.nitCliente = nitCliente;
+        this.nombreCliente = nombreCliente;
+        this.telefonoCliente = telefonoCliente;
+        this.nombreCiudad = nombreCiudad;
+    }
+    
     public long getNitCliente() {
         return nitCliente;
     }
@@ -55,6 +63,13 @@ public class Clientes {
     public void setIdCiudad(int idCiudad) {
         this.idCiudad = idCiudad;
     }
-            
-       
+
+    public String getNombreCiudad() {
+        return nombreCiudad;
+    }
+
+    public void setNombreCiudad(String nombreCiudad) {
+        this.nombreCiudad = nombreCiudad;
+    }
+               
 }

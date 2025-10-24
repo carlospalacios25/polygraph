@@ -12,6 +12,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -29,28 +30,40 @@ public class LoginController {
     @FXML private CheckBox showPasswordCheck;
     @FXML private Label errorLabel;
 
+    @FXML
     public void login(ActionEvent event) {
         String username = usernameField.getText();
-        String password = passwordField.getText(); // Usamos el PasswordField para la autenticación
+        String password = passwordField.isVisible() ? passwordField.getText() : passwordVisibleField.getText();
 
         if (authenticate(username, password)) {
             try {
-                // Cargar el dashboard (MainView.fxml)
+                // Cargar el formulario principal
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/MainView.fxml"));
                 Parent root = loader.load();
-                Stage stage = (Stage) usernameField.getScene().getWindow();
-                stage.setScene(new Scene(root, 800, 600));
-                stage.setTitle("Aplicación Polygraph - Dashboard");
-                stage.show();
+                
+                // Obtener las dimensiones de la pantalla principal
+                double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+                double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+                
+                // Crear un nuevo Stage y ajustar el tamaño al 90% de la pantalla (dejando márgenes)
+                Stage mainStage = new Stage();
+                mainStage.setTitle("Aplicación Polygraph - Dashboard");
+                mainStage.setScene(new Scene(root, screenWidth * 0.9, screenHeight * 0.9));
+                mainStage.show();
+
+                // Cerrar la ventana de login
+                Stage loginStage = (Stage) usernameField.getScene().getWindow();
+                loginStage.close();
             } catch (IOException e) {
-                errorLabel.setText("Error al cargar el dashboard.");
-                e.printStackTrace(); // Para depuración
+                errorLabel.setText("Error al cargar el dashboard: " + e.getMessage());
+                e.printStackTrace();
             }
         } else {
             errorLabel.setText("Usuario o contraseña incorrectos.");
         }
     }
 
+    @FXML
     public void togglePasswordVisibility(ActionEvent event) {
         boolean show = showPasswordCheck.isSelected();
         if (show) {
@@ -90,7 +103,7 @@ public class LoginController {
             }
         } catch (SQLException | NoSuchAlgorithmException e) {
             errorLabel.setText("Error en la base de datos: " + e.getMessage());
-            e.printStackTrace(); // Para depuración
+            e.printStackTrace();
         }
         return false;
     }
