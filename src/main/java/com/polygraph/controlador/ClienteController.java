@@ -65,7 +65,7 @@ public class ClienteController {
             listaClien.setAll(clienteDAO.listadoClientes());
             filteredList.setPredicate(cliente -> true); // Resetear filtro
         } catch (Exception e) {
-            showAlert("Error", "Error al cargar clientes: " + e.getMessage());
+           // showAlert("Error", "Error al cargar clientes: " + e.getMessage());
         }
     }
     

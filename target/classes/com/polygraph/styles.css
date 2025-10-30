@@ -133,3 +133,55 @@
     -fx-font-size: 12px;
     -fx-padding: 5 5 5 5;
 }
+
+/*Tabla*/
+.table-view {
+    -fx-background-color: #ffe6e6; /* Very light red background */
+    -fx-border-color: #d3d3d3;
+    -fx-border-width: 1px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #ff9999; /* Slightly darker red for header */
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #333333; /* Dark gray text for readability */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #ffe6e6; /* Very light red for rows */
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0; /* Bottom border only */
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #fff0f0; /* Slightly different light red for odd rows */
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #ff6666; /* Medium red for selected row */
+    -fx-text-fill: white;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: #333333; /* Dark gray text for cells */
+    -fx-alignment: center-left;
+}
+
+/* Explicitly style cells in the colNitCliente column */
+.table-view .table-column#colNitCliente .table-cell {
+    -fx-background-color: #fff5f5; /* Light red for NIT column cells */
+}
+
+/* Ensure header of colNitCliente is styled */
+.table-view .column-header#colNitCliente {
+    -fx-background-color: #fff5f5; /* Light red for NIT column header */
+}
+
+/* Center-align action column */
+#colAcciones {
+    -fx-alignment: center;
+}

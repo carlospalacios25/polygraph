@@ -8,6 +8,7 @@ public class Candidatos {
     private String telefonoCandidato;
     private String direccionCandidato;
     private int idCiudad;
+    private String nombreCiudad;
 
     public Candidatos(long cedulaCandidato, String nombreCandidato, String apellidoCandidato, String telefonoCandidato, String direccionCandidato, int idCiudad) {
         this.cedulaCandidato = cedulaCandidato;
@@ -18,6 +19,14 @@ public class Candidatos {
         this.idCiudad = idCiudad;
     }
 
+    public Candidatos(long cedulaCandidato, String nombreCandidato, String telefonoCandidato, String direccionCandidato, String nombreCiudad) {
+        this.cedulaCandidato = cedulaCandidato;
+        this.nombreCandidato = nombreCandidato;
+        this.telefonoCandidato = telefonoCandidato;
+        this.direccionCandidato = direccionCandidato;
+        this.nombreCiudad = nombreCiudad;
+    }
+    
     public long getCedulaCandidato() {
         return cedulaCandidato;
     }
@@ -58,14 +67,22 @@ public class Candidatos {
         this.direccionCandidato = direccionCandidato;
     }
 
-    public int getId_Ciudad() {
+    public int getIdCiudad() {
         return idCiudad;
     }
 
-    public void setId_Ciudad(int idCiudad) {
+    public void setIdCiudad(int idCiudad) {
         this.idCiudad = idCiudad;
     }
-            
-            
+
+    public String getNombreCiudad() {
+        return nombreCiudad;
+    }
+
+    public void setNombreCiudad(String nombreCiudad) {
+        this.nombreCiudad = nombreCiudad;
+    }
+
+     
             
 }

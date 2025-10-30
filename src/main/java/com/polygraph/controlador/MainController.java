@@ -51,9 +51,9 @@ public class MainController {
     }
 
     @FXML
-    public void loadCustomers(ActionEvent event) {
-        loadView("/com/polygraph/vista/Customers.fxml", (Node) event.getSource());
-        currentCrumb.setText("Customers");
+    public void cargarCandidato(ActionEvent event) {
+        loadView("/com/polygraph/vista/CandidatoForm.fxml", (Node) event.getSource());
+        currentCrumb.setText("Candidato");
     }
 
     @FXML

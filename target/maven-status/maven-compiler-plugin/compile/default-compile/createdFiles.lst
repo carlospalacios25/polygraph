@@ -1,11 +1,15 @@
 com\polygraph\modelo\Clientes.class
+com\polygraph\controlador\CandidatoController$2$1.class
 com\polygraph\controlador\PermisoController.class
 com\polygraph\modelo\Poligrafistas.class
+com\polygraph\dao\CandidatoDAO.class
 com\polygraph\AplicacionPrincipal.class
 com\polygraph\controlador\ClienteController.class
+com\polygraph\controlador\CandidatoController.class
 com\polygraph\modelo\Documentos.class
 com\polygraph\controlador\PerfilController.class
 com\polygraph\controlador\MainController.class
+com\polygraph\controlador\CandidatoController$1.class
 com\polygraph\dao\UsuarioDAO.class
 com\polygraph\modelo\Candidatos.class
 com\polygraph\controlador\ClienteController$2.class
@@ -33,6 +37,7 @@ com\polygraph\controlador\UsuarioController$1.class
 com\polygraph\dao\PermisosDAO.class
 com\polygraph\controlador\ClienteController$1.class
 com\polygraph\dao\ClienteDAO.class
+com\polygraph\controlador\CandidatoController$2.class
 com\polygraph\controlador\UsuarioController.class
 com\polygraph\modelo\Permisos.class
 com\polygraph\controlador\ClienteController$2$1.class
