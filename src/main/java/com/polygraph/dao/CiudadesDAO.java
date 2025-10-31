@@ -12,18 +12,17 @@ import java.util.List;
 
 public class CiudadesDAO {
 
-   /* public void insertarPerfile(Ciudades ciudades) throws SQLException, NoSuchAlgorithmException {
+    public void insertarPerfile(Ciudades ciudades) throws SQLException, NoSuchAlgorithmException {
         Connection conn = ConexionBD.getInstancia().getConexion();
-            String sql = "INSERT INTO perfiles (Nombre_Perfil, Descripcion) " +
-                     "VALUES (?,?)";
+            String sql = "INSERT INTO ciudades (Nombre_Ciudad) " +
+                     "VALUES (?)";
         
         
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, ciudades.getNombrePerfil());
-            pstmt.setString(2, ciudades.getDescripcion());
+            pstmt.setString(1, ciudades.getNombreCiudad());
             pstmt.executeUpdate();
         }
-    }*/
+    }
     
     public List<Ciudades> obtenerCiudades() throws SQLException {
         List<Ciudades> ciudades = new ArrayList<>();

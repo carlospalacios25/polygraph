@@ -65,9 +65,9 @@ public class CandidatoDAO {
         return candidatos;
     }
     
-    public int actualizarCandidato(Candidatos candidatos) throws SQLException {  // Cambiado a int
+    public int actualizarCandidato(Candidatos candidatos) throws SQLException { 
         Connection conn = ConexionBD.getInstancia().getConexion();
-        String sql = "UPDATE clientes SET Nombre_Candidato = ?, "
+        String sql = "UPDATE candidatos SET Nombre_Candidato = ?, "
                 + "Apellido_Candidato = ?, "
                 + "Telefono_Candidato = ?, "
                 + "Direccion_Candidato = ?, "

@@ -4,6 +4,7 @@ import com.polygraph.dao.CandidatoDAO;
 import com.polygraph.modelo.Ciudades;
 import com.polygraph.dao.CiudadesDAO;
 import com.polygraph.modelo.Candidatos;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -19,6 +20,11 @@ import javafx.util.StringConverter;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.function.Predicate;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 public class CandidatoController {
 
@@ -30,6 +36,7 @@ public class CandidatoController {
     @FXML private ComboBox<Ciudades> cidadesComboBox;
     @FXML private TableView<Candidatos> tablaCandidato;
     @FXML private TextField buscadorField;
+    @FXML private AnchorPane contentArea;
     
     @FXML private TableColumn<Candidatos, Long> colCeduCandidato;
     @FXML private TableColumn<Candidatos, String> colNomCandidato;
@@ -52,6 +59,12 @@ public class CandidatoController {
         configurarSeleccionFila();
         configurarBuscador();
     }
+    
+    @FXML
+    public void abrirCiudades() {
+        loadView("/com/polygraph/vista/CiudadesForm.fxml", null);
+    }
+
     
     private void cargarDatosCliente() {
         colCeduCandidato.setCellValueFactory(new PropertyValueFactory<>("cedulaCandidato"));
@@ -225,7 +238,7 @@ public class CandidatoController {
     private void guardarCambios(Candidatos candidatos) {
         try {
             if (cedulaCanField.getText().trim().isEmpty()) {
-                showAlert("Error", "La deula del candidato no puede estar vacío.");
+                showAlert("Error", "La cedula del candidato no puede estar vacío.");
                 return;
             }
 
@@ -325,5 +338,34 @@ public class CandidatoController {
                        (candidato.getTelefonoCandidato()!= null && candidato.getTelefonoCandidato().toLowerCase().contains(lowerCaseFilter));
             });
         });
+    }
+    
+    private void loadView(String fxmlPath, Node source) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root = loader.load();
+            contentArea.getChildren().clear();
+            contentArea.getChildren().add(root);
+            AnchorPane.setTopAnchor(root, 0.0);
+            AnchorPane.setBottomAnchor(root, 0.0);
+            AnchorPane.setLeftAnchor(root, 0.0);
+            AnchorPane.setRightAnchor(root, 0.0);
+
+            if (source instanceof Button) {
+                Button button = (Button) source;
+                button.getStyleClass().add("active");
+                for (Node node : ((VBox) button.getParent()).getChildren()) {
+                    if (node instanceof Button && node != button) {
+                        node.getStyleClass().remove("active");
+                    }
+                }
+            }
+
+            if (contentArea.getScene() != null) {
+                contentArea.getScene().getStylesheets().add(getClass().getResource("/com/polygraph/styles.css").toExternalForm());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

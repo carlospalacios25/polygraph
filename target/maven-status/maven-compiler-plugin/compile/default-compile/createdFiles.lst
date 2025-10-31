@@ -21,6 +21,7 @@ com\polygraph\modelo\Poligrafias.class
 com\polygraph\util\ConexionBD.class
 com\polygraph\modelo\Servicio.class
 com\polygraph\modelo\Visitas.class
+com\polygraph\controlador\CiudadesController.class
 com\polygraph\modelo\ProcesoTProgreso.class
 com\polygraph\controlador\ControladorServicios.class
 module-info.class

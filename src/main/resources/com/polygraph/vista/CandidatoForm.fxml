@@ -46,6 +46,9 @@
                 <children>
                     <Button layoutX="14.0" layoutY="10.0" onAction="#insertarCandidato" styleClass="button" text="Crear Candidato" />
                 </children>
+                <children>
+                    <Button layoutX="14.0" layoutY="10.0" onAction="#abrirCiudades" styleClass="button" text="Agregar Ciudad" />
+                </children>
             </Pane>
         </VBox>
         <TextField fx:id="buscadorField" layoutX="10" layoutY="10" prefWidth="150" promptText="Buscar..." />

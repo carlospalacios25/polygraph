@@ -9,6 +9,10 @@ public class Ciudades {
         this.idCiudad = idCiudad;
         this.nombreCiudad = nombreCiudad;
     }
+    
+    public Ciudades(String nombreCiudad) {
+        this.nombreCiudad = nombreCiudad;
+    }
 
     public int getIdCiudad() {
         return idCiudad;
