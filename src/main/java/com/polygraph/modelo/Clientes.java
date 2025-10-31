@@ -23,6 +23,11 @@ public class Clientes {
         this.telefonoCliente = telefonoCliente;
         this.nombreCiudad = nombreCiudad;
     }
+
+    public Clientes(long nitCliente, String nombreCliente) {
+        this.nitCliente = nitCliente;
+        this.nombreCliente = nombreCliente;
+    }
     
     public long getNitCliente() {
         return nitCliente;

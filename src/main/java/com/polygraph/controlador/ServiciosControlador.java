@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import javafx.collections.ObservableList;
 
 public class ServiciosControlador {
 
@@ -27,7 +28,7 @@ public class ServiciosControlador {
     private final ServicioDAO servicioDAO = new ServicioDAO();
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final CandidatoDAO candidatoDAO = new CandidatoDAO();
-    private final ProcesoDAO procesoDAO = new ProcesoDAO();
+    private final ProcesosDAO procesoDAO = new ProcesosDAO();
 
     @FXML
     public void initialize() {
@@ -35,8 +36,8 @@ public class ServiciosControlador {
         cargarClientes();
         cargarCandidatos();
         cargarProcesos();
-        actualizarTarjetasServicios();
-        configurarBuscador();
+        //actualizarTarjetasServicios();
+        //configurarBuscador();
     }
 
     // --- CONFIGURAR HORA ---
@@ -64,41 +65,71 @@ public class ServiciosControlador {
 
     // --- CARGAR COMBOBOX ---
     private void cargarClientes() {
+        ObservableList<Clientes> clientes = FXCollections.observableArrayList();
         try {
-            cedulaClieField.setItems(FXCollections.observableArrayList(clienteDAO.listadoClientes()));
-            cedulaClieField.setConverter(new StringConverter<>() {
-                @Override public String toString(Clientes c) { return c == null ? "" : c.getNitCliente() + " - " + c.getNombreCliente(); }
-                @Override public Clientes fromString(String s) { return null; }
+            clientes.addAll(clienteDAO.obtenerClienteBox());
+            cedulaClieField.setItems(clientes);
+
+            cedulaClieField.setConverter(new StringConverter<Clientes>() {
+                @Override
+                public String toString(Clientes cliente) {
+                    return cliente == null ? "" : cliente.getNombreCliente();
+                }
+
+                @Override
+                public Clientes fromString(String string) {
+                    return null;
+                }
             });
         } catch (SQLException e) {
-            showAlert("Error", "No se pudieron cargar clientes.");
+            showAlert("Error", "Error al cargar Candidato: " + e.getMessage());
         }
     }
-
+    
     private void cargarCandidatos() {
+        ObservableList<Candidatos> candidatos = FXCollections.observableArrayList();
         try {
-            cedulaCanField.setItems(FXCollections.observableArrayList(candidatoDAO.listadoCandidatos()));
-            cedulaCanField.setConverter(new StringConverter<>() {
-                @Override public String toString(Candidatos c) { return c == null ? "" : c.getCedulaCandidato() + " - " + c.getNombreCandidato(); }
-                @Override public Candidatos fromString(String s) { return null; }
+            candidatos.addAll(candidatoDAO.obtenerCandidatosBox());
+            cedulaCanField.setItems(candidatos);
+
+            cedulaCanField.setConverter(new StringConverter<Candidatos>() {
+                @Override
+                public String toString(Candidatos candidato) {
+                    return candidato == null ? "" : candidato.getNombreCandidato();
+                }
+
+                @Override
+                public Candidatos fromString(String string) {
+                    return null;
+                }
             });
         } catch (SQLException e) {
-            showAlert("Error", "No se pudieron cargar candidatos.");
+            showAlert("Error", "Error al cargar Candidato: " + e.getMessage());
         }
     }
 
     private void cargarProcesos() {
+        ObservableList<Procesos> procesos = FXCollections.observableArrayList();
         try {
-            procesoField.setItems(FXCollections.observableArrayList(procesoDAO.listarProcesos()));
-            procesoField.setConverter(new StringConverter<>() {
-                @Override public String toString(Procesos p) { return p == null ? "" : p.getNombre(); }
-                @Override public Procesos fromString(String s) { return null; }
+            procesos.addAll(procesoDAO.obtenerProcesosBox());
+            procesoField.setItems(procesos);
+
+            procesoField.setConverter(new StringConverter<Procesos>() {
+                @Override
+                public String toString(Procesos proceso) {
+                    return proceso == null ? "" : proceso.getNombreProceso();
+                }
+
+                @Override
+                public Procesos fromString(String string) {
+                    return null;
+                }
             });
         } catch (SQLException e) {
-            showAlert("Error", "No se pudieron cargar procesos.");
+            showAlert("Error", "Error al cargar Procesos: " + e.getMessage());
         }
     }
-
+/*
     // --- INSERTAR SERVICIO (COMO TÚ LO PIDES) ---
     @FXML
     private void insertarCandidato() {
@@ -146,7 +177,7 @@ public class ServiciosControlador {
 
             showAlert("Éxito", "Servicio creado correctamente con ID: " + servicio.getIdServicio());
             limpiarCampos();
-            actualizarTarjetasServicios();
+           // actualizarTarjetasServicios();
 
         } catch (SQLException e) {
             if (e.getErrorCode() == 1452) {
@@ -158,7 +189,9 @@ public class ServiciosControlador {
             showAlert("Error", "Formato inválido en algún campo.");
         }
     }
+    
 
+    /*
     // --- ACTUALIZAR TARJETAS ---
     private void actualizarTarjetasServicios() {
         serviciosContainer.getChildren().clear();
@@ -253,21 +286,22 @@ public class ServiciosControlador {
             } catch (SQLException ignored) {}
         });
     }
-
-    // --- LIMPIAR ---
+    
+    */
+            // --- ALERTA ---
+    private void showAlert(String titulo, String mensaje) {
+        Alert a = new Alert(titulo.equals("Éxito") ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
+        a.setTitle(titulo);
+        a.setContentText(mensaje);
+        a.showAndWait();
+    }
+    
+        // --- LIMPIAR ---
     private void limpiarCampos() {
         fechaSolField.setValue(null);
         horaSolField.clear();
         cedulaClieField.setValue(null);
         cedulaCanField.setValue(null);
         procesoField.setValue(null);
-    }
-
-    // --- ALERTA ---
-    private void showAlert(String titulo, String mensaje) {
-        Alert a = new Alert(titulo.equals("Éxito") ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
-        a.setTitle(titulo);
-        a.setContentText(mensaje);
-        a.showAndWait();
     }
 }

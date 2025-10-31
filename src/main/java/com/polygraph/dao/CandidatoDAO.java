@@ -1,6 +1,7 @@
 package com.polygraph.dao;
 
 import com.polygraph.modelo.Candidatos;
+import com.polygraph.modelo.Clientes;
 import com.polygraph.util.ConexionBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -115,6 +116,24 @@ public class CandidatoDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return candidatos;
+    }
+    
+        public List<Candidatos> obtenerCandidatosBox() throws SQLException {
+        List<Candidatos> candidatos = new ArrayList<>();
+        Connection conn = ConexionBD.getInstancia().getConexion();
+        String sql = "SELECT Cedula_Candidato, CONCAT(Nombre_Candidato, ' ', Apellido_Candidato) AS nombre_completo"
+                + " FROM Candidatos";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                candidatos.add(new Candidatos(
+                    rs.getInt("Cedula_Candidato"),
+                    rs.getString("nombre_completo")
+                ));
+            }
         }
         return candidatos;
     }

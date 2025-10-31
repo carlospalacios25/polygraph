@@ -48,9 +48,9 @@
                 </rowConstraints>
             </GridPane>
 
-            <HBox alignment="CENTER_LEFT" spacing="15">
+           <!--  <HBox alignment="CENTER_LEFT" spacing="15">
                 <Button onAction="#insertarCandidato" styleClass="button primary" text="Crear Candidato" />
-            </HBox>
+            </HBox> -->
         </VBox>
 
         <!-- BUSCADOR -->

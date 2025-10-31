@@ -3,9 +3,9 @@ package com.polygraph.modelo;
 
 public class Procesos {
     private int idProceso;
-    private int nombreProceso;
+    private String nombreProceso;
 
-    public Procesos(int idProceso, int nombreProceso) {
+    public Procesos(int idProceso, String nombreProceso) {
         this.idProceso = idProceso;
         this.nombreProceso = nombreProceso;
     }
@@ -18,11 +18,11 @@ public class Procesos {
         this.idProceso = idProceso;
     }
 
-    public int getNombreProceso() {
+    public String getNombreProceso() {
         return nombreProceso;
     }
 
-    public void setNombreProceso(int nombreProceso) {
+    public void setNombreProceso(String nombreProceso) {
         this.nombreProceso = nombreProceso;
     }
     

@@ -26,6 +26,11 @@ public class Candidatos {
         this.direccionCandidato = direccionCandidato;
         this.nombreCiudad = nombreCiudad;
     }
+
+    public Candidatos(long cedulaCandidato, String nombreCandidato) {
+        this.cedulaCandidato = cedulaCandidato;
+        this.nombreCandidato = nombreCandidato;
+    }
     
     public long getCedulaCandidato() {
         return cedulaCandidato;

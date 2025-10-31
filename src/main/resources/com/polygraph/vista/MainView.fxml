@@ -21,7 +21,7 @@
                                 <Image url="@../imgs/logo.png" />
                             </image>
                         </ImageView>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarCliente" prefHeight="40.0" styleClass="sidebar-button" text="Cliente">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarCliente" prefHeight="41.0" prefWidth="182.0" styleClass="sidebar-button" text="Cliente">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -33,7 +33,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarCandidato" prefHeight="40.0" styleClass="sidebar-button" text="Candidato">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarCandidato" prefHeight="41.0" prefWidth="191.0" styleClass="sidebar-button" text="Candidato">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -45,7 +45,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarServicio" prefHeight="40.0" styleClass="sidebar-button" text="Servicios">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarServicio" prefHeight="41.0" prefWidth="218.0" styleClass="sidebar-button" text="Servicios">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -57,7 +57,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadNotifications" prefHeight="40.0" styleClass="sidebar-button" text="Notifications">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadNotifications" prefHeight="41.0" prefWidth="218.0" styleClass="sidebar-button" text="Notifications">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -69,7 +69,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadSettings" prefHeight="40.0" styleClass="sidebar-button" text="Settings">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadSettings" prefHeight="41.0" prefWidth="226.0" styleClass="sidebar-button" text="Settings">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -81,7 +81,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarUsuario" prefHeight="40.0" styleClass="sidebar-button" text="Usuarios">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarUsuario" prefHeight="41.0" prefWidth="196.0" styleClass="sidebar-button" text="Usuarios">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>

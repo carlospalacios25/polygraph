@@ -1,5 +1,6 @@
 package com.polygraph.dao;
 
+import com.polygraph.modelo.Ciudades;
 import com.polygraph.modelo.Clientes;
 import com.polygraph.util.ConexionBD;
 import java.sql.Connection;
@@ -96,6 +97,23 @@ public class ClienteDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return cliente;
+    }
+    
+    public List<Clientes> obtenerClienteBox() throws SQLException {
+        List<Clientes> cliente = new ArrayList<>();
+        Connection conn = ConexionBD.getInstancia().getConexion();
+        String sql = "SELECT Nit_Cliente, Nombre_Cliente FROM clientes";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                cliente.add(new Clientes(
+                    rs.getInt("Nit_Cliente"),
+                    rs.getString("Nombre_Cliente")
+                ));
+            }
         }
         return cliente;
     }
