@@ -47,7 +47,7 @@
                     <Button layoutX="14.0" layoutY="10.0" onAction="#insertarCandidato" styleClass="button" text="Crear Candidato" />
                 </children>
                 <children>
-                    <Button layoutX="14.0" layoutY="10.0" onAction="#abrirCiudades" styleClass="button" text="Agregar Ciudad" />
+                    <Button layoutX="182.0" layoutY="13.0" onAction="#cargarForCiudades" styleClass="button" text="Agregar Ciudad" />
                 </children>
             </Pane>
         </VBox>

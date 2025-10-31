@@ -16,6 +16,7 @@ com\polygraph\controlador\ClienteController$2.class
 com\polygraph\modelo\Ciudades.class
 com\polygraph\dao\PerfilesDAO.class
 com\polygraph\modelo\Visitadores.class
+com\polygraph\listeners\CiudadAgregadaListener.class
 com\polygraph\modelo\Perfiles.class
 com\polygraph\modelo\Poligrafias.class
 com\polygraph\util\ConexionBD.class

@@ -4,6 +4,7 @@ import com.polygraph.dao.ClienteDAO;
 import com.polygraph.modelo.Ciudades;
 import com.polygraph.dao.CiudadesDAO;
 import com.polygraph.modelo.Clientes;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -19,6 +20,11 @@ import javafx.util.StringConverter;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.function.Predicate;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ClienteController {
 
@@ -49,6 +55,31 @@ public class ClienteController {
         agregarBotonEditar();
         configurarSeleccionFila();
         configurarBuscador();
+    }
+    
+    @FXML
+    private void cargarForCiudades(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/CiudadesForm.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            CiudadesController controller = loader.getController();
+
+            // Pasar el callback: "cuando agregues una ciudad, avísame"
+            controller.setOnCiudadAgregadaListener(() -> {
+                cargarCiudades();  // ← ¡Actualiza el ComboBox!
+            });
+
+            Stage stage = new Stage();
+            stage.setTitle("Formulario de Ciudades");
+            stage.initModality(Modality.APPLICATION_MODAL); // Bloquea el principal
+            stage.setScene(new Scene(root));
+            stage.showAndWait(); // ← ¡ESPERA A QUE SE CIERRE!
+
+        } catch (IOException e) {
+            showAlert("Error", "No se pudo cargar el formulario de ciudades: " + e.getMessage());
+        }
     }
     
     private void cargarDatosCliente() {

@@ -43,6 +43,7 @@
             <Pane prefHeight="76.0" prefWidth="434.0">
                 <children>
                     <Button layoutX="14.0" layoutY="10.0" onAction="#insertarCliente" styleClass="button" text="Crear Usuario" />
+                     <Button layoutX="167.0" layoutY="10.0" onAction="#cargarForCiudades" styleClass="button" text="Agregar Ciudad" />
                 </children>
             </Pane>
         </VBox>

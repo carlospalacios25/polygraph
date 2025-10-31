@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -17,19 +18,17 @@
         <VBox fx:id="formContainer" prefHeight="334.0" prefWidth="847.0" styleClass="form-container">
             <Label styleClass="title-label" text="Modulo de Candidato" />
             <GridPane alignment="CENTER" hgap="15" style="-fx-padding: 20; -fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8;" vgap="15">
-                <Label styleClass="label" text="Cedula Candidato:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="cedulaCanField" prefHeight="37.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Label styleClass="label" text="Nombre Candidato::" GridPane.columnIndex="2" />
-                <TextField fx:id="nombreCanField" styleClass="text-field" GridPane.columnIndex="3" />
-                <Label styleClass="label" text="Apellido Candidato:" GridPane.rowIndex="1" />
-                <TextField fx:id="apellidoCanField" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label styleClass="label" text="Telefono Candidato:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <TextField fx:id="telefonoCanField" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />   
-                <Label prefHeight="15.0" prefWidth="128.0" styleClass="label" text="Direccion Candidato::" GridPane.rowIndex="2" />
-                <TextField fx:id="direccionCanField" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Label styleClass="label" text="Ciudad Candidato:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <ComboBox fx:id="cidadesComboBox" prefHeight="31.0" prefWidth="177.0" styleClass="combo-box" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                
+                <Label styleClass="label" text="Fecha Solicitud:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Label styleClass="label" text="Hora Solicitud:" GridPane.columnIndex="2" GridPane.rowIndex="X" />
+                <TextField fx:id="horaField" styleClass="text-field" promptText="HH:MM" GridPane.columnIndex="3" GridPane.rowIndex="X" />
+                <Label styleClass="label" text="Cedula Cliente" GridPane.rowIndex="1" />
+                <Label styleClass="label" text="Proceso:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <DatePicker GridPane.columnIndex="1" />
+                <ComboBox fx:id="cidadesComboBox1" prefHeight="31.0" prefWidth="177.0" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label styleClass="label" text="Nit Cliente:" GridPane.rowIndex="2" />
+                <ComboBox fx:id="cidadesComboBox2" prefHeight="31.0" prefWidth="177.0" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <ComboBox fx:id="cidadesComboBox3" prefHeight="31.0" prefWidth="177.0" styleClass="combo-box" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
                     <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" minWidth="200.0" />
@@ -47,7 +46,7 @@
                     <Button layoutX="14.0" layoutY="10.0" onAction="#insertarCandidato" styleClass="button" text="Crear Candidato" />
                 </children>
                 <children>
-                    <Button layoutX="182.0" layoutY="13.0" onAction="#cargarForCiudades" styleClass="button" text="Agregar Ciudad" />
+                    <Button layoutX="179.0" layoutY="13.0" onAction="#cargarForCiudades" styleClass="button" text="Agregar Ciudad" />
                 </children>
             </Pane>
         </VBox>

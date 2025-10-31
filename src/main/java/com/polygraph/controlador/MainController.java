@@ -87,9 +87,9 @@ public class MainController {
     }
 
     @FXML
-    public void loadAnalytics(ActionEvent event) {
-        loadView("/com/polygraph/vista/Analytics.fxml", (Node) event.getSource());
-        currentCrumb.setText("Analytics");
+    public void cargarServicio(ActionEvent event) {
+        loadView("/com/polygraph/vista/ServicioForm.fxml", (Node) event.getSource());
+        currentCrumb.setText("Servicio");
     }
 
     @FXML
