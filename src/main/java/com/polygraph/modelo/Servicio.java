@@ -4,14 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Servicio {
+
+    // === CAMPOS PRINCIPALES (siempre presentes) ===
     private int idServicio;
     private LocalDate fechaSolicitud;
     private LocalTime horaSolicitud;
-    private long nitCliente;
-    private long cedulaCandidato;
-    private int idProceso;
     private String estado;
     private String resultado;
+
+    // === CAMPOS ADICIONALES (tu base de datos) ===
     private String facturacionServicio;
     private String verificacionServicio;
     private String cargoAutofinanciera;
@@ -22,19 +23,33 @@ public class Servicio {
     private LocalDate fechaEntregaEstudio;
     private LocalDate fechaEnvio;
 
-    // Constructor completo
+    private String nombreCliente;
+    private String nombreCandidato;
+    private String apellidoCandidato;
+    private String nombreProceso;
+
+    private Long nitCliente;        
+    private Long cedulaCandidato;
+    private Integer idProceso;
+
+    // ===================================================================
+    // CONSTRUCTOR PARA LISTAR (con JOIN) - SIN IDs
+    // ===================================================================
     public Servicio(int idServicio, LocalDate fechaSolicitud, LocalTime horaSolicitud,
-                    long nitCliente, long cedulaCandidato, int idProceso,
-                    String estado, String resultado, String facturacionServicio,
-                    String verificacionServicio, String cargoAutofinanciera,
-                    String autofinanciera, String empresasServicio, Integer idSucursal,
+                    String nombreCliente, String nombreCandidato, String apellidoCandidato,
+                    String nombreProceso, String estado, String resultado,
+                    String facturacionServicio, String verificacionServicio,
+                    String cargoAutofinanciera, String autofinanciera,
+                    String empresasServicio, Integer idSucursal,
                     String centroCosto, LocalDate fechaEntregaEstudio, LocalDate fechaEnvio) {
+
         this.idServicio = idServicio;
         this.fechaSolicitud = fechaSolicitud;
         this.horaSolicitud = horaSolicitud;
-        this.nitCliente = nitCliente;
-        this.cedulaCandidato = cedulaCandidato;
-        this.idProceso = idProceso;
+        this.nombreCliente = nombreCliente;
+        this.nombreCandidato = nombreCandidato;
+        this.apellidoCandidato = apellidoCandidato;
+        this.nombreProceso = nombreProceso;
         this.estado = estado;
         this.resultado = resultado;
         this.facturacionServicio = facturacionServicio;
@@ -48,27 +63,29 @@ public class Servicio {
         this.fechaEnvio = fechaEnvio;
     }
 
-    public Servicio(LocalDate fechaSolicitud, LocalTime horaSolicitud, long nitCliente, long cedulaCandidato, int idProceso) {
+    public Servicio(LocalDate fechaSolicitud, LocalTime horaSolicitud, Long nitCliente, Long cedulaCandidato, Integer idProceso) {
         this.fechaSolicitud = fechaSolicitud;
         this.horaSolicitud = horaSolicitud;
         this.nitCliente = nitCliente;
         this.cedulaCandidato = cedulaCandidato;
-        this.idProceso = idProceso;
+        this.idProceso =  idProceso;
     }
 
-    public Servicio(int idServicio, LocalDate fechaSolicitud, LocalTime horaSolicitud, long nitCliente, long cedulaCandidato, int idProceso, String estado, String resultado) {
+    public Servicio(int idServicio, LocalDate fechaSolicitud, LocalTime horaSolicitud, String nombreCliente, String nombreCandidato, String apellidoCandidato, String nombreProceso,String estado, String resultado) {
         this.idServicio = idServicio;
         this.fechaSolicitud = fechaSolicitud;
         this.horaSolicitud = horaSolicitud;
-        this.nitCliente = nitCliente;
-        this.cedulaCandidato = cedulaCandidato;
-        this.idProceso = idProceso;
         this.estado = estado;
         this.resultado = resultado;
+        this.nombreCliente = nombreCliente;
+        this.nombreCandidato = nombreCandidato;
+        this.apellidoCandidato = apellidoCandidato;
+        this.nombreProceso = nombreProceso;
     }
 
     
-    // Getters y Setters
+
+    // --- Básicos ---
     public int getIdServicio() { return idServicio; }
     public void setIdServicio(int idServicio) { this.idServicio = idServicio; }
 
@@ -78,21 +95,26 @@ public class Servicio {
     public LocalTime getHoraSolicitud() { return horaSolicitud; }
     public void setHoraSolicitud(LocalTime horaSolicitud) { this.horaSolicitud = horaSolicitud; }
 
-    public long getNitCliente() { return nitCliente; }
-    public void setNitCliente(long nitCliente) { this.nitCliente = nitCliente; }
-
-    public long getCedulaCandidato() { return cedulaCandidato; }
-    public void setCedulaCandidato(long cedulaCandidato) { this.cedulaCandidato = cedulaCandidato; }
-
-    public int getIdProceso() { return idProceso; }
-    public void setIdProceso(int idProceso) { this.idProceso = idProceso; }
-
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
 
     public String getResultado() { return resultado; }
     public void setResultado(String resultado) { this.resultado = resultado; }
 
+    // --- Nombres (para mostrar) ---
+    public String getNombreCliente() { return nombreCliente; }
+    public void setNombreCliente(String nombreCliente) { this.nombreCliente = nombreCliente; }
+
+    public String getNombreCandidato() { return nombreCandidato; }
+    public void setNombreCandidato(String nombreCandidato) { this.nombreCandidato = nombreCandidato; }
+
+    public String getApellidoCandidato() { return apellidoCandidato; }
+    public void setApellidoCandidato(String apellidoCandidato) { this.apellidoCandidato = apellidoCandidato; }
+
+    public String getNombreProceso() { return nombreProceso; }
+    public void setNombreProceso(String nombreProceso) { this.nombreProceso = nombreProceso; }
+
+    // --- Campos adicionales ---
     public String getFacturacionServicio() { return facturacionServicio; }
     public void setFacturacionServicio(String facturacionServicio) { this.facturacionServicio = facturacionServicio; }
 
@@ -120,5 +142,14 @@ public class Servicio {
     public LocalDate getFechaEnvio() { return fechaEnvio; }
     public void setFechaEnvio(LocalDate fechaEnvio) { this.fechaEnvio = fechaEnvio; }
 
+    public Long getNitCliente() {return nitCliente;}
+    public void setNitCliente(Long nitCliente) {this.nitCliente = nitCliente;}
 
+    public Long getCedulaCandidato() {return cedulaCandidato;}
+    public void setCedulaCandidato(Long cedulaCandidato) {this.cedulaCandidato = cedulaCandidato;}
+
+    public Integer getIdProceso() {return idProceso;}
+    public void setIdProceso(Integer idProceso) {this.idProceso = idProceso;}
+    
+    
 }

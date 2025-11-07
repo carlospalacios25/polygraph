@@ -248,3 +248,116 @@
 .card-button:hover {
     -fx-background-color: #2563eb;
 }
+
+/* En tu archivo CSS */
+.card-button {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
+}
+
+.btn-detalle {
+    -fx-background-color: #3498db;
+}
+
+.btn-detalle:hover {
+    -fx-background-color: #2980b9;
+}
+
+.btn-editar {
+    -fx-background-color: #2ecc71;
+}
+
+.btn-editar:hover {
+    -fx-background-color: #27ae60;
+}
+
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.card-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #555;
+    -fx-line-spacing: 2;
+}
+
+.card-icon {
+    -fx-alignment: CENTER;
+    -fx-padding: 8 0 0 0;
+}
+
+/* SIDEBAR */
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #bdc3c7;
+    -fx-font-size: 14px;
+    -fx-padding: 10 15;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+}
+
+.sidebar-btn:hover {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+}
+
+.sidebar-btn.active {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: white;
+}
+
+/* BOTÓN ESPECIAL: POLO → ROJITO */
+.sidebar-btn.polo {
+    -fx-background-color: #e74c3c;     /* Rojo vivo */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.sidebar-btn.polo:hover {
+    -fx-background-color: #c0392b;     /* Rojo más oscuro al hover */
+    -fx-text-fill: white;
+}
+
+.sidebar-btn.polo.active {
+    -fx-background-color: #c0392b;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 3, 0, 0, 1);
+}
+
+/* BREADCRUMB */
+.breadcrumb-bar {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #dee2e6;
+    -fx-border-width: 0 0 1 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+}
+
+.breadcrumb-item {
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 13.5px;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-cursor: hand;
+    -fx-padding: 0 6;
+}
+
+.breadcrumb-item:hover {
+    -fx-text-fill: #0d6efd;
+    -fx-font-weight: 600;
+}
+
+.breadcrumb-item.active {
+    -fx-text-fill: #0d6efd;
+    -fx-font-weight: 600;
+}
+
+.breadcrumb-separator {
+    -fx-text-fill: #adb5bd;
+    -fx-font-size: 13.5px;
+    -fx-padding: 0 4;
+}

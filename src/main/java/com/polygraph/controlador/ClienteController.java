@@ -43,9 +43,11 @@ public class ClienteController {
     @FXML private TableColumn<Clientes, Void> colAcciones;
     
     private ObservableList<Clientes> listaClien = FXCollections.observableArrayList();
+    private ObservableList<Ciudades> ciudades = FXCollections.observableArrayList();
     private FilteredList<Clientes> filteredList;
     private boolean isEditing = false;
     private ClienteDAO clienteDAO = new ClienteDAO();
+    private CiudadesDAO ciudadesdao = new CiudadesDAO();
     
     @FXML
     public void initialize() {
@@ -101,10 +103,9 @@ public class ClienteController {
     }
     
     private void cargarCiudades() {
-        ObservableList<Ciudades> ciudades = FXCollections.observableArrayList();
-        CiudadesDAO dao = new CiudadesDAO();
+        
         try {
-            ciudades.addAll(dao.obtenerCiudades());
+            ciudades.addAll(ciudadesdao.obtenerCiudades());
             cidadesComboBox.setItems(ciudades);
 
             cidadesComboBox.setConverter(new StringConverter<Ciudades>() {

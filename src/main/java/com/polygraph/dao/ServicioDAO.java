@@ -39,10 +39,26 @@ public class ServicioDAO {
         }
     }
 
-    // LISTAR TODOS LOS SERVICIOS
     public List<Servicio> listarServicios() throws SQLException {
         List<Servicio> servicios = new ArrayList<>();
-        String sql = "SELECT * FROM servicios ORDER BY Fecha_Solicitud DESC, Hora_Solicitud DESC";
+
+        String sql = """
+            SELECT 
+                s.Id_Servicio,
+                s.Fecha_Solicitud,
+                s.Hora_Solicitud,
+                cli.Nombre_Cliente,
+                can.Nombre_Candidato,
+                can.Apellido_Candidato,
+                p.Nombre_Proceso,
+                s.Estado,
+                s.Resultado
+            FROM servicios s
+            LEFT JOIN clientes cli     ON s.Nit_Cliente      = cli.Nit_Cliente
+            LEFT JOIN candidatos can   ON s.Cedula_Candidato = can.Cedula_Candidato
+            LEFT JOIN procesos p       ON s.Id_Proceso       = p.Id_Proceso
+            ORDER BY s.Fecha_Solicitud ASC, s.Hora_Solicitud ASC
+            """;
 
         try (Connection conn = ConexionBD.getInstancia().getConexion();
              PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -53,9 +69,10 @@ public class ServicioDAO {
                     rs.getInt("Id_Servicio"),
                     rs.getObject("Fecha_Solicitud", LocalDate.class),
                     rs.getObject("Hora_Solicitud", LocalTime.class),
-                    rs.getLong("Nit_Cliente"),
-                    rs.getLong("Cedula_Candidato"),
-                    rs.getInt("Id_Proceso"),
+                    rs.getString("Nombre_Cliente"),
+                    rs.getString("Nombre_Candidato"),
+                    rs.getString("Apellido_Candidato"),
+                    rs.getString("Nombre_Proceso"),
                     rs.getString("Estado"),
                     rs.getString("Resultado")
                 );
@@ -63,32 +80,6 @@ public class ServicioDAO {
             }
         }
         return servicios;
-    }
-
-    // OBTENER UN SERVICIO POR ID
-    public Servicio obtenerServicio(int idServicio) throws SQLException {
-        String sql = "SELECT * FROM servicios WHERE Id_Servicio = ?";
-
-        try (Connection conn = ConexionBD.getInstancia().getConexion();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, idServicio);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Servicio(
-                        rs.getInt("Id_Servicio"),
-                        rs.getObject("Fecha_Solicitud", LocalDate.class),
-                        rs.getObject("Hora_Solicitud", LocalTime.class),
-                        rs.getLong("Nit_Cliente"),
-                        rs.getLong("Cedula_Candidato"),
-                        rs.getInt("Id_Proceso"),
-                        rs.getString("Estado"),
-                        rs.getString("Resultado")
-                    );
-                }
-            }
-        }
-        return null;
     }
 
     // ACTUALIZAR SERVICIO (OPCIONAL)
@@ -114,15 +105,4 @@ public class ServicioDAO {
         }
     }
 
-    // ELIMINAR SERVICIO (OPCIONAL)
-    public void eliminarServicio(int idServicio) throws SQLException {
-        String sql = "DELETE FROM servicios WHERE Id_Servicio = ?";
-
-        try (Connection conn = ConexionBD.getInstancia().getConexion();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, idServicio);
-            pstmt.executeUpdate();
-        }
-    }
 }

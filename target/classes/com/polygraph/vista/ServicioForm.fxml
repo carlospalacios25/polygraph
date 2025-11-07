@@ -21,7 +21,7 @@
             <GridPane hgap="15" style="-fx-padding: 20; -fx-background-color: white; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #e2e8f0;" vgap="12">
                 <!-- FILA 1 -->
                 <Label styleClass="label" text="Fecha Solicitud:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <DatePicker fx:id="fechaSolField" styleClass="date-picker" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <DatePicker fx:id="fechaSolField" promptText="Fecha Solicitud" styleClass="date-picker" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                 <Label styleClass="label" text="Hora Solicitud:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                 <TextField fx:id="horaSolField" promptText="HH:MM" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 

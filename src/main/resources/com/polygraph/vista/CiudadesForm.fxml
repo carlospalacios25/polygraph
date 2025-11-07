@@ -14,7 +14,7 @@
            <Label styleClass="title-label" text="Agregar Ciudades" />
             <GridPane alignment="CENTER" hgap="15" prefHeight="248.0" prefWidth="369.0" style="-fx-padding: 20;" vgap="12">
                 <Label styleClass="label" text="Nombre Ciudad" GridPane.columnIndex="0" />
-                <TextField fx:id="nomCiudadField" prefHeight="37.0" prefWidth="164.0" styleClass="text-field" GridPane.columnIndex="2" />
+                <TextField fx:id="nomCiudadField" promptText="Ciudad" prefHeight="37.0" prefWidth="164.0" styleClass="text-field" GridPane.columnIndex="2" />
                 <Button graphicTextGap="10.0" mnemonicParsing="false" onAction="#insertarCiudad" prefHeight="36.0" prefWidth="151.0" styleClass="sidebar-button" text="Crear Ciudad" GridPane.columnIndex="2" GridPane.rowIndex="5" />
                 <columnConstraints>
                     <ColumnConstraints minWidth="-Infinity" />

@@ -18,14 +18,14 @@
             <Label styleClass="title-label" text="Modulo de Cliente" />
             <GridPane alignment="CENTER" hgap="15" style="-fx-padding: 20; -fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8;" vgap="15">
                 <Label styleClass="label" text="Nit Cliente:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="nitClienteField" prefHeight="37.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="nitClienteField" promptText="Nit Cliente" prefHeight="37.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                 <Label styleClass="label" text="Nombre Cliente:" GridPane.columnIndex="2" />
-                <TextField fx:id="nombreClieField" styleClass="text-field" GridPane.columnIndex="3" />
+                <TextField fx:id="nombreClieField" promptText="Nombre Cliente" styleClass="text-field" GridPane.columnIndex="3" />
                 <Label styleClass="label" text="Telefono Cliente:" GridPane.rowIndex="1" />
-                <TextField fx:id="telefonoClieField" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="telefonoClieField" promptText="Telefono Cliente" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Label styleClass="label" text="Direccion Cliente:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <TextField fx:id="direccionClienField" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <ComboBox fx:id="cidadesComboBox" prefHeight="31.0" prefWidth="177.0" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="direccionClienField" promptText="Direccion Cliente" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                <ComboBox fx:id="cidadesComboBox" promptText="Ciudad Cliente" prefHeight="31.0" prefWidth="177.0" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label styleClass="label" text="Ciudad Cliente:" GridPane.rowIndex="2" />
                 
                 <columnConstraints>

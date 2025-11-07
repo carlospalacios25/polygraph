@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles.css" fx:controller="com.polygraph.controlador.ModificarServicioControlador" prefHeight="500.0" prefWidth="700.0">
+
+    <VBox spacing="25" style="-fx-padding: 30; -fx-background-color: #f8f9fa;">
+        <children>
+
+            <Label text="MODIFICAR SERVICIO"
+                   style="-fx-font-size: 26; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+            <Label fx:id="lblId" text="Servicio #0"
+                   style="-fx-font-size: 16; -fx-text-fill: #7f8c8d;"/>
+
+            <GridPane hgap="15" vgap="12"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 12;">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                    <ColumnConstraints hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Label text="Cliente:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="txtCliente" GridPane.rowIndex="0" GridPane.columnIndex="1" promptText="Nombre del cliente" editable="false"/>
+
+                <Label text="Candidato:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="txtCandidato" GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="Nombre del candidato" editable="false"/>
+
+                <Label text="Proceso:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="cmbProceso" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="Selecciona un proceso"/>
+
+                <Label text="Estado:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="cmbEstado" GridPane.rowIndex="3" GridPane.columnIndex="1" promptText="Estado del servicio"/>
+
+                <Label text="Resultado:" GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-weight: bold;"/>
+                <TextArea fx:id="txtResultado" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                          prefRowCount="3" promptText="Resultado del servicio" GridPane.hgrow="ALWAYS"/>
+            </GridPane>
+
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <Button text="Guardar Cambios" onAction="#guardar"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 16; -fx-background-radius: 6;"/>
+                <Button text="Volver" onAction="#cancelar"
+                        style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-padding: 8 16; -fx-background-radius: 6;"/>
+            </HBox>
+
+        </children>
+    </VBox>
+</AnchorPane>

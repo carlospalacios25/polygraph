@@ -27,6 +27,7 @@ com\polygraph\modelo\Visitas.class
 com\polygraph\controlador\CiudadesController.class
 com\polygraph\modelo\ProcesoTProgreso.class
 com\polygraph\controlador\ServiciosControlador$2.class
+com\polygraph\controlador\ModificarServicioControlador.class
 module-info.class
 com\polygraph\modelo\PerfilesPermisos.class
 com\polygraph\modelo\Progreso.class
@@ -46,5 +47,6 @@ com\polygraph\controlador\CandidatoController$2.class
 com\polygraph\controlador\UsuarioController.class
 com\polygraph\modelo\Permisos.class
 com\polygraph\controlador\ClienteController$2$1.class
+com\polygraph\controlador\ModificarServicioControlador$1.class
 com\polygraph\controlador\ServiciosControlador$1.class
 com\polygraph\modelo\Sucursales.class

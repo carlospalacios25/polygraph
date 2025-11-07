@@ -37,23 +37,29 @@ public class LoginController {
 
         if (authenticate(username, password)) {
             try {
-                // Cargar el formulario principal
+                // CARGAR MAIN
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/MainView.fxml"));
                 Parent root = loader.load();
-                
-                // Obtener las dimensiones de la pantalla principal
+
+                // OBTENER CONTROLADOR
+                MainController mainController = loader.getController();
+
+                // GUARDAR EN USERDATA (ESTO ES TODO!)
+                root.setUserData(mainController);
+
+                // PANTALLA
                 double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
                 double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
-                
-                // Crear un nuevo Stage y ajustar el tamaño al 90% de la pantalla (dejando márgenes)
+
                 Stage mainStage = new Stage();
                 mainStage.setTitle("Aplicación Polygraph - Dashboard");
                 mainStage.setScene(new Scene(root, screenWidth * 0.9, screenHeight * 0.9));
                 mainStage.show();
 
-                // Cerrar la ventana de login
+                // CERRAR LOGIN
                 Stage loginStage = (Stage) usernameField.getScene().getWindow();
                 loginStage.close();
+
             } catch (IOException e) {
                 errorLabel.setText("Error al cargar el dashboard: " + e.getMessage());
                 e.printStackTrace();
