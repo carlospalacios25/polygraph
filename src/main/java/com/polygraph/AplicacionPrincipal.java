@@ -1,5 +1,6 @@
 package com.polygraph;
 
+import com.polygraph.util.ConexionBD;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,5 +25,10 @@ public class AplicacionPrincipal extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    @Override
+    public void stop() {
+        ConexionBD.getInstancia().cerrarConexion();
     }
 }

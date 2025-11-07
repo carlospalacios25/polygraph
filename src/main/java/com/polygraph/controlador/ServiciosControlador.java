@@ -3,8 +3,11 @@ package com.polygraph.controlador;
 import com.polygraph.dao.*;
 import com.polygraph.modelo.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
@@ -13,7 +16,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import javafx.collections.ObservableList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ServiciosControlador {
 
@@ -23,12 +27,15 @@ public class ServiciosControlador {
     @FXML private ComboBox<Candidatos> cedulaCanField;
     @FXML private ComboBox<Procesos> procesoField;
     @FXML private TextField buscadorField;
-    @FXML private VBox serviciosContainer;
+    @FXML private GridPane serviciosContainer;
 
     private final ServicioDAO servicioDAO = new ServicioDAO();
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final CandidatoDAO candidatoDAO = new CandidatoDAO();
     private final ProcesosDAO procesoDAO = new ProcesosDAO();
+
+    // Caché de procesos: id → nombre
+    private final Map<Integer, String> mapaProcesos = new HashMap<>();
 
     @FXML
     public void initialize() {
@@ -36,8 +43,9 @@ public class ServiciosControlador {
         cargarClientes();
         cargarCandidatos();
         cargarProcesos();
-        //actualizarTarjetasServicios();
-        //configurarBuscador();
+        cargarMapaProcesos();        // Carga el caché una sola vez
+        actualizarTarjetasServicios();
+        configurarBuscador();
     }
 
     // --- CONFIGURAR HORA ---
@@ -69,42 +77,30 @@ public class ServiciosControlador {
         try {
             clientes.addAll(clienteDAO.obtenerClienteBox());
             cedulaClieField.setItems(clientes);
-
             cedulaClieField.setConverter(new StringConverter<Clientes>() {
-                @Override
-                public String toString(Clientes cliente) {
+                @Override public String toString(Clientes cliente) {
                     return cliente == null ? "" : cliente.getNombreCliente();
                 }
-
-                @Override
-                public Clientes fromString(String string) {
-                    return null;
-                }
+                @Override public Clientes fromString(String string) { return null; }
             });
         } catch (SQLException e) {
-            showAlert("Error", "Error al cargar Candidato: " + e.getMessage());
+            showAlert("Error", "Error al cargar Clientes: " + e.getMessage());
         }
     }
-    
+
     private void cargarCandidatos() {
         ObservableList<Candidatos> candidatos = FXCollections.observableArrayList();
         try {
             candidatos.addAll(candidatoDAO.obtenerCandidatosBox());
             cedulaCanField.setItems(candidatos);
-
             cedulaCanField.setConverter(new StringConverter<Candidatos>() {
-                @Override
-                public String toString(Candidatos candidato) {
+                @Override public String toString(Candidatos candidato) {
                     return candidato == null ? "" : candidato.getNombreCandidato();
                 }
-
-                @Override
-                public Candidatos fromString(String string) {
-                    return null;
-                }
+                @Override public Candidatos fromString(String string) { return null; }
             });
         } catch (SQLException e) {
-            showAlert("Error", "Error al cargar Candidato: " + e.getMessage());
+            showAlert("Error", "Error al cargar Candidatos: " + e.getMessage());
         }
     }
 
@@ -113,26 +109,37 @@ public class ServiciosControlador {
         try {
             procesos.addAll(procesoDAO.obtenerProcesosBox());
             procesoField.setItems(procesos);
-
             procesoField.setConverter(new StringConverter<Procesos>() {
-                @Override
-                public String toString(Procesos proceso) {
+                @Override public String toString(Procesos proceso) {
                     return proceso == null ? "" : proceso.getNombreProceso();
                 }
-
-                @Override
-                public Procesos fromString(String string) {
-                    return null;
-                }
+                @Override public Procesos fromString(String string) { return null; }
             });
         } catch (SQLException e) {
             showAlert("Error", "Error al cargar Procesos: " + e.getMessage());
         }
     }
-/*
-    // --- INSERTAR SERVICIO (COMO TÚ LO PIDES) ---
+
+    // --- CARGAR MAPA DE PROCESOS (caché) ---
+    private void cargarMapaProcesos() {
+        try {
+            mapaProcesos.clear();
+            for (Procesos p : procesoDAO.obtenerProcesosBox()) {
+                mapaProcesos.put(p.getIdProceso(), p.getNombreProceso());
+            }
+        } catch (SQLException e) {
+            showAlert("Error", "Error al cargar caché de procesos: " + e.getMessage());
+        }
+    }
+
+    // --- NUEVO: obtener nombre del proceso desde caché ---
+    private String getNombreProceso(int id) {
+        return mapaProcesos.getOrDefault(id, "Desconocido");
+    }
+
+    // --- INSERTAR SERVICIO ---
     @FXML
-    private void insertarCandidato() {
+    private void insertarServicio() {
         try {
             LocalDate fecha = fechaSolField.getValue();
             if (fecha == null) {
@@ -174,11 +181,10 @@ public class ServiciosControlador {
             );
 
             servicioDAO.insertarServicio(servicio);
-
             showAlert("Éxito", "Servicio creado correctamente con ID: " + servicio.getIdServicio());
-            limpiarCampos();
-           // actualizarTarjetasServicios();
 
+            limpiarCampos();
+            actualizarTarjetasServicios();
         } catch (SQLException e) {
             if (e.getErrorCode() == 1452) {
                 showAlert("Error", "Datos no válidos: Cliente, Candidato o Proceso no existen.");
@@ -189,65 +195,60 @@ public class ServiciosControlador {
             showAlert("Error", "Formato inválido en algún campo.");
         }
     }
-    
 
-    /*
     // --- ACTUALIZAR TARJETAS ---
     private void actualizarTarjetasServicios() {
         serviciosContainer.getChildren().clear();
         try {
-            for (Servicio s : servicioDAO.listarServicios()) {
-                serviciosContainer.getChildren().add(crearTarjeta(s));
+            List<Servicio> servicios = servicioDAO.listarServicios()
+                .stream()
+                .sorted(Comparator.comparingInt(Servicio::getIdServicio))
+                .collect(Collectors.toList());
+
+            int col = 0, row = 0;
+            for (Servicio s : servicios) {
+                VBox card = crearTarjeta(s);
+                serviciosContainer.add(card, col, row);
+                col++;
+                if (col == 3) {
+                    col = 0;
+                    row++;
+                }
             }
         } catch (SQLException e) {
-            showAlert("Error", "No se pudieron cargar servicios.");
+            showAlert("Error", "No se pudieron cargar los servicios.");
         }
     }
 
     // --- CREAR TARJETA ---
     private VBox crearTarjeta(Servicio s) {
-        VBox card = new VBox(10);
-        card.getStyleClass().add("service-card");
+        VBox card = new VBox(16);
+        card.getStyleClass().add("service-card-modern");
 
-        Label fechaHora = new Label(
-            s.getFechaSolicitud().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) +
-            " a las " + s.getHoraSolicitud().format(DateTimeFormatter.ofPattern("HH:mm"))
+        ImageView icon = new ImageView();
+        icon.getStyleClass().add("card-icon");
+
+        Label title = new Label("Servicio #" + s.getIdServicio());
+        title.getStyleClass().add("card-title");
+
+        String fecha = s.getFechaSolicitud().format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
+        String hora = s.getHoraSolicitud().format(DateTimeFormatter.ofPattern("HH:mm"));
+
+        Label subtitle = new Label(
+            "Fecha: " + fecha + " a las " + hora + "\n" +
+            "Cliente: NIT " + s.getNitCliente() + "\n" +
+            "Candidato: " + s.getCedulaCandidato() + "\n" +
+            "Proceso: " + getNombreProceso(s.getIdProceso()) + "\n" +
+            "Estado: " + s.getEstado()
         );
-        fechaHora.getStyleClass().add("card-title");
+        subtitle.getStyleClass().add("card-subtitle");
 
-        HBox fila1 = new HBox(30);
-        fila1.getChildren().addAll(
-            label("NIT:", String.valueOf(s.getNitCliente()), "card-label", "card-value"),
-            label("Cédula:", String.valueOf(s.getCedulaCandidato()), "card-label", "card-value")
-        );
+        Button btn = new Button("Ver Detalle");
+        btn.getStyleClass().add("card-button");
+        btn.setOnAction(e -> mostrarDetalle(s));
 
-        HBox fila2 = new HBox(30);
-        fila2.getChildren().addAll(
-            label("Proceso:", getNombreProceso(s.getIdProceso()), "card-label", "card-value"),
-            label("Estado:", s.getEstado(), "card-label", "card-value")
-        );
-
-        Button btnDetalle = new Button("Ver Detalle");
-        btnDetalle.getStyleClass().add("card-button");
-        btnDetalle.setOnAction(e -> mostrarDetalle(s));
-
-        card.getChildren().addAll(fechaHora, fila1, fila2, btnDetalle);
+        card.getChildren().addAll(icon, title, subtitle, btn);
         return card;
-    }
-
-    private String getNombreProceso(int id) {
-        try {
-            Procesos p = procesoDAO.obtenerProceso(id);
-            return p != null ? p.getNombre() : "Desconocido";
-        } catch (SQLException e) {
-            return "Error";
-        }
-    }
-
-    private HBox label(String titulo, String valor, String... clases) {
-        Label l1 = new Label(titulo); l1.getStyleClass().addAll(clases[0], "bold");
-        Label l2 = new Label(valor); l2.getStyleClass().add(clases[1]);
-        return new HBox(8, l1, l2);
     }
 
     // --- DETALLE ---
@@ -266,6 +267,7 @@ public class ServiciosControlador {
             new Label("Estado: " + s.getEstado()),
             new Label("Resultado: " + s.getResultado())
         );
+
         alert.getDialogPane().setContent(content);
         alert.showAndWait();
     }
@@ -273,35 +275,47 @@ public class ServiciosControlador {
     // --- BUSCADOR ---
     private void configurarBuscador() {
         buscadorField.textProperty().addListener((obs, old, nuevo) -> {
-            String filtro = nuevo == null ? "" : nuevo.toLowerCase();
+            String filtro = (nuevo == null ? "" : nuevo.toLowerCase());
             serviciosContainer.getChildren().clear();
             try {
                 for (Servicio s : servicioDAO.listarServicios()) {
-                    String texto = (s.getNitCliente() + " " + s.getCedulaCandidato() + " " +
-                                  getNombreProceso(s.getIdProceso()) + " " + s.getEstado()).toLowerCase();
+                    String texto = (s.getNitCliente() + " " +
+                                  s.getCedulaCandidato() + " " +
+                                  getNombreProceso(s.getIdProceso()) + " " +
+                                  s.getEstado()).toLowerCase();
                     if (texto.contains(filtro)) {
-                        serviciosContainer.getChildren().add(crearTarjeta(s));
+                        VBox card = crearTarjeta(s);
+                        // Mantener disposición en grid
+                        int index = serviciosContainer.getChildren().size();
+                        int col = index % 3;
+                        int row = index / 3;
+                        serviciosContainer.add(card, col, row);
                     }
                 }
             } catch (SQLException ignored) {}
         });
     }
-    
-    */
-            // --- ALERTA ---
+
+    // --- ALERTA ---
     private void showAlert(String titulo, String mensaje) {
         Alert a = new Alert(titulo.equals("Éxito") ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
         a.setTitle(titulo);
         a.setContentText(mensaje);
         a.showAndWait();
     }
-    
-        // --- LIMPIAR ---
+
+    // --- LIMPIAR CAMPOS ---
     private void limpiarCampos() {
         fechaSolField.setValue(null);
         horaSolField.clear();
         cedulaClieField.setValue(null);
         cedulaCanField.setValue(null);
         procesoField.setValue(null);
+    }
+
+    // --- MÉTODO PÚBLICO PARA RECARGAR PROCESOS (si se crean nuevos) ---
+    public void recargarProcesos() {
+        cargarProcesos();
+        cargarMapaProcesos();
     }
 }

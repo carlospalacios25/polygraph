@@ -26,11 +26,12 @@ public class CiudadesDAO {
     
     public List<Ciudades> obtenerCiudades() throws SQLException {
         List<Ciudades> ciudades = new ArrayList<>();
-        Connection conn = ConexionBD.getInstancia().getConexion();
         String sql = "SELECT Id_Ciudad, Nombre_Ciudad FROM ciudades";
 
-        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+        try (Connection conn = ConexionBD.getInstancia().getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
+
             while (rs.next()) {
                 ciudades.add(new Ciudades(
                     rs.getInt("Id_Ciudad"),
@@ -40,6 +41,5 @@ public class CiudadesDAO {
         }
         return ciudades;
     }
-    
     
 }

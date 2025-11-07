@@ -48,7 +48,26 @@ public class Servicio {
         this.fechaEnvio = fechaEnvio;
     }
 
+    public Servicio(LocalDate fechaSolicitud, LocalTime horaSolicitud, long nitCliente, long cedulaCandidato, int idProceso) {
+        this.fechaSolicitud = fechaSolicitud;
+        this.horaSolicitud = horaSolicitud;
+        this.nitCliente = nitCliente;
+        this.cedulaCandidato = cedulaCandidato;
+        this.idProceso = idProceso;
+    }
 
+    public Servicio(int idServicio, LocalDate fechaSolicitud, LocalTime horaSolicitud, long nitCliente, long cedulaCandidato, int idProceso, String estado, String resultado) {
+        this.idServicio = idServicio;
+        this.fechaSolicitud = fechaSolicitud;
+        this.horaSolicitud = horaSolicitud;
+        this.nitCliente = nitCliente;
+        this.cedulaCandidato = cedulaCandidato;
+        this.idProceso = idProceso;
+        this.estado = estado;
+        this.resultado = resultado;
+    }
+
+    
     // Getters y Setters
     public int getIdServicio() { return idServicio; }
     public void setIdServicio(int idServicio) { this.idServicio = idServicio; }

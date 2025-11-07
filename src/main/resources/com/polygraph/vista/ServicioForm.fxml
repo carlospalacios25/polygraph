@@ -48,18 +48,17 @@
                 </rowConstraints>
             </GridPane>
 
-           <!--  <HBox alignment="CENTER_LEFT" spacing="15">
-                <Button onAction="#insertarCandidato" styleClass="button primary" text="Crear Candidato" />
-            </HBox> -->
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Button onAction="#insertarServicio" styleClass="button primary" text="Crear Candidato" />
+            </HBox>
         </VBox>
 
         <!-- BUSCADOR -->
         <TextField fx:id="buscadorField" prefWidth="300" promptText="Buscar por cédula, nombre, ciudad..." styleClass="text-field search" />
 
         <!-- TARJETAS BONITAS -->
-        <ScrollPane fitToWidth="true" styleClass="cards-scroll">
-            <VBox fx:id="candidatosContainer" spacing="16" styleClass="cards-container" />
+        <ScrollPane fitToWidth="true" styleClass="cards-scroll" prefHeight="500">
+            <GridPane fx:id="serviciosContainer" hgap="25" vgap="25" styleClass="cards-grid" />
         </ScrollPane>
-
     </children>
 </VBox>

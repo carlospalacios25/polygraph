@@ -41,5 +41,24 @@ public class ProcesosDAO {
         return procesos;
     }
     
+    // MÉTODO NUEVO: OBTENER UN PROCESO POR ID
+    public Procesos obtenerProceso(int idProceso) throws SQLException {
+        String sql = "SELECT Id_Proceso, Nombre_Proceso FROM procesos WHERE Id_Proceso = ?";
+
+        try (Connection conn = ConexionBD.getInstancia().getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idProceso);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Procesos(
+                        rs.getInt("Id_Proceso"),
+                        rs.getString("Nombre_Proceso")
+                    );
+                }
+            }
+        }
+        return null; // No encontrado
+    }
     
 }
