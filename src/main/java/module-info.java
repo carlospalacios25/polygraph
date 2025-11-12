@@ -1,4 +1,4 @@
-module com.polygraph.polygraph {
+module com.polygraph {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;

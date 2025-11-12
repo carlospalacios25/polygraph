@@ -182,7 +182,7 @@ public class ServiciosControlador {
 
         ImageView icon = new ImageView();
         icon.getStyleClass().add("card-icon");
-        Image img = new Image(getClass().getResourceAsStream("/com/polygraph/imgs/icons_card.png"));
+        Image img = new Image(getClass().getResourceAsStream("/com/polygraph/imgs/incos-service.png"));
         if (!img.isError()) {
             icon.setImage(img);
             icon.setFitHeight(36); icon.setFitWidth(36);

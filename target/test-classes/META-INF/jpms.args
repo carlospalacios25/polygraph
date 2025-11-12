@@ -1,0 +1,4 @@
+--patch-module
+com.polygraph=_
+--add-reads
+com.polygraph=ALL-UNNAMED

@@ -12,67 +12,44 @@ import java.util.List;
 
 public class ModificarServicioControlador {
 
-    @FXML private Label lblId;
-    @FXML private TextField txtCliente;
-    @FXML private TextField txtCandidato;
-    @FXML private ComboBox<Procesos> cmbProceso;
-    @FXML private ComboBox<String> cmbEstado;
-    @FXML private TextArea txtResultado;
+    // === SOLO LOS ELEMENTOS DEL FORMULARIO 1 (los que están en tu FXML) ===
+    @FXML private Label lblId1;
+    @FXML private TextField txtCliente1;
+    @FXML private TextField txtCandidato1;
+    @FXML private ComboBox<Procesos> cmbProceso1;   // fx:id="cmbProceso1"
+    @FXML private ComboBox<String> cmbEstado1;      // fx:id="cmbEstado1"
+    @FXML private TextArea txtResultado1;
 
     private Servicio servicio;
     private MainController mainController;
     private final ServicioDAO servicioDAO = new ServicioDAO();
     private final ProcesosDAO procesosDAO = new ProcesosDAO();
 
+    // === SETTERS ===
     public void setServicio(Servicio servicio) {
         this.servicio = servicio;
-        cargarDatos();
+        cargarDatos(); // Carga datos cuando se asigna el servicio
     }
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
+    // === INICIALIZACIÓN ===
     @FXML
     private void initialize() {
         cargarProcesos();
-        cmbEstado.setItems(FXCollections.observableArrayList(
-            "Pendiente", "En Proceso", "Completado", "Cancelado"
-        ));
-    }
-
-    private void cargarDatos() {
-        if (servicio == null) return;
-
-        lblId.setText("Servicio #" + servicio.getIdServicio());
-        txtCliente.setText(servicio.getNombreCliente() != null ? servicio.getNombreCliente() : "");
-        txtCandidato.setText(
-            (servicio.getNombreCandidato() != null ? servicio.getNombreCandidato() + " " : "") +
-            (servicio.getApellidoCandidato() != null ? servicio.getApellidoCandidato() : "")
-        );
-
-        if (servicio.getIdProceso() != null) {
-            cmbProceso.getSelectionModel().select(
-                cmbProceso.getItems().stream()
-                    .filter(p -> p.getIdProceso() == servicio.getIdProceso())
-                    .findFirst()
-                    .orElse(null)
-            );
-        }
-
-        if (servicio.getEstado() != null) {
-            cmbEstado.setValue(servicio.getEstado());
-        }
-
-        txtResultado.setText(servicio.getResultado() != null ? servicio.getResultado() : "");
+        cargarEstados();
     }
 
     private void cargarProcesos() {
         try {
             List<Procesos> procesos = procesosDAO.obtenerProcesosBox();
-            cmbProceso.setItems(FXCollections.observableArrayList(procesos));
-            cmbProceso.setConverter(new javafx.util.StringConverter<Procesos>() {
-                @Override public String toString(Procesos p) { return p == null ? "" : p.getNombreProceso(); }
+            cmbProceso1.setItems(FXCollections.observableArrayList(procesos));
+            cmbProceso1.setConverter(new javafx.util.StringConverter<Procesos>() {
+                @Override public String toString(Procesos p) {
+                    return p == null ? "" : p.getNombreProceso();
+                }
                 @Override public Procesos fromString(String s) { return null; }
             });
         } catch (SQLException e) {
@@ -80,23 +57,57 @@ public class ModificarServicioControlador {
         }
     }
 
+    private void cargarEstados() {
+        cmbEstado1.setItems(FXCollections.observableArrayList(
+            "Pendiente", "En Proceso", "Completado", "Cancelado"
+        ));
+    }
+
+    // === CARGAR DATOS DEL SERVICIO ===
+    private void cargarDatos() {
+        if (servicio == null) {
+            lblId1.setText("Servicio #—");
+            return;
+        }
+
+        lblId1.setText("Servicio #" + servicio.getIdServicio());
+        txtCliente1.setText(servicio.getNombreCliente() != null ? servicio.getNombreCliente() : "");
+        txtCandidato1.setText(
+            (servicio.getNombreCandidato() != null ? servicio.getNombreCandidato() + " " : "") +
+            (servicio.getApellidoCandidato() != null ? servicio.getApellidoCandidato() : "")
+        );
+
+        if (servicio.getIdProceso() != null) {
+            Procesos seleccionado = cmbProceso1.getItems().stream()
+                .filter(p -> p.getIdProceso() == servicio.getIdProceso())
+                .findFirst()
+                .orElse(null);
+            cmbProceso1.setValue(seleccionado);
+        }
+
+        cmbEstado1.setValue(servicio.getEstado());
+        txtResultado1.setText(servicio.getResultado() != null ? servicio.getResultado() : "");
+    }
+
+    // === GUARDAR ===
     @FXML
     private void guardar() {
         if (servicio == null) return;
 
-        servicio.setIdProceso(cmbProceso.getValue() != null ? cmbProceso.getValue().getIdProceso() : null);
-        servicio.setEstado(cmbEstado.getValue());
-        servicio.setResultado(txtResultado.getText().trim().isEmpty() ? null : txtResultado.getText().trim());
+        servicio.setIdProceso(cmbProceso1.getValue() != null ? cmbProceso1.getValue().getIdProceso() : null);
+        servicio.setEstado(cmbEstado1.getValue());
+        servicio.setResultado(txtResultado1.getText().trim().isEmpty() ? null : txtResultado1.getText().trim());
 
         try {
             servicioDAO.actualizarServicio(servicio);
-            showAlert("Éxito", "Servicio actualizado.");
+            showAlert("Éxito", "Servicio actualizado correctamente.");
             volverALaLista();
         } catch (SQLException e) {
             showAlert("Error", "Error al guardar: " + e.getMessage());
         }
     }
 
+    // === CANCELAR ===
     @FXML
     private void cancelar() {
         volverALaLista();
@@ -104,7 +115,7 @@ public class ModificarServicioControlador {
 
     private void volverALaLista() {
         if (mainController != null) {
-            mainController.popBreadcrumb(); // ← AHORA SÍ EXISTE EN MainController
+            mainController.popBreadcrumb();
             mainController.cargarServicio(null);
         }
     }
