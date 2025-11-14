@@ -9,14 +9,23 @@ public class Progreso {
     private String observacionAnte;
     private int idServicio;
     private String nombreUsuario;
+    private String tipoProgresoNombre;
 
-    public Progreso(int idProgreso, int idTipoProgr, LocalDate fechaProgr, String observacionAnte, int idServicio, String nombreUsuario) {
+    // ✅ Constructor vacío (necesario para usar new Progreso() en DAO/controlador)
+    public Progreso() {
+    }
+
+    // ✅ Constructor completo (opcional)
+    public Progreso(int idProgreso, int idTipoProgr, LocalDate fechaProgr,
+                    String observacionAnte, int idServicio,
+                    String nombreUsuario, String tipoProgresoNombre) {
         this.idProgreso = idProgreso;
         this.idTipoProgr = idTipoProgr;
         this.fechaProgr = fechaProgr;
         this.observacionAnte = observacionAnte;
         this.idServicio = idServicio;
         this.nombreUsuario = nombreUsuario;
+        this.tipoProgresoNombre = tipoProgresoNombre;
     }
 
     public int getIdProgreso() {
@@ -66,6 +75,13 @@ public class Progreso {
     public void setNombreUsuario(String nombreUsuario) {
         this.nombreUsuario = nombreUsuario;
     }
-    
-    
+
+    public String getTipoProgresoNombre() {
+        return tipoProgresoNombre;
+    }
+
+    public void setTipoProgresoNombre(String tipoProgresoNombre) {
+        this.tipoProgresoNombre = tipoProgresoNombre;
+    }
 }
+

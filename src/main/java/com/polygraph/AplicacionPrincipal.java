@@ -8,18 +8,25 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.stage.StageStyle;
 
 public class AplicacionPrincipal extends Application {
 
     @Override
     public void start(Stage primaryStage) {
         try {
-            // CARGAR LOGIN
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/LoginView.fxml"));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 400, 400);
-            primaryStage.setTitle("Polygraph - Login");
+
+            Scene scene = new Scene(root);
             primaryStage.setScene(scene);
+            primaryStage.setTitle("Polygraph - Login");
+
+            // SIN BARRA DE TÍTULO
+            primaryStage.initStyle(StageStyle.UNDECORATED);
+
+            // CENTRAR EN PANTALLA
+            primaryStage.centerOnScreen();
             primaryStage.show();
 
         } catch (IOException e) {

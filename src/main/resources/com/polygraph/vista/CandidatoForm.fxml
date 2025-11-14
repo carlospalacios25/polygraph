@@ -28,7 +28,7 @@
                 <Label prefHeight="15.0" prefWidth="128.0" styleClass="label" text="Direccion Candidato::" GridPane.rowIndex="2" />
                 <TextField fx:id="direccionCanField" promptText="Direccion Candidato" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <Label styleClass="label" text="Ciudad Candidato:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <ComboBox fx:id="cidadesComboBox" promptText="Ciudad Candidato" prefHeight="31.0" prefWidth="177.0" styleClass="combo-box" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                <ComboBox fx:id="cidadesComboBox" promptText="Ciudad Candidato" prefHeight="31.0" prefWidth="177.0" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                 
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />

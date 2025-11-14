@@ -10,18 +10,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="415.0" prefWidth="419.0" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1"  fx:controller="com.polygraph.controlador.MainController">
+<AnchorPane prefHeight="504.0" prefWidth="419.0" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.MainController">
     <children>
-        <Pane prefHeight="415.0" prefWidth="205.0" styleClass="sidebar" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+        <Pane prefHeight="415.0" prefWidth="214.0" styleClass="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
             <children>
-                <VBox prefHeight="412.0" prefWidth="162.0">
+                <VBox prefHeight="504.0" prefWidth="214.0">
                     <children>
                         <ImageView fitHeight="161.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../imgs/logo.png" />
                             </image>
                         </ImageView>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarCliente" prefHeight="41.0" prefWidth="182.0" styleClass="sidebar-button" text="Cliente">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarCliente" prefHeight="42.0" prefWidth="200.0" styleClass="sidebar-button" text="Cliente">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -33,7 +33,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarCandidato" prefHeight="41.0" prefWidth="191.0" styleClass="sidebar-button" text="Candidato">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarCandidato" prefHeight="42.0" prefWidth="196.0" styleClass="sidebar-button" text="Candidato">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -45,7 +45,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarServicio" prefHeight="41.0" prefWidth="218.0" styleClass="sidebar-button" text="Servicios">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarServicio" prefHeight="42.0" prefWidth="206.0" styleClass="sidebar-button" text="Servicios">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -57,7 +57,7 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadNotifications" prefHeight="41.0" prefWidth="218.0" styleClass="sidebar-button" text="Notifications">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadNotifications" prefHeight="42.0" prefWidth="208.0" styleClass="sidebar-button" text="Poligrafía">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
@@ -69,18 +69,30 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadSettings" prefHeight="41.0" prefWidth="226.0" styleClass="sidebar-button" text="Settings">
+                        <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#loadSettings" prefHeight="42.0" prefWidth="206.0" styleClass="sidebar-button" text="Visita">
                             <padding>
                                 <Insets left="20.0" />
                             </padding>
                             <graphic>
                                 <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../imgs/icons8_settings_32px.png" />
+                                        <Image url="@../imgs/icons_visita.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
+                  <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarConfServicio" prefHeight="42.0" prefWidth="206.0" styleClass="sidebar-button" text="Configuracion Servicio">
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../imgs/icons8_settings_32px.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                         <Button alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#cargarUsuario" prefHeight="41.0" prefWidth="196.0" styleClass="sidebar-button" text="Usuarios">
                             <padding>
                                 <Insets left="20.0" />
@@ -101,8 +113,8 @@
             <children>
                 <HBox fx:id="breadcrumbBar" prefHeight="30.0" styleClass="breadcrumb-bar">
                     <children>
-                        <Label fx:id="lblDashboard" text="Home" onMouseClicked="#irADashboard" styleClass="breadcrumb-item" />
-                        <Label fx:id="lblSeparator2" text=" > " styleClass="breadcrumb-separator" />
+                        <Label fx:id="lblDashboard" onMouseClicked="#irADashboard" styleClass="breadcrumb-item" text="Home" />
+                        <Label fx:id="lblSeparator2" styleClass="breadcrumb-separator" text=" &gt; " />
                         <HBox fx:id="dynamicCrumbs" spacing="4" />
                     </children>
                     <padding>

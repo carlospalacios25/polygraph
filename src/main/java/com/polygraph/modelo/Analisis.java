@@ -1,4 +1,3 @@
-
 package com.polygraph.modelo;
 
 public class Analisis {
@@ -7,6 +6,11 @@ public class Analisis {
     private String tipoAnalisis;
     private String contenido;
 
+    // Constructor vacío (necesario para JavaFX, DAO, etc.)
+    public Analisis() {
+    }
+
+    // Constructor completo
     public Analisis(int idAnalisis, int idServicio, String tipoAnalisis, String contenido) {
         this.idAnalisis = idAnalisis;
         this.idServicio = idServicio;
@@ -45,6 +49,4 @@ public class Analisis {
     public void setContenido(String contenido) {
         this.contenido = contenido;
     }
-    
-    
 }

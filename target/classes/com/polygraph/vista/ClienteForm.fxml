@@ -25,7 +25,7 @@
                 <TextField fx:id="telefonoClieField" promptText="Telefono Cliente" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Label styleClass="label" text="Direccion Cliente:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                 <TextField fx:id="direccionClienField" promptText="Direccion Cliente" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <ComboBox fx:id="cidadesComboBox" promptText="Ciudad Cliente" prefHeight="31.0" prefWidth="177.0" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <ComboBox fx:id="cidadesComboBox" promptText="Ciudad Cliente" prefHeight="31.0" prefWidth="177.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label styleClass="label" text="Ciudad Cliente:" GridPane.rowIndex="2" />
                 
                 <columnConstraints>

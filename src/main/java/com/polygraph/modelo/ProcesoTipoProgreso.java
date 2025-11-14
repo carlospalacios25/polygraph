@@ -1,19 +1,25 @@
 
 package com.polygraph.modelo;
 
-public class ProcesoTProgreso {
+public class ProcesoTipoProgreso {
    private int id;
    private int idProceso;
    private int idTipoProgreso;
    private boolean habilitado;
 
-    public ProcesoTProgreso(int id, int idProceso, int idTipoProgreso, boolean habilitado) {
+    public ProcesoTipoProgreso(int id, int idProceso, int idTipoProgreso, boolean habilitado) {
         this.id = id;
         this.idProceso = idProceso;
         this.idTipoProgreso = idTipoProgreso;
         this.habilitado = habilitado;
     }
-
+    
+    public ProcesoTipoProgreso(int idProceso, int idTipoProgreso, boolean habilitado) {
+        this.idProceso = idProceso;
+        this.idTipoProgreso = idTipoProgreso;
+        this.habilitado = habilitado;
+    }
+    
     public int getId() {
         return id;
     }

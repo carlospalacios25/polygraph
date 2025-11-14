@@ -21,6 +21,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 
 public class LoginController {
 
@@ -29,7 +31,11 @@ public class LoginController {
     @FXML private TextField passwordVisibleField;
     @FXML private CheckBox showPasswordCheck;
     @FXML private Label errorLabel;
+    
+    private double xOffset = 0;
+    private double yOffset = 0;
 
+    
     @FXML
     public void login(ActionEvent event) {
         String username = usernameField.getText();
@@ -67,6 +73,34 @@ public class LoginController {
         } else {
             errorLabel.setText("Usuario o contraseña incorrectos.");
         }
+    }
+    
+    @FXML
+    private void iniciarArrastre(MouseEvent event) {
+        xOffset = event.getSceneX();
+        yOffset = event.getSceneY();
+    }
+
+    @FXML
+    private void arrastrarVentana(MouseEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setX(event.getScreenX() - xOffset);
+        stage.setY(event.getScreenY() - yOffset);
+    }
+    
+    @FXML
+    private void cerrar(ActionEvent event) {
+        Stage stage = (Stage) usernameField.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void cancelar(ActionEvent event) {
+        usernameField.clear();
+        passwordField.clear();
+        passwordVisibleField.clear();
+        showPasswordCheck.setSelected(false);
+        errorLabel.setText("");
     }
 
     @FXML

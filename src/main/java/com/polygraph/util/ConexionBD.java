@@ -17,7 +17,6 @@ public class ConexionBD {
     private ConexionBD() {
         try {
             conexion = DriverManager.getConnection(URL, USUARIO, CONTRASENA);
-            System.out.println("Conexion Correcta");
         } catch (SQLException e) {
             mostrarError(e);
         }

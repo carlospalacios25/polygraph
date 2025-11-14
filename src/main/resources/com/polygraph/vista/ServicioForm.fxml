@@ -28,12 +28,12 @@
                 <!-- FILA 2 -->
                 <Label styleClass="label" text="Cédula Cliente:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                 <Label styleClass="label" text="Cedula Candidato:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <ComboBox fx:id="cedulaCanField" promptText="Candidato" prefHeight="32.0" prefWidth="203.0" styleClass="combo-box" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                <ComboBox fx:id="cedulaCanField" promptText="Candidato" prefHeight="32.0" prefWidth="203.0" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
                 <!-- FILA 3 -->
                 <Label styleClass="label" text="Proceso" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <ComboBox fx:id="cedulaClieField" promptText="Cliente" prefHeight="32.0" prefWidth="210.0" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox fx:id="procesoField" promptText="Proceso" prefHeight="32.0" prefWidth="211.0" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="cedulaClieField" promptText="Cliente" prefHeight="32.0" prefWidth="210.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="procesoField" promptText="Proceso" prefHeight="32.0" prefWidth="211.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="140" />

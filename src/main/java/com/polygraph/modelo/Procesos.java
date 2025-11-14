@@ -9,7 +9,11 @@ public class Procesos {
         this.idProceso = idProceso;
         this.nombreProceso = nombreProceso;
     }
-
+    
+    public Procesos(String nombreProceso) {
+        this.nombreProceso = nombreProceso;
+    }
+    
     public int getIdProceso() {
         return idProceso;
     }

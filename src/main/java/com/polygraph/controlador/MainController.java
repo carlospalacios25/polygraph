@@ -74,7 +74,7 @@ public class MainController {
     @FXML public void cargarCliente(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/ClienteForm.fxml", (Node)e.getSource(), "Cliente"); }
     @FXML public void cargarCandidato(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/CandidatoForm.fxml", (Node)e.getSource(), "Candidato"); }
     @FXML public void cargarServicio(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/ServicioForm.fxml", (Node)e.getSource(), "Servicios"); }
-    @FXML public void loadMenus(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Menus.fxml", (Node)e.getSource(), "Menus"); }
+    @FXML public void cargarConfServicio(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/ConfiguracionSerForm.fxml", (Node)e.getSource(), "Configuracion Servicio"); }
     @FXML public void loadPackages(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Packages.fxml", (Node)e.getSource(), "Packages"); }
     @FXML public void loadSettings(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Settings.fxml", (Node)e.getSource(), "Settings"); }
     @FXML public void loadDiscovery(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/VistaServicio.fxml", (Node)e.getSource(), "Discovery"); }
@@ -93,7 +93,7 @@ public class MainController {
     public void abrirModificarServicio(Servicio servicio) {
         pushBreadcrumb("Servicio #" + servicio.getIdServicio(), "/com/polygraph/vista/ModificarServicio.fxml");
         loadView("/com/polygraph/vista/ModificarServicio.fxml", null, ctrl -> {
-            if (ctrl instanceof ModificarServicioControlador modCtrl) {
+            if (ctrl instanceof GestServicioControlador modCtrl) {
                 modCtrl.setServicio(servicio);
             }
         });
@@ -167,7 +167,7 @@ public class MainController {
 
             T ctrl = loader.getController();
             if (ctrl instanceof ServiciosControlador sc) sc.setMainController(this);
-            if (ctrl instanceof ModificarServicioControlador mc) mc.setMainController(this);
+            if (ctrl instanceof GestServicioControlador mc) mc.setMainController(this);
 
             if (postLoad != null) postLoad.accept(ctrl);
 

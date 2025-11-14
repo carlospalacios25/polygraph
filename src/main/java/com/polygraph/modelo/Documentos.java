@@ -1,4 +1,3 @@
-
 package com.polygraph.modelo;
 
 import java.time.LocalDate;
@@ -12,12 +11,21 @@ public class Documentos {
     private String descripcion;
     private long tamanoArchivo;
     private String estadoDocumento;
-    private LocalDate Fecha_Solicitud;
-    private LocalDate Fecha_Recibido;
+    private LocalDate fechaSolicitud;
+    private LocalDate fechaRecibido;
     private String habesData;
     private String comunicados;
+    private String rutaArchivo;   
 
-    public Documentos(int idDocumento, int idServicio, String tipoDocumento, String nombreArchivo, LocalDate fechaCarga, String descripcion, long tamanoArchivo, String estadoDocumento, LocalDate Fecha_Solicitud, LocalDate Fecha_Recibido, String habesData, String comunicados) {
+    
+    public Documentos() {
+    }
+
+    // ✅ Constructor completo (opcional, si lo quieres usar)
+    public Documentos(int idDocumento, int idServicio, String tipoDocumento, String nombreArchivo,
+                      LocalDate fechaCarga, String descripcion, long tamanoArchivo,
+                      String estadoDocumento, LocalDate fechaSolicitud, LocalDate fechaRecibido,
+                      String habesData, String comunicados, String rutaArchivo) {
         this.idDocumento = idDocumento;
         this.idServicio = idServicio;
         this.tipoDocumento = tipoDocumento;
@@ -26,10 +34,11 @@ public class Documentos {
         this.descripcion = descripcion;
         this.tamanoArchivo = tamanoArchivo;
         this.estadoDocumento = estadoDocumento;
-        this.Fecha_Solicitud = Fecha_Solicitud;
-        this.Fecha_Recibido = Fecha_Recibido;
+        this.fechaSolicitud = fechaSolicitud;
+        this.fechaRecibido = fechaRecibido;
         this.habesData = habesData;
         this.comunicados = comunicados;
+        this.rutaArchivo = rutaArchivo;
     }
 
     public int getIdDocumento() {
@@ -64,11 +73,11 @@ public class Documentos {
         this.nombreArchivo = nombreArchivo;
     }
 
-    public LocalDate getFecha_Carga() {
+    public LocalDate getFechaCarga() {          
         return fechaCarga;
     }
 
-    public void setFecha_Carga(LocalDate fechaCarga) {
+    public void setFechaCarga(LocalDate fechaCarga) {   
         this.fechaCarga = fechaCarga;
     }
 
@@ -96,20 +105,20 @@ public class Documentos {
         this.estadoDocumento = estadoDocumento;
     }
 
-    public LocalDate getFecha_Solicitud() {
-        return Fecha_Solicitud;
+    public LocalDate getFechaSolicitud() {
+        return fechaSolicitud;
     }
 
-    public void setFecha_Solicitud(LocalDate Fecha_Solicitud) {
-        this.Fecha_Solicitud = Fecha_Solicitud;
+    public void setFechaSolicitud(LocalDate fechaSolicitud) {
+        this.fechaSolicitud = fechaSolicitud;
     }
 
-    public LocalDate getFecha_Recibido() {
-        return Fecha_Recibido;
+    public LocalDate getFechaRecibido() {
+        return fechaRecibido;
     }
 
-    public void setFecha_Recibido(LocalDate Fecha_Recibido) {
-        this.Fecha_Recibido = Fecha_Recibido;
+    public void setFechaRecibido(LocalDate fechaRecibido) {
+        this.fechaRecibido = fechaRecibido;
     }
 
     public String getHabesData() {
@@ -127,6 +136,12 @@ public class Documentos {
     public void setComunicados(String comunicados) {
         this.comunicados = comunicados;
     }
-    
-    
+
+    public String getRutaArchivo() {          
+        return rutaArchivo;
+    }
+
+    public void setRutaArchivo(String rutaArchivo) {  
+        this.rutaArchivo = rutaArchivo;
+    }
 }

@@ -12,18 +12,15 @@ import java.util.List;
 
 public class ProcesosDAO {
 
-   /* public void insertarPerfile(Ciudades ciudades) throws SQLException, NoSuchAlgorithmException {
-        Connection conn = ConexionBD.getInstancia().getConexion();
-            String sql = "INSERT INTO ciudades (Nombre_Ciudad) " +
-                     "VALUES (?)";
-        
-        
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, ciudades.getNombreCiudad());
+    public void insertar(Procesos proceso) throws SQLException {
+        String sql = "INSERT INTO procesos (Nombre_Proceso) VALUES (?)";
+        try (Connection conn = ConexionBD.getInstancia().getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, proceso.getNombreProceso());
             pstmt.executeUpdate();
         }
-    }*/
-    
+    }
+
     public List<Procesos> obtenerProcesosBox() throws SQLException {
         List<Procesos> procesos = new ArrayList<>();
         Connection conn = ConexionBD.getInstancia().getConexion();

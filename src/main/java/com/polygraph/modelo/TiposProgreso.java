@@ -9,6 +9,10 @@ public class TiposProgreso {
         this.idTipoProgreso = idTipoProgreso;
         this.nombreProgreso = nombreProgreso;
     }
+    
+    public TiposProgreso(String nombreProgreso) {
+        this.nombreProgreso = nombreProgreso;
+    }
 
     public int getIdTipoProgreso() {
         return idTipoProgreso;
@@ -25,6 +29,7 @@ public class TiposProgreso {
     public void setNombreProgreso(String nombreProgreso) {
         this.nombreProgreso = nombreProgreso;
     }
-   
+
+    
    
 }
