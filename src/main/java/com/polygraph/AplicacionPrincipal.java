@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.StageStyle;
 
 public class AplicacionPrincipal extends Application {
@@ -22,10 +23,10 @@ public class AplicacionPrincipal extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("Polygraph - Login");
 
-            // SIN BARRA DE TÍTULO
-            primaryStage.initStyle(StageStyle.UNDECORATED);
+            // QUITA ESTO:
+            // primaryStage.initStyle(StageStyle.UNDECORATED);
 
-            // CENTRAR EN PANTALLA
+            primaryStage.setResizable(true); // Permite maximizar
             primaryStage.centerOnScreen();
             primaryStage.show();
 
@@ -33,8 +34,7 @@ public class AplicacionPrincipal extends Application {
             e.printStackTrace();
         }
     }
-
-    // MÉTODO PÚBLICO PARA ABRIR MAIN DESDE LOGIN
+        // MÉTODO PÚBLICO PARA ABRIR MAIN DESDE LOGIN
     public static void abrirMain(Stage stage) {
         try {
             FXMLLoader loader = new FXMLLoader(
@@ -43,16 +43,22 @@ public class AplicacionPrincipal extends Application {
             Parent root = loader.load();
             MainController mainController = loader.getController();
 
-            // GUARDAR EN USERDATA (¡ESTO ES TODO!)
+            // GUARDAR EN USERDATA
             root.setUserData(mainController);
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("Polygraph - Sistema Principal");
+
+            // OCUPA TODA LA PANTALLA (CON BARRA DE TÍTULO)
             stage.setMaximized(true);
+
+            // ASEGURAR QUE NO ESTÉ MINIMIZADA
+            stage.setIconified(false);
+
+            // MOSTRAR
             stage.show();
 
-            System.out.println("MainController guardado correctamente.");
 
         } catch (IOException e) {
             e.printStackTrace();

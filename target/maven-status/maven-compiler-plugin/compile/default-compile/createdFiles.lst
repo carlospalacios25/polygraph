@@ -1,3 +1,4 @@
+com\polygraph\dao\VisitasDAO.class
 com\polygraph\modelo\Clientes.class
 com\polygraph\controlador\CandidatoController$2$1.class
 com\polygraph\controlador\ConServicioControlador$2.class
@@ -11,6 +12,7 @@ com\polygraph\controlador\CandidatoController.class
 com\polygraph\modelo\Documentos.class
 com\polygraph\controlador\PerfilController.class
 com\polygraph\modelo\ProcesoTipoProgreso.class
+com\polygraph\controlador\VisitasControlador$1.class
 com\polygraph\dao\AnalisisDAO.class
 com\polygraph\controlador\GestServicioControlador.class
 com\polygraph\controlador\MainController.class
@@ -35,9 +37,11 @@ com\polygraph\modelo\Servicio.class
 com\polygraph\modelo\Visitas.class
 com\polygraph\controlador\CiudadesController.class
 com\polygraph\dao\TiposProgresoDAO.class
+com\polygraph\dao\VisitadoresDAO.class
 com\polygraph\controlador\ServiciosControlador$2.class
 module-info.class
 com\polygraph\modelo\PerfilesPermisos.class
+com\polygraph\controlador\VisitasControlador.class
 com\polygraph\modelo\Progreso.class
 com\polygraph\modelo\Procesos.class
 com\polygraph\controlador\LoginController.class

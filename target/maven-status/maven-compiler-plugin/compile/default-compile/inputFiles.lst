@@ -14,6 +14,7 @@ C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\listeners
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Sucursales.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\ProcesoTipoProgresoDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\CiudadesController.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\VisitadoresDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Documentos.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\PermisoController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\ClienteDAO.java
@@ -25,6 +26,7 @@ C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\listeners
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Progreso.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\PermisosDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Ciudades.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\VisitasDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Analisis.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\module-info.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Perfiles.java
@@ -44,6 +46,7 @@ C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlad
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\ProcesoController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\PerfilesDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Permisos.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\VisitasControlador.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\CiudadesDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\MainController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\TiposProgresoDAO.java

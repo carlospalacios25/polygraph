@@ -29,7 +29,9 @@ public class MainController {
     @FXML private Label lblDashboard;
     @FXML private Label lblSeparator1;
     @FXML private Label lblSeparator2;
-
+    
+    @FXML public void irAHome() { irANivel(0); }
+    @FXML public void irADashboard() { irANivel(1); }
     // === HISTORIA DE NAVEGACIÓN ===
     private final List<String> breadcrumbHistory = new ArrayList<>();
     private final Map<Integer, String> vistaPorNivel = new HashMap<>();
@@ -51,9 +53,6 @@ public class MainController {
         actualizarBreadcrumbVisual();
     }
 
-    // === IR A HOME / DASHBOARD ===
-    @FXML public void irAHome() { irANivel(0); }
-    @FXML public void irADashboard() { irANivel(1); }
 
     private void irANivel(int nivel) {
         if (nivel >= breadcrumbHistory.size()) return;
@@ -75,7 +74,7 @@ public class MainController {
     @FXML public void cargarCandidato(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/CandidatoForm.fxml", (Node)e.getSource(), "Candidato"); }
     @FXML public void cargarServicio(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/ServicioForm.fxml", (Node)e.getSource(), "Servicios"); }
     @FXML public void cargarConfServicio(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/ConfiguracionSerForm.fxml", (Node)e.getSource(), "Configuracion Servicio"); }
-    @FXML public void loadPackages(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Packages.fxml", (Node)e.getSource(), "Packages"); }
+    @FXML public void cargarVisita(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/VisitaForm.fxml", (Node)e.getSource(), "Visita"); }
     @FXML public void loadSettings(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Settings.fxml", (Node)e.getSource(), "Settings"); }
     @FXML public void loadDiscovery(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/VistaServicio.fxml", (Node)e.getSource(), "Discovery"); }
     @FXML public void loadReports(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Reports.fxml", (Node)e.getSource(), "Reports"); }

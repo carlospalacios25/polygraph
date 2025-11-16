@@ -21,8 +21,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.StageStyle;
 
 public class LoginController {
 
@@ -43,38 +45,28 @@ public class LoginController {
 
         if (authenticate(username, password)) {
             try {
-                // CARGAR MAIN
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/MainView.fxml"));
                 Parent root = loader.load();
-
-                // OBTENER CONTROLADOR
                 MainController mainController = loader.getController();
-
-                // GUARDAR EN USERDATA (ESTO ES TODO!)
                 root.setUserData(mainController);
 
-                // PANTALLA
-                double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
-                double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+                Stage stage = (Stage) usernameField.getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Polygraph - Sistema Principal");
 
-                Stage mainStage = new Stage();
-                mainStage.setTitle("Aplicación Polygraph - Dashboard");
-                mainStage.setScene(new Scene(root, screenWidth * 0.9, screenHeight * 0.9));
-                mainStage.show();
+                // MAXIMIZADO CON BARRA
+                stage.setMaximized(true);
 
-                // CERRAR LOGIN
-                Stage loginStage = (Stage) usernameField.getScene().getWindow();
-                loginStage.close();
+                stage.show();
 
             } catch (IOException e) {
-                errorLabel.setText("Error al cargar el dashboard: " + e.getMessage());
-                e.printStackTrace();
+                errorLabel.setText("Error: " + e.getMessage());
             }
         } else {
             errorLabel.setText("Usuario o contraseña incorrectos.");
         }
     }
-    
+
     @FXML
     private void iniciarArrastre(MouseEvent event) {
         xOffset = event.getSceneX();
