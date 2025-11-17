@@ -488,7 +488,7 @@ CREATE TABLE `usuarios` (
   `Apellido_Emp1` varchar(100) DEFAULT NULL COMMENT 'Apellido del empleado.',
   `Nombre_usuario` varchar(50) DEFAULT NULL COMMENT 'Nombre de usuario para inicio de sesión.',
   `Correo_Usu` varchar(100) DEFAULT NULL COMMENT 'Correo electrónico del usuario.',
-  `Contraseña_Usu` varchar(255) DEFAULT NULL COMMENT 'Contraseña cifrada del usuario.',
+  `Contrasena_Usu` varchar(255) DEFAULT NULL COMMENT 'Contraseña cifrada del usuario.',
   `Fecha_Creacion` date DEFAULT NULL COMMENT 'Fecha de creación del usuario.',
   `Activo_Usu` tinyint(1) DEFAULT NULL COMMENT 'Indica si el usuario está activo (1) o no (0).',
   `Id_perfil` int DEFAULT NULL COMMENT 'Perfil asignado al usuario.',
@@ -505,7 +505,7 @@ CREATE TABLE `usuarios` (
 -- Dumping data for table `usuarios`
 --
 
-LOCK TABLES `usuarios` WRITE;
+LOCK TABLES ` ` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;

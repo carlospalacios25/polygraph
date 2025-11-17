@@ -37,6 +37,8 @@ com\polygraph\controlador\PermisoController.class
 com\polygraph\dao\CandidatoDAO.class
 com\polygraph\AplicacionPrincipal.class
 com\polygraph\controlador\ServiciosControlador$3.class
+com\polygraph\controlador\VisitadoresController.class
+com\polygraph\listeners\VisitadorAgregadoListener.class
 com\polygraph\modelo\ProcesoTipoProgreso.class
 com\polygraph\dao\AnalisisDAO.class
 com\polygraph\controlador\GestServicioControlador.class

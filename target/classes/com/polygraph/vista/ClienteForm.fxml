@@ -12,20 +12,20 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="618.0" prefWidth="847.0" spacing="15" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.ClienteController">
+<VBox alignment="CENTER" prefHeight="618.0" prefWidth="847.0" spacing="15" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.ClienteController">
     <children>
-        <VBox fx:id="formContainer" prefHeight="334.0" prefWidth="847.0" styleClass="form-container">
+        <VBox fx:id="formContainer" prefHeight="354.0" prefWidth="871.0" styleClass="form-container">
             <Label styleClass="title-label" text="Modulo de Cliente" />
             <GridPane alignment="CENTER" hgap="15" style="-fx-padding: 20; -fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8;" vgap="15">
                 <Label styleClass="label" text="Nit Cliente:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="nitClienteField" promptText="Nit Cliente" prefHeight="37.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="nitClienteField" prefHeight="37.0" promptText="Nit Cliente" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                 <Label styleClass="label" text="Nombre Cliente:" GridPane.columnIndex="2" />
                 <TextField fx:id="nombreClieField" promptText="Nombre Cliente" styleClass="text-field" GridPane.columnIndex="3" />
                 <Label styleClass="label" text="Telefono Cliente:" GridPane.rowIndex="1" />
                 <TextField fx:id="telefonoClieField" promptText="Telefono Cliente" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Label styleClass="label" text="Direccion Cliente:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                 <TextField fx:id="direccionClienField" promptText="Direccion Cliente" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                <ComboBox fx:id="cidadesComboBox" promptText="Ciudad Cliente" prefHeight="31.0" prefWidth="177.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <ComboBox fx:id="cidadesComboBox" prefHeight="31.0" prefWidth="177.0" promptText="Ciudad Cliente" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label styleClass="label" text="Ciudad Cliente:" GridPane.rowIndex="2" />
                 
                 <columnConstraints>

@@ -6,6 +6,7 @@ import com.polygraph.dao.VisitadoresDAO;
 import com.polygraph.modelo.Servicio;
 import com.polygraph.modelo.Visitas;
 import com.polygraph.modelo.Visitadores;
+import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -23,6 +24,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class VisitasControlador {
 
@@ -113,6 +120,31 @@ public class VisitasControlador {
             });
         } catch (SQLException e) {
             showAlert("Error", "Error al cargar visitadores: " + e.getMessage());
+        }
+    }
+    
+        @FXML
+    private void cargarForVisitador(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/AgregarVisitador.fxml"));
+            Parent root = loader.load();
+
+            // Obtener el controlador
+            VisitadoresController controller = loader.getController();
+
+            // Pasar el callback: "cuando agregues una ciudad, avísame"
+            controller.setOnVisitadorAgregadoListener(()-> {
+                cargarVisitadores();  // ← ¡Actualiza el ComboBox!
+            });
+
+            Stage stage = new Stage();
+            stage.setTitle("Formulario de Visitador");
+            stage.initModality(Modality.APPLICATION_MODAL); // Bloquea el principal
+            stage.setScene(new Scene(root));
+            stage.showAndWait(); // ← ¡ESPERA A QUE SE CIERRE!
+
+        } catch (IOException e) {
+            showAlert("Error", "No se pudo cargar el formulario de visitador: " + e.getMessage());
         }
     }
 
@@ -226,8 +258,8 @@ public class VisitasControlador {
     private VBox crearTarjeta(Servicio s) {
         VBox card = new VBox(12);
         card.getStyleClass().add("service-card-modern");
-        card.setStyle("-fx-padding: 16; -fx-background-radius: 12;");
-
+        
+        card.setAlignment(Pos.CENTER);
         ImageView icon = new ImageView();
         icon.getStyleClass().add("card-icon");
         Image img = new Image(getClass().getResourceAsStream("/com/polygraph/imgs/incos-service.png"));
@@ -290,6 +322,7 @@ public class VisitasControlador {
         );
         subtitle.getStyleClass().add("card-subtitle");
         subtitle.setWrapText(true);
+        subtitle.setMaxWidth(260);
 
         Button btnDetalle = new Button("Cargue");
         btnDetalle.getStyleClass().addAll("card-button", "btn-detalle");
@@ -318,8 +351,8 @@ public class VisitasControlador {
         });
 
         HBox botones = new HBox(10, btnDetalle);
-        botones.setAlignment(Pos.CENTER_RIGHT);
-        botones.setStyle("-fx-padding: 8 0 0 0;");
+        botones.setAlignment(Pos.CENTER);
+        botones.setStyle("-fx-padding: 12 0 0 0;");
 
         card.getChildren().addAll(icon, title, subtitle, botones);
         return card;

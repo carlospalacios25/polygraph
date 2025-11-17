@@ -10,97 +10,173 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane styleClass="main-root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.MainController">
+<AnchorPane styleClass="main-root"
+            stylesheets="@../styles.css"
+            xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.polygraph.controlador.MainController">
 
     <!-- CONTENEDOR PRINCIPAL -->
-    <HBox styleClass="main-container" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+    <HBox styleClass="main-container"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0"
+          AnchorPane.topAnchor="0">
 
         <!-- SIDEBAR -->
-        <Pane prefHeight="515.0" prefWidth="194.0" styleClass="sidebar" HBox.hgrow="NEVER">
+        <Pane prefWidth="210.0"
+              styleClass="sidebar"
+              HBox.hgrow="NEVER">
+
             <VBox styleClass="sidebar-content">
-                <padding><Insets bottom="30" left="20" right="20" top="30" /></padding>
+                <padding>
+                    <Insets top="26" right="14" bottom="26" left="14"/>
+                </padding>
 
                 <!-- LOGO -->
-                <ImageView fitHeight="120" fitWidth="180" pickOnBounds="true" preserveRatio="true" style="-fx-padding: 0 0 30 0;">
+                <ImageView fitHeight="120"
+                           fitWidth="180"
+                           pickOnBounds="true"
+                           preserveRatio="true">
                     <image>
-                        <Image url="@../imgs/logo.png" />
+                        <Image url="@../imgs/logo.png"/>
                     </image>
                 </ImageView>
 
                 <!-- BOTONES DEL MENÚ -->
-                <VBox spacing="8" styleClass="sidebar-menu">
-                    <Button onAction="#cargarCliente" prefHeight="42.0" prefWidth="162.0" styleClass="sidebar-button" text="Cliente">
+                <VBox spacing="10" styleClass="sidebar-menu">
+
+                    <Button onAction="#cargarCliente"
+                            prefHeight="48.0"
+                            prefWidth="180.0"
+                            styleClass="sidebar-button"
+                            text="Cliente">
                         <graphic>
-                            <ImageView fitHeight="20" fitWidth="20">
-                                <image><Image url="@../imgs/icons_cliente.png" /></image>
+                            <ImageView fitHeight="22" fitWidth="22">
+                                <image>
+                                    <Image url="@../imgs/icons_cliente.png"/>
+                                </image>
                             </ImageView>
                         </graphic>
                     </Button>
 
-                    <Button onAction="#cargarCandidato" prefHeight="41.0" prefWidth="157.0" styleClass="sidebar-button" text="Candidato">
+                    <Button onAction="#cargarCandidato"
+                            prefHeight="48.0"
+                            prefWidth="180.0"
+                            styleClass="sidebar-button"
+                            text="Candidato">
                         <graphic>
-                            <ImageView fitHeight="20" fitWidth="20">
-                                <image><Image url="@../imgs/icons_candidato.png" /></image>
+                            <ImageView fitHeight="22" fitWidth="22">
+                                <image>
+                                    <Image url="@../imgs/icons_candidato.png"/>
+                                </image>
                             </ImageView>
                         </graphic>
                     </Button>
 
-                    <Button onAction="#cargarServicio" prefHeight="41.0" prefWidth="159.0" styleClass="sidebar-button" text="Servicios">
+                    <Button onAction="#cargarServicio"
+                            prefHeight="48.0"
+                            prefWidth="180.0"
+                            styleClass="sidebar-button"
+                            text="Servicios">
                         <graphic>
-                            <ImageView fitHeight="20" fitWidth="20">
-                                <image><Image url="@../imgs/icons_servicio.png" /></image>
+                            <ImageView fitHeight="22" fitWidth="22">
+                                <image>
+                                    <Image url="@../imgs/icons_servicio.png"/>
+                                </image>
                             </ImageView>
                         </graphic>
                     </Button>
 
-                    <Button onAction="#loadNotifications" prefHeight="41.0" prefWidth="158.0" styleClass="sidebar-button" text="Poligrafía">
+                    <Button onAction="#loadNotifications"
+                            prefHeight="48.0"
+                            prefWidth="180.0"
+                            styleClass="sidebar-button"
+                            text="Poligrafía">
                         <graphic>
-                            <ImageView fitHeight="20" fitWidth="20">
-                                <image><Image url="@../imgs/icons8_notifications_24px.png" /></image>
+                            <ImageView fitHeight="22" fitWidth="22">
+                                <image>
+                                    <Image url="@../imgs/icons8_notifications_24px.png"/>
+                                </image>
                             </ImageView>
                         </graphic>
                     </Button>
 
-                    <Button onAction="#cargarVisita" prefHeight="41.0" prefWidth="160.0" styleClass="sidebar-button" text="Visita">
+                    <Button onAction="#cargarVisita"
+                            prefHeight="48.0"
+                            prefWidth="180.0"
+                            styleClass="sidebar-button"
+                            text="Visita">
                         <graphic>
-                            <ImageView fitHeight="20" fitWidth="20">
-                                <image><Image url="@../imgs/icons_visita.png" /></image>
+                            <ImageView fitHeight="22" fitWidth="22">
+                                <image>
+                                    <Image url="@../imgs/icons_visita.png"/>
+                                </image>
                             </ImageView>
                         </graphic>
                     </Button>
 
-                    <Button onAction="#cargarConfServicio" styleClass="sidebar-button" text="Config. Servicio">
+                    <Button onAction="#cargarConfServicio"
+                            prefHeight="48.0"
+                            prefWidth="180.0"
+                            styleClass="sidebar-button"
+                            text="Config. Servicio">
                         <graphic>
-                            <ImageView fitHeight="20" fitWidth="20">
-                                <image><Image url="@../imgs/icons8_settings_32px.png" /></image>
+                            <ImageView fitHeight="22" fitWidth="22">
+                                <image>
+                                    <Image url="@../imgs/icons8_settings_32px.png"/>
+                                </image>
                             </ImageView>
                         </graphic>
                     </Button>
 
-                    <Button onAction="#cargarUsuario" prefHeight="41.0" prefWidth="161.0" styleClass="sidebar-button" text="Usuarios">
+                    <Button onAction="#cargarUsuario"
+                            prefHeight="48.0"
+                            prefWidth="180.0"
+                            styleClass="sidebar-button"
+                            text="Usuarios">
                         <graphic>
-                            <ImageView fitHeight="20" fitWidth="20">
-                                <image><Image url="@../imgs/icons_usuario.png" /></image>
+                            <ImageView fitHeight="22" fitWidth="22">
+                                <image>
+                                    <Image url="@../imgs/icons_usuario.png"/>
+                                </image>
                             </ImageView>
                         </graphic>
                     </Button>
+
                 </VBox>
             </VBox>
         </Pane>
 
         <!-- ÁREA PRINCIPAL -->
         <VBox styleClass="main-content" HBox.hgrow="ALWAYS">
+
             <!-- BREADCRUMB -->
-            <HBox fx:id="breadcrumbBar" alignment="CENTER_LEFT" styleClass="breadcrumb-bar">
-                <padding><Insets bottom="12" left="25" right="25" top="12" /></padding>
-                <Label fx:id="lblDashboard" onMouseClicked="#irADashboard" styleClass="breadcrumb-item" text="Home" />
-                <Label fx:id="lblSeparator2" styleClass="breadcrumb-separator" text=" &gt; " />
-                <HBox fx:id="dynamicCrumbs" alignment="CENTER_LEFT" spacing="6" />
+            <HBox fx:id="breadcrumbBar"
+                  alignment="CENTER_LEFT"
+                  styleClass="breadcrumb-bar">
+                <padding>
+                    <Insets top="12" right="25" bottom="12" left="25"/>
+                </padding>
+                <Label fx:id="lblDashboard"
+                       onMouseClicked="#irADashboard"
+                       styleClass="breadcrumb-item"
+                       text="Home"/>
+                <Label fx:id="lblSeparator2"
+                       styleClass="breadcrumb-separator"
+                       text=" > "/>
+                <HBox fx:id="dynamicCrumbs"
+                      alignment="CENTER_LEFT"
+                      spacing="6"/>
             </HBox>
 
             <!-- CONTENIDO DINÁMICO -->
-            <AnchorPane fx:id="contentArea" styleClass="content-area" VBox.vgrow="ALWAYS">
-                <padding><Insets bottom="25" left="25" right="25" top="20" /></padding>
+            <AnchorPane fx:id="contentArea"
+                        styleClass="content-area"
+                        VBox.vgrow="ALWAYS">
+                <padding>
+                    <Insets top="20" right="25" bottom="25" left="25"/>
+                </padding>
             </AnchorPane>
         </VBox>
     </HBox>

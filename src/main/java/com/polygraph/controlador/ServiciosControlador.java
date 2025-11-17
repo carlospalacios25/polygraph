@@ -178,7 +178,9 @@ public class ServiciosControlador {
     private VBox crearTarjeta(Servicio s) {
         VBox card = new VBox(12);
         card.getStyleClass().add("service-card-modern");
-        card.setStyle("-fx-padding: 16; -fx-background-radius: 12;");
+
+        // 🔥 CENTRA TODO EL CONTENIDO
+        card.setAlignment(Pos.CENTER);
 
         ImageView icon = new ImageView();
         icon.getStyleClass().add("card-icon");
@@ -205,6 +207,7 @@ public class ServiciosControlador {
         );
         subtitle.getStyleClass().add("card-subtitle");
         subtitle.setWrapText(true);
+        subtitle.setMaxWidth(260);  // 🔥 mejora el centrado visual del texto
 
         Button btnDetalle = new Button("Detalle");
         btnDetalle.getStyleClass().addAll("card-button", "btn-detalle");
@@ -220,13 +223,14 @@ public class ServiciosControlador {
             }
         });
 
-        HBox botones = new HBox(10, btnDetalle, btnEditar);
-        botones.setAlignment(Pos.CENTER_RIGHT);
-        botones.setStyle("-fx-padding: 8 0 0 0;");
+        HBox botones = new HBox(12, btnDetalle, btnEditar);
+        botones.setAlignment(Pos.CENTER);
+        botones.setStyle("-fx-padding: 12 0 0 0;");
 
         card.getChildren().addAll(icon, title, subtitle, botones);
         return card;
     }
+
 
     private void mostrarDetalle(Servicio s) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

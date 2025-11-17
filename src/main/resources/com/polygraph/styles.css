@@ -1,146 +1,335 @@
-/* ROOT / FONDO GENERAL */
-.root {
+/* ============================================= */
+/*              ROOT / FONDO GENERAL             */
+/* ============================================= */
+
+.root,
+.main-root {
     -fx-background-color: linear-gradient(to bottom right, #fa7d7d, #e33939);
     -fx-font-family: "System";
     -fx-font-size: 12px;
 }
 
-/* SIDEBAR */
+/* ============================================= */
+/*                     SIDEBAR                   */
+/* ============================================= */
+
 .sidebar {
-    -fx-background-color: #fa7d7d;
-    -fx-background-radius: 0 50 0 0;
+    -fx-background-color: rgba(250, 125, 125, 0.95);
+    -fx-background-radius: 0 28 28 0;
     -fx-border-color: #e33939;
     -fx-border-width: 0 2 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 14, 0.2, 0, 0);
 }
 
+/* Contenido interno del sidebar */
+.sidebar-content {
+    -fx-spacing: 22;
+}
+
+/* Contenedor de los botones del menú */
+.sidebar-menu {
+    -fx-spacing: 10;
+    -fx-padding: 18 0 0 0;
+}
+
+/* BOTONES PRINCIPALES DEL MENÚ LATERAL */
+
 .sidebar-button {
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(255,255,255,0.16);  /* card suave */
     -fx-text-fill: #ffffff;
-    -fx-font-size: 14px;
-    -fx-alignment: center-left;
+    -fx-font-size: 13px;
     -fx-font-family: "System";
+    -fx-font-weight: bold;
+
+    -fx-alignment: CENTER_LEFT;
+    -fx-content-display: LEFT;
+    -fx-graphic-text-gap: 10;
+
+    -fx-padding: 10 18;
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: rgba(255,255,255,0.25);
+    -fx-border-width: 1;
+
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 6, 0, 0, 2);
 }
 
 .sidebar-button:hover {
+    -fx-background-color: rgba(255,255,255,0.32);
+    -fx-text-fill: #ffffff;
+    -fx-translate-y: -2;
+}
+
+.sidebar-button:pressed {
     -fx-background-color: #e33939;
 }
 
-.sidebar-button:active {
-    -fx-background-color: #d32f2f;
+/* Si en algún momento marcas uno como activo, puedes usar esta clase desde el controlador */
+.sidebar-button.active {
+    -fx-background-color: #e33939;
+    -fx-border-color: rgba(255,255,255,0.4);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 8, 0, 0, 3);
 }
 
-/* CONTENEDORES PRINCIPALES */
-.login-container, .form-container {
+/* Botones secundarios del sidebar (si los usas) */
+
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #bdc3c7;
+    -fx-font-size: 13px;
+    -fx-padding: 10 15;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+    -fx-font-family: "System";
+}
+
+.sidebar-btn:hover {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+}
+
+.sidebar-btn.active {
+    -fx-background-color: #1abc9c;
+    -fx-text-fill: white;
+}
+
+.sidebar-btn.polo {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.sidebar-btn.polo:hover {
+    -fx-background-color: #c0392b;
+}
+
+.sidebar-btn.polo.active {
+    -fx-background-color: #c0392b;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 3, 0, 0, 1);
+}
+
+/* ============================================= */
+/*            CONTENEDORES PRINCIPALES           */
+/* ============================================= */
+
+.login-container,
+.form-container {
     -fx-background-color: #ffffff;
-    -fx-background-radius: 10px;
-    -fx-padding: 20px;
-    -fx-spacing: 10px;
+    -fx-background-radius: 18px;
+    -fx-padding: 28px 32px;
+    -fx-spacing: 18px;
     -fx-alignment: center;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 18, 0.3, 0, 4);
     -fx-font-family: "System";
-    -fx-font-size: 11px;
+    -fx-font-size: 11.5px;
 }
 
-/* CAMPOS DE TEXTO */
-.text-field {
-    -fx-background-color: #f5f5f5;
-    -fx-background-radius: 5px;
-    -fx-border-color: #fa7d7d;
-    -fx-border-radius: 5px;
-    -fx-border-width: 1px;
-    -fx-padding: 10px;
+/* ============================================= */
+/*                CAMPOS DE TEXTO                */
+/* ============================================= */
+
+.text-field,
+.text-area,
+.password-field {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 10px;
+
+    /* 🔸 Bordes SIEMPRE visibles (suaves) */
+    -fx-border-color: #f5a3a3;
+    -fx-border-width: 1.3px;
+    -fx-border-radius: 10px;
+
+    -fx-padding: 11 15;
     -fx-font-family: "System";
-    -fx-font-size: 12px;
+    -fx-font-size: 13px;           /* un poquito más grande */
     -fx-text-fill: #212121;
-    -fx-pref-width: 250px;
+    -fx-prompt-text-fill: #95a5a6;
+    -fx-pref-width: 260px;
 }
 
-/* BOTONES GENERALES */
+/* hover */
+.text-field:hover,
+.text-area:hover,
+.password-field:hover {
+    -fx-border-color: #fa7d7d;
+}
+
+/* focus */
+.text-field:focused,
+.text-area:focused,
+.password-field:focused {
+    -fx-border-color: #e33939;
+    -fx-border-width: 1.8px;
+}
+
+/* ============================================= */
+/*               BOTONES GENERALES               */
+/* ============================================= */
+
 .button {
     -fx-background-color: #fa7d7d;
     -fx-text-fill: #ffffff;
     -fx-font-family: "System";
-    -fx-font-size: 12px;
+    -fx-font-size: 11px;
     -fx-font-weight: bold;
-    -fx-background-radius: 5px;
-    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 12px;
+    -fx-padding: 11 26;
     -fx-cursor: hand;
     -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);
 }
 
 .button:hover {
     -fx-background-color: #e33939;
 }
 
-.button:active {
+.button:pressed {
     -fx-background-color: #d32f2f;
 }
 
-/* LABELS */
+.button.secondary {
+    -fx-background-color: #95a5a6;
+}
+
+.button.secondary:hover {
+    -fx-background-color: #7f8c8d;
+}
+
+/* Cards */
+.card-button {
+    -fx-background-color: #fa7d7d;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 12;
+    -fx-padding: 10 24;
+    -fx-font-size: 12;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
+}
+
+.card-button:hover {
+    -fx-background-color: #e33939;
+}
+
+.btn-detalle {
+    -fx-background-color: #e67e22;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+}
+
+.btn-detalle:hover {
+    -fx-background-color: #d35400;
+}
+
+.btn-editar {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-background-radius: 12;
+}
+
+.btn-editar:hover {
+    -fx-background-color: #27ae60;
+}
+
+/* ============================================= */
+/*                    LABELS                     */
+/* ============================================= */
+
 .label {
     -fx-font-family: "System";
-    -fx-font-size: 12px;
-    -fx-text-fill: #212121;
+    -fx-font-size: 11.5px;
+    -fx-text-fill: #34495e;
     -fx-font-weight: bold;
 }
 
 .title-label {
     -fx-font-family: "System";
-    -fx-font-size: 16px;
+    -fx-font-size: 20px;
     -fx-font-weight: bold;
     -fx-text-fill: #e33939;
     -fx-alignment: center;
 }
 
-/* ERRORES */
+/* ============================================= */
+/*                    ERRORES                    */
+/* ============================================= */
+
 .error-label {
-    -fx-text-fill: #d32f2f;
+    -fx-text-fill: #e74c3c;
     -fx-font-family: "System";
-    -fx-font-size: 12px;
-    -fx-padding: 5 0 0 0;
+    -fx-font-size: 11.5px;
+    -fx-padding: 6 0 0 0;
 }
 
-/* TABLAS */
+/* ============================================= */
+/*                     TABLAS                    */
+/* ============================================= */
+
 .table-view {
     -fx-font-family: "System";
-    -fx-font-size: 12px;
-    -fx-padding: 5 0 0 0;
-    -fx-background-color: #ffe6e6;
-    -fx-border-color: #d3d3d3;
+    -fx-font-size: 13px;          /* letra un poquito más grande */
+    -fx-padding: 8;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e1e5ee;
     -fx-border-width: 1px;
+    -fx-background-radius: 10;
+    -fx-table-cell-border-color: #e5e7eb;
+    -fx-control-inner-background: #ffffff;
 }
 
+/* Cabecera */
 .table-view .column-header-background {
-    -fx-background-color: #ff9999;
+    -fx-background-color: linear-gradient(to bottom, #ffe5e5, #ffd6d6);
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-color: #e1e5ee;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-size: 30px;
+    -fx-background-color: transparent;
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: #333333;
-    -fx-font-size: 14px;
+    -fx-text-fill: #e33939;
+    -fx-font-size: 13.5px;
     -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 0 10 0 10;
 }
 
+/* Filas */
 .table-view .table-row-cell {
-    -fx-background-color: #ffe6e6;
-    -fx-border-color: #e0e0e0;
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #e5e7eb transparent;
     -fx-border-width: 0 0 1 0;
 }
 
 .table-view .table-row-cell:odd {
-    -fx-background-color: #fff0f0;
+    -fx-background-color: #f9fafb;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #ffecec;
 }
 
 .table-view .table-row-cell:selected {
-    -fx-background-color: #ff6666;
+    -fx-background-color: #fa7d7d;
     -fx-text-fill: white;
 }
 
+/* Celdas */
 .table-view .table-cell {
     -fx-text-fill: #333333;
     -fx-alignment: center-left;
+    -fx-padding: 6 10;
+    -fx-font-size: 13px;
 }
 
-/* Columna NIT (si la usas con fx:id) */
+/* NIT column */
 .table-view .table-column#colNitCliente .table-cell {
     -fx-background-color: #fff5f5;
 }
@@ -154,7 +343,10 @@
     -fx-alignment: center;
 }
 
-/* TARJETAS / CARDS */
+/* ============================================= */
+/*                TARJETAS / CARDS               */
+/* ============================================= */
+
 .cards-grid {
     -fx-padding: 30 20;
     -fx-background-color: #f8fafc;
@@ -177,113 +369,20 @@
     -fx-font-family: "System";
 }
 
-.service-card-modern:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 20, 0, 0, 8);
-    -fx-translate-y: -6;
-    -fx-cursor: hand;
-}
+/* ============================================= */
+/*                  BREADCRUMB                   */
+/* ============================================= */
 
-.card-title {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2c3e50;
-}
-
-.card-subtitle {
-    -fx-font-size: 13px;
-    -fx-text-fill: #555;
-    -fx-line-spacing: 2;
-}
-
-.card-button {
-    -fx-background-color: #fa7d7d;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-background-radius: 12;
-    -fx-padding: 10 24;
-    -fx-font-size: 13;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);
-}
-
-.card-button:hover {
-    -fx-background-color: #e33939;
-}
-
-/* Botones dentro de cards por tipo */
-.btn-detalle {
-    -fx-background-color: #e67e22;
-    -fx-text-fill: white;
-}
-
-.btn-detalle:hover {
-    -fx-background-color: #d35400;
-}
-
-.btn-editar {
-    -fx-background-color: #2ecc71;
-    -fx-text-fill: white;
-}
-
-.btn-editar:hover {
-    -fx-background-color: #27ae60;
-}
-
-/* ICONOS EN CARDS */
-.card-icon {
-    -fx-alignment: CENTER;
-    -fx-padding: 8 0 0 0;
-}
-
-/* SIDEBAR BOTONES (EXTRA) */
-.sidebar-btn {
-    -fx-background-color: transparent;
-    -fx-text-fill: #bdc3c7;
-    -fx-font-size: 14px;
-    -fx-padding: 10 15;
-    -fx-alignment: CENTER_LEFT;
-    -fx-cursor: hand;
-    -fx-font-family: "System";
-}
-
-.sidebar-btn:hover {
-    -fx-background-color: #34495e;
-    -fx-text-fill: white;
-}
-
-.sidebar-btn.active {
-    -fx-background-color: #1abc9c;
-    -fx-text-fill: white;
-}
-
-/* BOTÓN ESPECIAL POLÍGRAFO */
-.sidebar-btn.polo {
-    -fx-background-color: #e74c3c;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-}
-
-.sidebar-btn.polo:hover {
-    -fx-background-color: #c0392b;
-}
-
-.sidebar-btn.polo.active {
-    -fx-background-color: #c0392b;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 3, 0, 0, 1);
-}
-
-/* BREADCRUMB */
 .breadcrumb-bar {
     -fx-background-color: #ffffff;
     -fx-border-color: #dee2e6;
     -fx-border-width: 0 0 1 0;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 1);
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 5, 0, 0, 1);
 }
 
 .breadcrumb-item {
     -fx-text-fill: #6c757d;
-    -fx-font-size: 13px;
+    -fx-font-size: 12px;
     -fx-font-family: "System";
     -fx-cursor: hand;
     -fx-padding: 0 6;
@@ -303,4 +402,17 @@
     -fx-text-fill: #adb5bd;
     -fx-font-size: 13px;
     -fx-padding: 0 4;
+}
+
+/* ============================================= */
+/*         CONTENIDO PRINCIPAL (MAIN AREA)       */
+/* ============================================= */
+
+.main-content {
+    -fx-spacing: 0;
+    -fx-background-color: transparent;
+}
+
+.content-area {
+    -fx-background-color: transparent; /* para que se vea el gradiente de fondo */
 }
