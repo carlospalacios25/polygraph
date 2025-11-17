@@ -137,7 +137,17 @@ public class VisitasControlador {
             int idServicio = Integer.parseInt(idServicioField.getText());
             Visitadores visitadorSel = visitadorCombo.getValue();
 
-            // Si NO estamos editando, validar que no exista ya una visita para ese servicio
+            // 1️⃣ VALIDAR QUE EL SERVICIO REQUIERA VISITA
+            boolean requiereVisita = servicioDAO.servicioRequiereVisita(idServicio);
+            if (!requiereVisita) {
+                showAlert("Error",
+                        "El servicio " + idServicio +
+                        " no está configurado para realizar visita.\n" +
+                        "No es posible registrar una visita para este servicio.");
+                return;
+            }
+
+            // 2️⃣ VALIDAR QUE NO EXISTA YA UNA VISITA PARA ESTE SERVICIO (si no estamos editando)
             if (visitaActual == null) {
                 Visitas existente = visitasDAO.obtenerVisitaPorServicio(idServicio);
                 if (existente != null) {
@@ -158,11 +168,7 @@ public class VisitasControlador {
                         visitadorSel.getIdVisitador(),
                         tipoPruebaCombo.getValue(),
                         tipoVisitaCombo.getValue(),
-                        fechaSolicitudPicker.getValue(),
-                        fechaVisitaPicker.getValue(),
-                        LocalTime.parse(horaVisitaField.getText()),
-                        fechaEnvioInformePicker.getValue(),
-                        novedadField.getText()
+                        fechaSolicitudPicker.getValue()
                 );
                 visitasDAO.insertarVisita(nueva);
                 showAlert("Éxito", "Visita creada con ID: " + nueva.getIdVisita());
@@ -246,8 +252,8 @@ public class VisitasControlador {
         // Datos de la visita (si existe)
         Visitas visita = null;
         String fechaVisitaStr = "Sin visita";
-        String idVisitadorTxt = "N/A";
-        String tipoPruebaTxt = "N/A";
+        String nombreVisitadorTxt = "Sin visita";
+        String tipoPruebaTxt = "Sin visita";
 
         try {
             visita = visitasDAO.obtenerVisitaPorServicio(s.getIdServicio());
@@ -256,11 +262,21 @@ public class VisitasControlador {
                     fechaVisitaStr = visita.getFechaVisita()
                             .format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
                 }
-                idVisitadorTxt = String.valueOf(visita.getIdVisitador());
                 tipoPruebaTxt = visita.getTipo_Prueba() != null ? visita.getTipo_Prueba() : "N/A";
+
+                // Buscar el nombre del visitador a partir del Id_Visitador
+                int idVisitador = visita.getIdVisitador();
+                if (visitadorCombo != null && visitadorCombo.getItems() != null) {
+                    for (Visitadores vis : visitadorCombo.getItems()) {
+                        if (vis.getIdVisitador() == idVisitador) {
+                            nombreVisitadorTxt = vis.getNombreVisitador();
+                            break;
+                        }
+                    }
+                }
             }
         } catch (SQLException e) {
-            // puedes loguear si quieres
+            // podrías loguear si quieres
         }
 
         Label subtitle = new Label(
@@ -269,7 +285,7 @@ public class VisitasControlador {
                 "Candidato: " + (s.getNombreCandidato() != null ? s.getNombreCandidato() + " " : "") +
                                (s.getApellidoCandidato() != null ? s.getApellidoCandidato() : "") + "\n" +
                 "Fecha visita: " + fechaVisitaStr + "\n" +
-                "Id visitador: " + idVisitadorTxt + "\n" +
+                "Visitador: " + nombreVisitadorTxt + "\n" +
                 "Tipo de prueba: " + tipoPruebaTxt
         );
         subtitle.getStyleClass().add("card-subtitle");
@@ -278,7 +294,7 @@ public class VisitasControlador {
         Button btnDetalle = new Button("Cargue");
         btnDetalle.getStyleClass().addAll("card-button", "btn-detalle");
 
-        // 👉 Cargar al formulario en modo edición / creación según corresponda
+        // Cargar al formulario en modo edición / creación según corresponda
         btnDetalle.setOnAction(e -> {
             try {
                 limpiarCampos();
@@ -399,3 +415,4 @@ public class VisitasControlador {
         novedadField.clear();
     }
 }
+

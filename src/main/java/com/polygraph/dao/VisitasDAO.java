@@ -12,19 +12,15 @@ public class VisitasDAO {
 
     public void insertarVisita(Visitas v) throws SQLException {
         String sql = "INSERT INTO visitas (Id_Servicio, Id_Visitador, Tipo_Prueba, Tipo_Visita, " +
-                     "Fecha_Solicitud, Fecha_Visita, Hora_Visita, Fecha_Envio_Informe, Novedad_Visita) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                     "Fecha_Solicitud) " +
+                     "VALUES (?, ?, ?, ?, ?)";
         try (Connection c = ConexionBD.getInstancia().getConexion();
              PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             p.setInt(1, v.getIdServicio());
             p.setInt(2, v.getIdVisitador());
             p.setString(3, v.getTipo_Prueba());
             p.setString(4, v.getTipo_Visita());
-            p.setDate(5, Date.valueOf(v.getFechaSolicitud()));
-            p.setDate(6, Date.valueOf(v.getFechaVisita()));
-            p.setTime(7, Time.valueOf(v.getHoraVisita()));
-            p.setDate(8, Date.valueOf(v.getFechaeInforme()));
-            p.setString(9, v.getNovedadVisita());
+            p.setObject(5, v.getFechaSolicitud());
             p.executeUpdate();
 
             try (ResultSet rs = p.getGeneratedKeys()) {
@@ -94,10 +90,10 @@ public class VisitasDAO {
     
     public Visitas obtenerVisitaPorServicio(int idServicio) throws SQLException {
         String sql = "SELECT v.Id_Visita, v.Id_Servicio, v.Id_Visitador, " +
-                     "       v.Tipo_Prueba, v.Tipo_Visita, " +
-                     "       v.Fecha_Solicitud, v.Fecha_Visita, v.Hora_Visita, " +
-                     "       v.Fecha_Envio_Informe, v.Novedad_Visita, " +
-                     "       vis.Nombre_Visitador " +
+                     " v.Tipo_Prueba, v.Tipo_Visita, " +
+                     " v.Fecha_Solicitud, v.Fecha_Visita, v.Hora_Visita, " +
+                     " v.Fecha_Envio_Informe, v.Novedad_Visita, " +
+                     " vis.Nombre_Visitador " +
                      "FROM visitas AS v " +
                      "JOIN visitadores AS vis ON v.Id_Visitador = vis.Id_Visitador " +
                      "WHERE v.Id_Servicio = ? " +
@@ -108,28 +104,35 @@ public class VisitasDAO {
              PreparedStatement p = c.prepareStatement(sql)) {
 
             p.setInt(1, idServicio);
-
             try (ResultSet rs = p.executeQuery()) {
                 if (rs.next()) {
                     Visitas v = new Visitas(
-                            rs.getInt("Id_Visita"),
-                            rs.getInt("Id_Servicio"),
-                            rs.getInt("Id_Visitador"),
-                            rs.getString("Tipo_Prueba"),
-                            rs.getString("Tipo_Visita"),
-                            rs.getDate("Fecha_Solicitud").toLocalDate(),
-                            rs.getDate("Fecha_Visita").toLocalDate(),
-                            rs.getTime("Hora_Visita").toLocalTime(),
-                            rs.getDate("Fecha_Envio_Informe").toLocalDate(),
-                            rs.getString("Novedad_Visita")
+                        rs.getInt("Id_Visita"),
+                        rs.getInt("Id_Servicio"),
+                        rs.getInt("Id_Visitador"),
+                        rs.getString("Tipo_Prueba"),
+                        rs.getString("Tipo_Visita"),
+                        toLocalDate(rs.getDate("Fecha_Solicitud")),      // Seguro
+                        toLocalDate(rs.getDate("Fecha_Visita")),         // Seguro (aunque sea NULL)
+                        toLocalTime(rs.getTime("Hora_Visita")),          // Seguro
+                        toLocalDate(rs.getDate("Fecha_Envio_Informe")),  // Seguro
+                        rs.getString("Novedad_Visita")
                     );
                     v.setNombreVisitador(rs.getString("Nombre_Visitador"));
                     return v;
                 }
             }
         }
-
         return null;
     }
+    
+        // Convierte java.sql.Date a LocalDate de forma segura
+    private LocalDate toLocalDate(java.sql.Date sqlDate) {
+        return sqlDate != null ? sqlDate.toLocalDate() : null;
+    }
 
+    // Convierte java.sql.Time a LocalTime de forma segura
+    private LocalTime toLocalTime(java.sql.Time sqlTime) {
+        return sqlTime != null ? sqlTime.toLocalTime() : null;
+    }
 }

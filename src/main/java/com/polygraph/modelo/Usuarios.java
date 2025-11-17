@@ -14,6 +14,9 @@ public class Usuarios {
     private boolean activoUsu;
     private int idPerfil;
 
+    public Usuarios() {
+    }
+    
     public Usuarios(String nombreEmp, String apellidoEmp, String nombreusuario, String correoUsu, String contrasenaUsu, LocalDate fechaCreacion, boolean activoUsu, int idPerfil) {
         this.nombreEmp = nombreEmp;
         this.apellidoEmp = apellidoEmp;

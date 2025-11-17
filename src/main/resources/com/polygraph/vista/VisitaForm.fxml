@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="20" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.VisitasControlador">
+<VBox spacing="20" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.VisitasControlador">
     <children>
     <!-- Formulario -->
     <VBox prefHeight="362.0" prefWidth="984.0" spacing="15" styleClass="form-container">
@@ -21,35 +21,35 @@
         <GridPane hgap="15" prefHeight="230.0" prefWidth="944.0" style="-fx-padding: 20; -fx-background-color: white; -fx-border-radius: 12; -fx-background-radius: 12;" vgap="12">
             <!-- Fila 1 -->
             <Label text="ID Servicio:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="idServicioField" prefHeight="38.0" prefWidth="189.0" promptText="Ej: 101" GridPane.columnIndex="1" />
+            <TextField fx:id="idServicioField" prefHeight="38.0" prefWidth="189.0" promptText="Servicio" GridPane.columnIndex="1" />
 
             <Label text="ID Visitador:" GridPane.columnIndex="2" />
-            <ComboBox fx:id="visitadorCombo" promptText="Seleccione..." styleClass="text-field" GridPane.columnIndex="3" />
+            <ComboBox fx:id="visitadorCombo" promptText="Visitador" styleClass="text-field" GridPane.columnIndex="3" />
 
             <!-- Fila 2 -->
             <Label text="Tipo Prueba:" GridPane.columnIndex="4" />
-            <ComboBox fx:id="tipoPruebaCombo" promptText="Seleccione..." styleClass="text-field" GridPane.columnIndex="5" />
+            <ComboBox fx:id="tipoPruebaCombo" promptText="Prueba" styleClass="text-field" GridPane.columnIndex="5" />
 
             <Label text="Tipo Visita:" GridPane.rowIndex="1" />
-            <ComboBox fx:id="tipoVisitaCombo" promptText="Seleccione..." styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ComboBox fx:id="tipoVisitaCombo" promptText="Tipo visita" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
             <!-- Fila 3 -->
             <Label text="Fecha Solicitud:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <DatePicker fx:id="fechaSolicitudPicker" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <DatePicker fx:id="fechaSolicitudPicker" promptText="Fecha solicitud" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
             <Label text="Fecha Visita:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <DatePicker fx:id="fechaVisitaPicker" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <DatePicker fx:id="fechaVisitaPicker" promptText="Fecha visita" GridPane.columnIndex="5" GridPane.rowIndex="1" />
 
             <!-- Fila 4 -->
             <Label text="Hora Visita:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
             <TextField fx:id="horaVisitaField" promptText="HH:MM" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
             <Label text="Fecha Envío Informe:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <DatePicker fx:id="fechaEnvioInformePicker" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <DatePicker fx:id="fechaEnvioInformePicker" promptText="Fecha informe" GridPane.columnIndex="3" GridPane.rowIndex="3" />
 
             <!-- Fila 5 -->
             <Label text="Novedad:" GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="3" />
-            <TextField fx:id="novedadField" promptText="Ej: 5" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <TextField fx:id="novedadField" promptText="Novedades visita" GridPane.columnIndex="5" GridPane.rowIndex="3" />
             
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />

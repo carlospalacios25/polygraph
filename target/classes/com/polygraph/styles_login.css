@@ -2,7 +2,7 @@
 /*               LOGIN CON FONDO ROJO            */
 /* ============================================= */
 
-/* Fondo gradiente rojo (tu estilo original) */
+/* Fondo gradiente rojo */
 .login-bg {
     -fx-background-color: linear-gradient(to bottom right, #fa7d7d, #e33939);
 }
@@ -21,7 +21,7 @@
 
 /* Título */
 .login-title {
-    -fx-font-family: "Arial";
+    -fx-font-family: "System";
     -fx-font-size: 30px;
     -fx-font-weight: bold;
     -fx-text-fill: #e33939;
@@ -29,7 +29,7 @@
 
 /* Subtítulo */
 .login-subtitle {
-    -fx-font-family: "Arial";
+    -fx-font-family: "System";
     -fx-font-size: 17px;
     -fx-text-fill: #2c3e50;
     -fx-font-weight: 600;
@@ -37,7 +37,7 @@
 
 /* Etiquetas */
 .login-label {
-    -fx-font-family: "Arial";
+    -fx-font-family: "System";
     -fx-font-size: 11.5px;
     -fx-font-weight: bold;
     -fx-text-fill: #34495e;
@@ -51,7 +51,7 @@
     -fx-border-radius: 10px;
     -fx-border-width: 1.4px;
     -fx-padding: 11px 15px;
-    -fx-font-family: "Arial";
+    -fx-font-family: "System";
     -fx-font-size: 12.5px;
     -fx-text-fill: #212121;
     -fx-pref-height: 44px;
@@ -65,7 +65,7 @@
 
 /* Checkbox */
 .login-checkbox {
-    -fx-font-family: "Arial";
+    -fx-font-family: "System";
     -fx-font-size: 11.5px;
     -fx-text-fill: #555;
 }
@@ -74,11 +74,11 @@
 .btn-login {
     -fx-background-color: #fa7d7d;
     -fx-text-fill: white;
-    -fx-font-family: "Arial";
-    -fx-font-size: 14px;
+    -fx-font-family: "System";
+    -fx-font-size: 11px;
     -fx-font-weight: bold;
     -fx-background-radius: 12px;
-    -fx-padding: 14px 35px;
+    -fx-padding: 11px 35px;
     -fx-cursor: hand;
     -fx-pref-width: 180px;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);
@@ -96,11 +96,11 @@
 .btn-cancelar {
     -fx-background-color: #95a5a6;
     -fx-text-fill: white;
-    -fx-font-family: "Arial";
-    -fx-font-size: 14px;
+    -fx-font-family: "System";
+    -fx-font-size: 11px;
     -fx-font-weight: bold;
     -fx-background-radius: 12px;
-    -fx-padding: 14px 35px;
+    -fx-padding: 11px 35px;
     -fx-cursor: hand;
     -fx-pref-width: 180px;
 }
@@ -113,8 +113,8 @@
 .btn-cerrar {
     -fx-background-color: transparent;
     -fx-text-fill: #bdc3c7;
-    -fx-font-family: "Arial";
-    -fx-font-size: 16px;
+    -fx-font-family: "System";
+    -fx-font-size: 11px;
     -fx-font-weight: bold;
     -fx-padding: 0 10 0 0;
     -fx-cursor: hand;
@@ -127,7 +127,7 @@
 /* Error */
 .login-error {
     -fx-text-fill: #e74c3c;
-    -fx-font-family: "Arial";
+    -fx-font-family: "System";
     -fx-font-size: 11.5px;
     -fx-padding: 8 0 0 0;
     -fx-min-height: 20px;
@@ -135,8 +135,49 @@
 
 /* Footer */
 .login-footer {
-    -fx-font-family: "Arial";
+    -fx-font-family: "System";
     -fx-font-size: 10.5px;
     -fx-text-fill: #95a5a6;
     -fx-padding: 20 0 0 0;
+}
+
+/* ============================================= */
+/*             ESTILO PESTAÑAS LOGIN             */
+/* ============================================= */
+
+.btn-login-iniciar, .btn-login-registro {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7f8c8d;
+    -fx-font-family: "System";
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 20px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: transparent;
+    -fx-border-width: 1.4px;
+    -fx-cursor: hand;
+}
+
+/* Pestañas activas */
+.btn-login-iniciar:disabled,
+.btn-login-registro:disabled {
+    -fx-background-color: #fa7d7d22;
+    -fx-text-fill: #e33939;
+    -fx-border-color: #e33939;
+    -fx-border-width: 1.6px;
+    -fx-opacity: 1;
+}
+
+/* Hover en pestañas inactivas */
+.btn-login-iniciar:hover:enabled,
+.btn-login-registro:hover:enabled {
+    -fx-background-color: #f2f2f2;
+    -fx-text-fill: #34495e;
+}
+
+/* Estado presionado */
+.btn-login-iniciar:pressed,
+.btn-login-registro:pressed {
+    -fx-background-color: #e6e6e6;
 }

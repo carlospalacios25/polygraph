@@ -31,6 +31,15 @@ public class Visitas {
         this.novedadVisita = novedadVisita;
     }
 
+    public Visitas(int idVisita,int idServicio, int idVisitador, String Tipo_Prueba, String Tipo_Visita, LocalDate fechaSolicitud) {
+        this.idVisita = idVisita;
+        this.idServicio = idServicio;
+        this.idVisitador = idVisitador;
+        this.Tipo_Prueba = Tipo_Prueba;
+        this.Tipo_Visita = Tipo_Visita;
+        this.fechaSolicitud = fechaSolicitud;
+    }
+
     // Getters y Setters
     public int getIdVisita() { return idVisita; }
     public void setIdVisita(int idVisita) { this.idVisita = idVisita; }

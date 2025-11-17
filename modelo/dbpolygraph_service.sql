@@ -39,7 +39,6 @@ CREATE TABLE `analisis` (
 
 LOCK TABLES `analisis` WRITE;
 /*!40000 ALTER TABLE `analisis` DISABLE KEYS */;
-INSERT INTO `analisis` VALUES (1,1,'Visita','El candidato mostró buena disposición durante la visita.'),(2,1,'Final','Resultados consistentes con la evaluación inicial.'),(3,2,'Visita','Visita realizada sin inconvenientes.'),(4,2,'Final','Aprobado tras revisión de antecedentes.'),(5,3,'Visita','Visita inicial completada con observaciones positivas.'),(6,3,'Final','Pendiente de revisión final.');
 /*!40000 ALTER TABLE `analisis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +93,6 @@ CREATE TABLE `ciudades` (
 
 LOCK TABLES `ciudades` WRITE;
 /*!40000 ALTER TABLE `ciudades` DISABLE KEYS */;
-INSERT INTO `ciudades` VALUES (1,'Bogotá'),(3,'Cali'),(2,'Medellín');
 /*!40000 ALTER TABLE `ciudades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +158,6 @@ CREATE TABLE `documentos` (
 
 LOCK TABLES `documentos` WRITE;
 /*!40000 ALTER TABLE `documentos` DISABLE KEYS */;
-INSERT INTO `documentos` VALUES (1,1,'Informe Poligrafía','informe_poligrafia_001.pdf','2025-10-03 14:30:00','Informe de la prueba de poligrafía para Juan Pérez.',102400,'Activo',NULL,NULL,NULL,NULL),(2,1,'Reporte Visita','reporte_visita_001.pdf','2025-10-03 15:00:00','Reporte de la visita inicial.',51200,'Activo',NULL,NULL,NULL,NULL),(3,2,'Informe Poligrafía','informe_poligrafia_002.pdf','2025-10-04 09:15:00','Informe de la prueba de poligrafía para María Gómez.',153600,'Activo',NULL,NULL,NULL,NULL),(4,2,'Certificado Antecedentes','certificado_antecedentes_002.pdf','2025-10-04 10:00:00','Certificado de antecedentes penales.',25600,'Activo',NULL,NULL,NULL,NULL),(5,3,'Reporte Visita','reporte_visita_003.pdf','2025-10-05 11:30:00','Reporte de la visita inicial para Carlos Rodríguez.',64000,'Activo',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `documentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -186,7 +183,6 @@ CREATE TABLE `perfiles` (
 
 LOCK TABLES `perfiles` WRITE;
 /*!40000 ALTER TABLE `perfiles` DISABLE KEYS */;
-INSERT INTO `perfiles` VALUES (1,'Administrador','Usuario con acceso completo al sistema.'),(2,'Analista','Usuario encargado de revisar y gestionar servicios.'),(3,'Poligrafista','Usuario encargado de realizar pruebas de poligrafía.');
 /*!40000 ALTER TABLE `perfiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -213,7 +209,6 @@ CREATE TABLE `perfiles_permisos` (
 
 LOCK TABLES `perfiles_permisos` WRITE;
 /*!40000 ALTER TABLE `perfiles_permisos` DISABLE KEYS */;
-INSERT INTO `perfiles_permisos` VALUES (1,1),(1,2),(2,2),(1,3),(2,3),(3,3);
 /*!40000 ALTER TABLE `perfiles_permisos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,7 +234,6 @@ CREATE TABLE `permisos` (
 
 LOCK TABLES `permisos` WRITE;
 /*!40000 ALTER TABLE `permisos` DISABLE KEYS */;
-INSERT INTO `permisos` VALUES (1,'Crear_Servicio','Permite crear nuevos servicios.'),(2,'Editar_Servicio','Permite editar servicios existentes.'),(3,'Ver_Informes','Permite visualizar informes de servicios.');
 /*!40000 ALTER TABLE `permisos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +266,6 @@ CREATE TABLE `poligrafias` (
 
 LOCK TABLES `poligrafias` WRITE;
 /*!40000 ALTER TABLE `poligrafias` DISABLE KEYS */;
-INSERT INTO `poligrafias` VALUES (1,1,1,'2025-10-01','Si','2025-10-03'),(2,2,2,'2025-10-02','No','2025-10-04'),(3,3,1,'2025-10-03','Si','2025-10-05');
 /*!40000 ALTER TABLE `poligrafias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,7 +290,6 @@ CREATE TABLE `poligrafistas` (
 
 LOCK TABLES `poligrafistas` WRITE;
 /*!40000 ALTER TABLE `poligrafistas` DISABLE KEYS */;
-INSERT INTO `poligrafistas` VALUES (1,'Ana López','Sala 1'),(2,'Carlos Martínez','Sala 2');
 /*!40000 ALTER TABLE `poligrafistas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -327,7 +319,6 @@ CREATE TABLE `proceso_tipos_progreso` (
 
 LOCK TABLES `proceso_tipos_progreso` WRITE;
 /*!40000 ALTER TABLE `proceso_tipos_progreso` DISABLE KEYS */;
-INSERT INTO `proceso_tipos_progreso` VALUES (1,1,1,1),(2,1,2,1),(3,2,3,1),(4,3,1,0),(5,1,3,1);
 /*!40000 ALTER TABLE `proceso_tipos_progreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -351,7 +342,6 @@ CREATE TABLE `procesos` (
 
 LOCK TABLES `procesos` WRITE;
 /*!40000 ALTER TABLE `procesos` DISABLE KEYS */;
-INSERT INTO `procesos` VALUES (1,'Selección de Personal'),(2,'Verificación de Antecedentes'),(3,'Evaluación de Seguridad');
 /*!40000 ALTER TABLE `procesos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,7 +375,6 @@ CREATE TABLE `progreso` (
 
 LOCK TABLES `progreso` WRITE;
 /*!40000 ALTER TABLE `progreso` DISABLE KEYS */;
-INSERT INTO `progreso` VALUES (1,1,'2025-10-03','Observación inicial para poligrafía',1,'admin'),(2,2,'2025-10-03','Observación para visita',1,'analista1'),(3,3,'2025-10-03','Pendiente de antecedentes',1,'admin'),(4,1,'2025-10-04','No asistió a poligrafía',2,'poligrafista1'),(5,2,'2025-10-04','Visita completada',2,'analista1'),(6,3,'2025-10-04','Antecedentes verificados',2,'admin'),(7,1,'2025-10-05','Poligrafía realizada',3,'poligrafista1'),(8,2,'2025-10-05','Visita inicial completada',3,'analista1'),(9,3,'2025-10-05','Pendiente de verificación de antecedentes',3,'admin');
 /*!40000 ALTER TABLE `progreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -434,7 +423,6 @@ CREATE TABLE `servicios` (
 
 LOCK TABLES `servicios` WRITE;
 /*!40000 ALTER TABLE `servicios` DISABLE KEYS */;
-INSERT INTO `servicios` VALUES (1,'2025-10-01','09:00:00',900123456,1234567890,1,'En Progreso','Pendiente','Factura 001','Verificado','Analista','Autofinanciera XYZ','Empresa XYZ',1,'CC-001',NULL,NULL),(2,'2025-10-02','10:30:00',900654321,9876543210,2,'Completado','Aprobado','Factura 002','Verificado','Gerente','Autofinanciera ABC','Compañía ABC',2,'CC-002',NULL,NULL),(3,'2025-10-03','11:00:00',900123456,4567891234,3,'Pendiente','Pendiente','Factura 003','Pendiente','Supervisor','Autofinanciera XYZ','Empresa XYZ',3,'CC-003',NULL,NULL);
 /*!40000 ALTER TABLE `servicios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -461,7 +449,6 @@ CREATE TABLE `sucursales` (
 
 LOCK TABLES `sucursales` WRITE;
 /*!40000 ALTER TABLE `sucursales` DISABLE KEYS */;
-INSERT INTO `sucursales` VALUES (1,'Sucursal Norte',1),(2,'Sucursal Centro',2),(3,'Sucursal Sur',3);
 /*!40000 ALTER TABLE `sucursales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,7 +472,6 @@ CREATE TABLE `tipos_progreso` (
 
 LOCK TABLES `tipos_progreso` WRITE;
 /*!40000 ALTER TABLE `tipos_progreso` DISABLE KEYS */;
-INSERT INTO `tipos_progreso` VALUES (1,'Poligrafía'),(2,'Visita'),(3,'Antecedente'),(4,'Financiero'),(5,'Académico'),(6,'Laboral'),(7,'Personal'),(8,'Pasta'),(9,'Sicotécnica');
 /*!40000 ALTER TABLE `tipos_progreso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -521,7 +507,6 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Admin','Sistema','admin','admin@polygraph.com','hashed_password_123','2025-10-01',1,1),(2,'Analista','Uno','analista1','analista1@polygraph.com','hashed_password_456','2025-10-02',1,2),(3,'Poligrafista','Dos','poligrafista1','poligrafista1@polygraph.com','hashed_password_789','2025-10-03',1,3);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -546,7 +531,6 @@ CREATE TABLE `visitadores` (
 
 LOCK TABLES `visitadores` WRITE;
 /*!40000 ALTER TABLE `visitadores` DISABLE KEYS */;
-INSERT INTO `visitadores` VALUES (1,'Carlos Gómez','Zona Norte'),(2,'Laura Sánchez','Zona Centro');
 /*!40000 ALTER TABLE `visitadores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -564,9 +548,9 @@ CREATE TABLE `visitas` (
   `Tipo_Prueba` enum('VALI. RESI.','VDV','VDP') NOT NULL COMMENT 'Tipo de prueba (Virtual o Presencial).',
   `Tipo_Visita` enum('PRE EMPLEO','ENFASIS EN TELETRABAJO','TIPO OEA','PRE - ENFASIS VEHICULAR','RUTINA') NOT NULL COMMENT 'Tipo de visita (Inicial o Seguimiento).',
   `Fecha_Solicitud` date NOT NULL COMMENT 'Fecha de solicitud de la visita.',
-  `Fecha_Visita` date NOT NULL COMMENT 'Fecha en que se realiza la visita.',
-  `Hora_Visita` time NOT NULL COMMENT 'Hora de la visita.',
-  `Fecha_Envio_Informe` date NOT NULL COMMENT 'Fecha de envío del informe de la visita.',
+  `Fecha_Visita` date COMMENT 'Fecha en que se realiza la visita.',
+  `Hora_Visita` time COMMENT 'Hora de la visita.',
+  `Fecha_Envio_Informe` date COMMENT 'Fecha de envío del informe de la visita.',
   `Novedad_Visita` varchar(500) DEFAULT NULL COMMENT 'Observaciones o novedades de la visita.',
   PRIMARY KEY (`Id_Visita`),
   KEY `Id_Servicio` (`Id_Servicio`),
@@ -583,7 +567,6 @@ CREATE TABLE `visitas` (
 
 LOCK TABLES `visitas` WRITE;
 /*!40000 ALTER TABLE `visitas` DISABLE KEYS */;
-INSERT INTO `visitas` VALUES (1,1,1,'Virtual','Inicial','2025-10-01','2025-10-02','10:00:00','2025-10-03','Sin novedades'),(2,2,2,'Presencial','Seguimiento','2025-10-02','2025-10-03','14:30:00','2025-10-04','Candidato ausente'),(3,3,1,'Presencial','Inicial','2025-10-03','2025-10-04','09:00:00','2025-10-05','Visita realizada con éxito');
 /*!40000 ALTER TABLE `visitas` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

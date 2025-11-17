@@ -150,4 +150,27 @@ public class ServicioDAO {
         }
     }
     
+    public boolean servicioRequiereVisita(int idServicio) throws SQLException {
+        String sql = """
+            SELECT 
+                1
+            FROM servicios s
+            LEFT JOIN proceso_tipos_progreso tp ON s.Id_Proceso  = tp.Id_Proceso
+            LEFT JOIN tipos_progreso tpr       ON tp.Id_Tipo_Progreso = tpr.Id_Tipo_Progreso
+            WHERE  s.Id_Servicio = ?
+               AND tpr.Nombre_Progreso LIKE '%visita%'
+               AND tp.Habilitado = 1
+            LIMIT 1
+            """;
+
+        try (Connection conn = ConexionBD.getInstancia().getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idServicio);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next(); // true si encontró al menos 1 registro
+            }
+        }
+    }
 }

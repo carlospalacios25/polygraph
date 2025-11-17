@@ -2,7 +2,9 @@ module com.polygraph {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
-
+    requires jakarta.mail;
+    requires jakarta.activation;
+    
     opens com.polygraph to javafx.fxml;          // Para AplicacionPrincipal
     opens com.polygraph.controlador to javafx.fxml; // Para ControladorServicios
     opens com.polygraph.modelo to javafx.base;   // Para permitir acceso a Servicio por TableView
