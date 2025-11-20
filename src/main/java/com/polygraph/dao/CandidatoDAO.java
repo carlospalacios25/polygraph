@@ -111,7 +111,7 @@ public class CandidatoDAO {
                         rs.getString("Direccion_Candidato"),    
                         rs.getInt("Id_Ciudad")
                     );
-                    candidatos.setNombreCiudad(rs.getString("Nombre Ciudad"));
+                    candidatos.setNombreCiudad(rs.getString("Nombre_Ciudad"));
                 }
             }
         } catch (SQLException e) {

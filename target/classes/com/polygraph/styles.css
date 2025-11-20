@@ -344,32 +344,6 @@
 }
 
 /* ============================================= */
-/*                TARJETAS / CARDS               */
-/* ============================================= */
-
-.cards-grid {
-    -fx-padding: 30 20;
-    -fx-background-color: #f8fafc;
-    -fx-hgap: 25;
-    -fx-vgap: 25;
-}
-
-.service-card-modern {
-    -fx-background-color: white;
-    -fx-background-radius: 16;
-    -fx-border-radius: 16;
-    -fx-padding: 24;
-    -fx-spacing: 16;
-    -fx-alignment: center;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 12, 0, 0, 4);
-    -fx-pref-width: 280;
-    -fx-max-width: 280;
-    -fx-border-color: #e2e8f0;
-    -fx-border-width: 1;
-    -fx-font-family: "System";
-}
-
-/* ============================================= */
 /*                  BREADCRUMB                   */
 /* ============================================= */
 
@@ -415,4 +389,102 @@
 
 .content-area {
     -fx-background-color: transparent; /* para que se vea el gradiente de fondo */
+}
+
+
+/* ============================================= */
+/*           TARJETAS DE SERVICIO (CARDS)        */
+/* ============================================= */
+
+/* Contenedor donde van las cards (VBox / FlowPane) */
+.cards-grid {
+    -fx-padding: 20 40 20 40;
+    -fx-background-color: transparent;
+    -fx-hgap: 24;
+    -fx-vgap: 24;
+    -fx-alignment: CENTER;   /* tarjetas centradas en el contenedor */
+}
+
+/* Tarjeta individual */
+.service-card-modern {
+    /* Mismo color que ya tenías */
+    -fx-background-color: linear-gradient(to bottom right, #ffffff, #ffecec);
+    -fx-background-radius: 16;
+    -fx-border-radius: 16;
+
+    -fx-padding: 18 20 16 20;
+    -fx-spacing: 10;
+
+    /* 🔥 Centra el contenido dentro de la tarjeta */
+    -fx-alignment: CENTER;
+    -fx-text-alignment: CENTER;
+
+    -fx-border-color: #ffe0e0;
+    -fx-border-width: 1;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, 4);
+    -fx-pref-width: 320;
+    -fx-max-width: 340;
+    -fx-font-family: "System";
+}
+
+.service-card-modern:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.20), 18, 0, 0, 6);
+    -fx-translate-y: -3;
+    -fx-cursor: hand;
+}
+
+/* Icono (si lo usas) */
+.card-icon {
+    -fx-alignment: CENTER;
+    -fx-padding: 0 0 4 0;
+}
+
+/* Título: grande y centrado, mismo color rojo */
+.card-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e33939;
+    -fx-alignment: CENTER;
+    -fx-text-alignment: CENTER;
+    -fx-padding: 2 0 6 0;
+}
+
+/* Texto descriptivo: centrado, sin cambiar color */
+.card-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #444444;
+    -fx-line-spacing: 2;
+    -fx-alignment: CENTER;
+    -fx-text-alignment: CENTER;
+}
+
+/* Botones dentro de la tarjeta */
+.card-button {
+    -fx-background-radius: 14;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+
+    -fx-alignment: CENTER;
+    -fx-padding: 8 24;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 4, 0, 0, 1);
+}
+
+.card-button:hover {
+    -fx-translate-y: -1;
+    -fx-opacity: 0.95;
+}
+
+/* Botón Detalle (naranja, como lo tenías) */
+.btn-detalle {
+    -fx-background-color: #e67e22;
+    -fx-text-fill: white;
+}
+
+/* Botón Editar (verde, como lo tenías) */
+.btn-editar {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
 }

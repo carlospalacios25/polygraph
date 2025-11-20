@@ -88,7 +88,7 @@
                         </graphic>
                     </Button>
 
-                    <Button onAction="#loadNotifications"
+                    <Button onAction="#cargarPoligrafia"
                             prefHeight="48.0"
                             prefWidth="180.0"
                             styleClass="sidebar-button"
@@ -96,7 +96,7 @@
                         <graphic>
                             <ImageView fitHeight="22" fitWidth="22">
                                 <image>
-                                    <Image url="@../imgs/icons8_notifications_24px.png"/>
+                                    <Image url="@../imgs/icons_poligrafia.png"/>
                                 </image>
                             </ImageView>
                         </graphic>

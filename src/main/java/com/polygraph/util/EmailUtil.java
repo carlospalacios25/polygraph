@@ -45,33 +45,96 @@ public class EmailUtil {
         message.setSubject("Código de verificación - Polygraph");
 
         String html = """
-                <!DOCTYPE html>
-                <html lang="es">
-                <head><meta charset="UTF-8"></head>
-                <body style="font-family: Arial, sans-serif; background-color:#ffffff; margin:0; padding:0;">
-                <div style="max-width:600px;margin:20px auto;background:#ffffff;border-radius:12px;
-                            border:1px solid #f3f3f3;padding:25px 30px;">
-                    <h1 style="text-align:center;color:#e63939;margin:0 0 5px 0;">Polygraph</h1>
-                    <div style="width:90%%;height:3px;background:linear-gradient(to right,#ff6b6b,#e63939);
-                                border-radius:5px;margin:15px auto;"></div>
-                    <p>Hola 👋</p>
-                    <p>Tu <strong>código de verificación</strong> para continuar tu registro en <b>Polygraph</b> es:</p>
-                    <div style="text-align:center;font-size:28px;font-weight:bold;background:#ffe8e8;
-                                padding:14px 0;border-radius:10px;color:#e63939;border:2px dashed #ff6b6b;
-                                letter-spacing:4px;margin:25px 0;">%s</div>
-                    <p>Regresa a la aplicación e ingresa el código. Este código expirará en <b>10 minutos</b>.</p>
-                    <p>Si el código expira, solicita uno nuevo desde la aplicación.</p>
-                    <hr style="margin:25px 0;border:none;border-top:1px solid #ddd;">
-                    <p style="font-size:12px;color:#888;text-align:center;">
-                        ¿Tienes dudas? Escríbenos a 
-                        <a href="mailto:soporte.polygraph@gmail.com" style="color:#e63939;text-decoration:none;">
-                            soporte.polygraph@gmail.com
-                        </a><br><br>¡Estamos listos para ayudarte! 😊
-                    </p>
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <title>Código de verificación Polygraph</title>
+        </head>
+        <body style="margin:0;padding:0;background-color:#f5f5f5;font-family:Arial,Helvetica,sans-serif;">
+
+            <!-- CINTA SUPERIOR -->
+            <div style="background-color:#b0202a;padding:18px 0;text-align:center;">
+                <!-- Si tienes logo, reemplaza el texto por una imagen -->
+                <span style="color:#ffffff;font-size:20px;font-weight:bold;letter-spacing:0.08em;">
+                    POLYGRAPH
+                </span>
+            </div>
+
+            <!-- CONTENEDOR PRINCIPAL -->
+            <div style="
+                max-width:640px;
+                margin:24px auto 32px auto;
+                background-color:#ffffff;
+                border-radius:10px;
+                border:1px solid #e4e4e4;
+                box-shadow:0 2px 6px rgba(0,0,0,0.04);
+                padding:28px 32px;
+            ">
+                <!-- TÍTULO -->
+                <h2 style="margin:0 0 16px 0;color:#333333;font-size:19px;font-weight:600;text-align:left;">
+                    Código de acceso a Polygraph
+                </h2>
+
+                <!-- DESCRIPCIÓN INICIAL -->
+                <p style="margin:0 0 10px 0;color:#555555;font-size:14px;line-height:1.5;">
+                    Te enviamos este correo porque estás realizando un proceso de registro o inicio de sesión en
+                    <strong>Polygraph</strong>.
+                </p>
+
+                <p style="margin:10px 0 12px 0;color:#333333;font-size:14px;line-height:1.5;">
+                    Tu <strong>código de verificación</strong> es:
+                </p>
+
+                <!-- CÓDIGO DESTACADO -->
+                <div style="
+                    text-align:center;
+                    font-size:30px;
+                    font-weight:bold;
+                    letter-spacing:6px;
+                    color:#b0202a;
+                    background-color:#fff4f4;
+                    border:1px solid #f1b7b7;
+                    border-radius:8px;
+                    padding:16px 0;
+                    margin:20px 0 18px 0;
+                ">
+                    %s
                 </div>
-                </body>
-                </html>
-                """.formatted(codigo);
+
+                <!-- INFORMACIÓN DE VIGENCIA -->
+                <p style="margin:0 0 8px 0;color:#555555;font-size:14px;line-height:1.5;">
+                    Este código tiene una vigencia de <strong>10 minutos</strong> a partir del momento de su envío.
+                    Por favor, regresa a la aplicación e ingrésalo exactamente como aparece.
+                </p>
+
+                <p style="margin:8px 0 18px 0;color:#555555;font-size:14px;line-height:1.5;">
+                    Si el código expira o no reconoces esta solicitud, puedes ignorar este mensaje o generar un nuevo
+                    código desde la aplicación.
+                </p>
+
+                <!-- LÍNEA DIVISORIA -->
+                <hr style="margin:22px 0;border:none;border-top:1px solid #e0e0e0;">
+
+                <!-- PIE DE PÁGINA -->
+                <p style="font-size:12px;color:#888888;line-height:1.5;text-align:center;margin:0;">
+                    ¿Tienes dudas o necesitas ayuda?<br>
+                    Escríbenos a
+                    <a href="mailto:soporte.polygraph@gmail.com"
+                       style="color:#b0202a;text-decoration:none;font-weight:500;">
+                        soporte.polygraph@gmail.com
+                    </a>.
+                </p>
+
+                <p style="font-size:11px;color:#aaaaaa;line-height:1.5;text-align:center;margin:18px 0 0 0;">
+                    Este mensaje ha sido enviado automáticamente, por favor no respondas a este correo.
+                </p>
+            </div>
+
+        </body>
+        </html>
+        """.formatted(codigo);
+
 
         message.setContent(html, "text/html; charset=UTF-8");
 

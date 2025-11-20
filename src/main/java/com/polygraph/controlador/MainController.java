@@ -75,7 +75,7 @@ public class MainController {
     @FXML public void cargarServicio(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/ServicioForm.fxml", (Node)e.getSource(), "Servicios"); }
     @FXML public void cargarConfServicio(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/ConfiguracionSerForm.fxml", (Node)e.getSource(), "Configuracion Servicio"); }
     @FXML public void cargarVisita(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/VisitaForm.fxml", (Node)e.getSource(), "Visita"); }
-    @FXML public void loadSettings(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Settings.fxml", (Node)e.getSource(), "Settings"); }
+    @FXML public void cargarPoligrafia(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/PoligrafiasForm.fxml", (Node)e.getSource(), "Poligrafia"); }
     @FXML public void loadDiscovery(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/VistaServicio.fxml", (Node)e.getSource(), "Discovery"); }
     @FXML public void loadReports(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Reports.fxml", (Node)e.getSource(), "Reports"); }
     @FXML public void loadNotifications(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Notifications.fxml", (Node)e.getSource(), "Notifications"); }

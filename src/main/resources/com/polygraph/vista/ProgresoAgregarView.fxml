@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.polygraph.controlador.ProgresoAgregarController"
+      alignment="CENTER" prefHeight="500.0" prefWidth="480.0" spacing="20"
+      styleClass="root" stylesheets="@../styles.css">
+
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <!-- PANEL BLANCO EXACTO COMO POLIGRAFISTAS -->
+    <VBox alignment="CENTER" spacing="20" styleClass="form-container">
+
+        <!-- TÍTULO -->
+        <Label text="Agregar Progreso" styleClass="title-label"/>
+
+        <!-- TIPO DE PROGRESO -->
+        <VBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="Tipo de progreso:" styleClass="label"/>
+            <ComboBox fx:id="cmbTipoProgreso"
+                      promptText="Selecciona un tipo"
+                      prefWidth="360"
+                      styleClass="text-field"/>
+        </VBox>
+
+        <!-- FECHA -->
+        <VBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="Fecha del progreso:" styleClass="label"/>
+            <DatePicker fx:id="dpFecha"
+                        prefWidth="360"/>
+        </VBox>
+
+        <!-- OBSERVACIÓN -->
+        <VBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="Observación:" styleClass="label"/>
+            <TextArea fx:id="txtObservacion"
+                      prefHeight="110"
+                      prefWidth="360"
+                      promptText="Describe el avance o novedad del servicio..."
+                      wrapText="true"
+                      styleClass="text-field"/>
+        </VBox>
+
+        <!-- USUARIO BLOQUEADO (SOLO LECTURA) -->
+        <VBox spacing="8" alignment="CENTER_LEFT">
+            <Label text="Registrado por:" styleClass="label"/>
+            <TextField fx:id="txtUsuario"
+                       prefWidth="360"
+                       styleClass="text-field"
+                       editable="false"
+                       text="Cargando..."/>
+        </VBox>
+
+        <!-- BOTONES CENTRADOS -->
+        <HBox alignment="CENTER" spacing="20">
+            <Button text="Cancelar"
+                    onAction="#cancelar"
+                    styleClass="button"/>
+            <Button text="Guardar Progreso"
+                    onAction="#guardar"
+                    styleClass="button primary"/>
+        </HBox>
+
+        <!-- MENSAJE DE ERROR -->
+        <Label fx:id="errorLabel"
+               styleClass="error-label"
+               text=""
+               style="-fx-min-height: 20;"/>
+    </VBox>
+</VBox>

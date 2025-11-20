@@ -44,7 +44,7 @@
             </GridPane>
             <Pane prefHeight="76.0" prefWidth="434.0">
                 <children>
-                    <Button layoutX="14.0" layoutY="10.0" onAction="#insertarCandidato" styleClass="button" text="Crear Candidato" />
+                    <Button fx:id="btnCrearCandidato" layoutX="14.0" layoutY="10.0" onAction="#insertarCandidato" styleClass="button" text="Crear Candidato" />
                 </children>
                 <children>
                     <Button layoutX="182.0" layoutY="13.0" onAction="#cargarForCiudades" styleClass="button" text="Agregar Ciudad" />

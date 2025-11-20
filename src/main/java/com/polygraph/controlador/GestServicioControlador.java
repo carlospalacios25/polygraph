@@ -1,33 +1,34 @@
 package com.polygraph.controlador;
 
-import com.polygraph.dao.*;
+import com.polygraph.dao.AnalisisDAO;
+import com.polygraph.dao.DocumentoDAO;
+import com.polygraph.dao.ProgresoDAO;
 import com.polygraph.modelo.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.function.Consumer;
 
+/**
+ * Controlador principal para la gestión detallada de un servicio.
+ * Muestra información del servicio y permite agregar progreso, documentos y análisis
+ * mediante ventanas modales limpias y profesionales.
+ */
 public class GestServicioControlador {
 
-    // === INFO GENERAL ===
+    // === COMPONENTES FXML (UNA POR LÍNEA - BUENA PRÁCTICA) ===
     @FXML private Label lblId1;
     @FXML private Label lblInfoGeneral;
 
-    // === CAMPOS ===
-    @FXML private TextField txtNuevoProgreso;
-    @FXML private ComboBox<String> cmbTipoProgreso;
-    @FXML private ComboBox<String> cmbTipoDocumento;
-    @FXML private ComboBox<String> cmbTipoAnalisis;
-    @FXML private TextField txtNuevoAnalisis;
-
-    // === TABLAS ===
     @FXML private TableView<Progreso> tblProgreso;
     @FXML private TableColumn<Progreso, LocalDate> colProgFecha;
     @FXML private TableColumn<Progreso, String> colProgTipo;
@@ -44,17 +45,16 @@ public class GestServicioControlador {
     @FXML private TableColumn<Analisis, String> colAnaTipo;
     @FXML private TableColumn<Analisis, String> colAnaContenido;
 
-    // === DAOs ===
-    private final ServicioDAO servicioDAO = new ServicioDAO();
+    // === DAOs (INYECCIÓN MANUAL - LIMPIO Y CONTROLADO) ===
     private final ProgresoDAO progresoDAO = new ProgresoDAO();
     private final DocumentoDAO documentoDAO = new DocumentoDAO();
     private final AnalisisDAO analisisDAO = new AnalisisDAO();
-   // private final TipoDocumentoDAO tipoDocumentoDAO = new TipoDocumentoDAO();
-   // private final TipoAnalisisDAO tipoAnalisisDAO = new TipoAnalisisDAO();
 
+    // === DATOS DE SESIÓN ===
     private Servicio servicio;
     private MainController mainController;
 
+    // === CONFIGURACIÓN INICIAL ===
     public void setServicio(Servicio servicio) {
         this.servicio = servicio;
         cargarDatos();
@@ -68,9 +68,6 @@ public class GestServicioControlador {
     @FXML
     private void initialize() {
         configurarTablas();
-        cargarTiposProgreso();
-  //      cargarTiposDocumento();
-  //      cargarTiposAnalisis();
     }
 
     private void configurarTablas() {
@@ -88,144 +85,71 @@ public class GestServicioControlador {
         colAnaContenido.setCellValueFactory(new PropertyValueFactory<>("contenido"));
     }
 
-    private void cargarTiposProgreso() {
-        try {
-            String sql = "SELECT Nombre_Progreso FROM tipos_progreso ORDER BY Nombre_Progreso";
-            var lista = new java.util.ArrayList<String>();
-            try (var conn = com.polygraph.util.ConexionBD.getInstancia().getConexion();
-                 var ps = conn.prepareStatement(sql);
-                 var rs = ps.executeQuery()) {
-                while (rs.next()) lista.add(rs.getString(1));
-            }
-            cmbTipoProgreso.setItems(FXCollections.observableArrayList(lista));
-        } catch (SQLException e) {
-            showAlert("Error", "Error al cargar tipos de progreso: " + e.getMessage());
-        }
-    }
-
-   /* private void cargarTiposDocumento() {
-        try {
-            cmbTipoDocumento.setItems(FXCollections.observableArrayList(tipoDocumentoDAO.listarNombres()));
-        } catch (SQLException e) {
-            showAlert("Error", "Error al cargar tipos de documento: " + e.getMessage());
-        }
-    }
-
-    private void cargarTiposAnalisis() {
-        try {
-            cmbTipoAnalisis.setItems(FXCollections.observableArrayList(tipoAnalisisDAO.listarNombres()));
-        } catch (SQLException e) {
-            showAlert("Error", "Error al cargar tipos de análisis: " + e.getMessage());
-        }
-    }*/
-
     private void cargarDatos() {
-        if (servicio == null) {
-            lblId1.setText("GESTIÓN DEL SERVICIO # —");
-            lblInfoGeneral.setText("Información General: Cliente: [Sin datos] Candidato: [Sin datos] Proceso: [Sin datos]");
-            return;
-        }
+        if (servicio == null) return;
+
         lblId1.setText("GESTIÓN DEL SERVICIO # " + servicio.getIdServicio());
-        String info = "Información General : " +
-                "Cliente: " + (servicio.getNombreCliente() != null ? servicio.getNombreCliente() : "N/A") +
-                " Candidato: " + (servicio.getNombreCandidato() != null ? servicio.getNombreCandidato() : "N/A") + " " +
-                (servicio.getApellidoCandidato() != null ? servicio.getApellidoCandidato() : "") +
-                " Proceso: " + (servicio.getNombreProceso() != null ? servicio.getNombreProceso() : "N/A");
-        lblInfoGeneral.setText(info);
+        lblInfoGeneral.setText(
+            "Cliente: " + servicio.getNombreCliente() +
+            " • Candidato: " + servicio.getNombreCandidato() + " " + servicio.getApellidoCandidato() +
+            " • Proceso: " + servicio.getNombreProceso()
+        );
     }
 
     private void cargarTablas() {
         if (servicio == null) return;
+
         try {
-            tblProgreso.setItems(FXCollections.observableArrayList(progresoDAO.listarPorServicio(servicio.getIdServicio())));
-            tblDocumentos.setItems(FXCollections.observableArrayList(documentoDAO.listarPorServicio(servicio.getIdServicio())));
-            tblAnalisis.setItems(FXCollections.observableArrayList(analisisDAO.listarPorServicio(servicio.getIdServicio())));
+            tblProgreso.setItems(FXCollections.observableArrayList(
+                progresoDAO.listarPorServicio(servicio.getIdServicio())
+            ));
+            tblDocumentos.setItems(FXCollections.observableArrayList(
+                documentoDAO.listarPorServicio(servicio.getIdServicio())
+            ));
+            tblAnalisis.setItems(FXCollections.observableArrayList(
+                analisisDAO.listarPorServicio(servicio.getIdServicio())
+            ));
         } catch (SQLException e) {
-            showAlert("Error", "Error al cargar datos: " + e.getMessage());
+            mostrarError("Error de base de datos", "No se pudieron cargar los datos del servicio.");
         }
     }
 
+    // === ACCIONES DE MODALES ===
     @FXML
-    private void agregarProgresoDirecto() {
-        String obs = txtNuevoProgreso.getText().trim();
-        String tipo = cmbTipoProgreso.getValue();
-        if (obs.isEmpty() || tipo == null) {
-            showAlert("Error", "Completa observación y tipo.");
-            return;
-        }
-        try {
-            Progreso p = new Progreso();
-            p.setIdServicio(servicio.getIdServicio());
-            p.setFechaProgr(LocalDate.now());
-            p.setIdTipoProgr(progresoDAO.obtenerIdTipoPorNombre(tipo));
-            p.setObservacionAnte(obs);
-            p.setNombreUsuario("UsuarioActual");
-            progresoDAO.insertar(p);
-            txtNuevoProgreso.clear();
-            cargarTablas();
-            showAlert("Éxito", "Progreso agregado.");
-        } catch (SQLException e) {
-            showAlert("Error", "Error al guardar el progreso: " + e.getMessage());
-        }
+    private void abrirAgregarProgreso() {
+        abrirModal("/com/polygraph/vista/ProgresoAgregarView.fxml", "Agregar Progreso",
+            c -> ((ProgresoAgregarController) c).setDatos(servicio.getIdServicio(), this::cargarTablas));
     }
 
     @FXML
-    private void subirDocumentoDirecto() {
-        String tipoDoc = cmbTipoDocumento.getValue();
-        if (tipoDoc == null) {
-            showAlert("Error", "Selecciona un tipo de documento.");
-            return;
-        }
-
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Seleccionar Documento");
-        Stage stage = (Stage) tblDocumentos.getScene().getWindow();
-        File fileOrigen = fc.showOpenDialog(stage);
-        if (fileOrigen == null) return;
-
-        try {
-            String basePath = System.getProperty("user.dir") + "/documentos/" + servicio.getIdServicio();
-            File carpeta = new File(basePath);
-            if (!carpeta.exists()) carpeta.mkdirs();
-            File fileDestino = new File(carpeta, fileOrigen.getName());
-            Files.copy(fileOrigen.toPath(), fileDestino.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-            Documentos d = new Documentos();
-            d.setIdServicio(servicio.getIdServicio());
-         //   d.setIdTipoDocumento(tipoDocumentoDAO.obtenerIdPorNombre(tipoDoc));
-            d.setNombreArchivo(fileOrigen.getName());
-            d.setFechaCarga(LocalDate.now());
-            d.setEstadoDocumento("Activo");
-            d.setRutaArchivo(fileDestino.getAbsolutePath());
-            d.setTamanoArchivo(fileOrigen.length());
-
-            documentoDAO.insertar(d);
-            cargarTablas();
-            showAlert("Éxito", "Documento guardado en:\n" + fileDestino.getAbsolutePath());
-        } catch (Exception e) {
-            showAlert("Error", "No se pudo guardar el documento:\n" + e.getMessage());
-        }
+    private void abrirAgregarDocumento() {
+        abrirModal("/com/polygraph/vista/DocumentoAgregarView.fxml", "Subir Documento",
+            c -> ((DocumentoAgregarController) c).setDatos(servicio.getIdServicio(), this::cargarTablas));
     }
 
     @FXML
-    private void agregarAnalisisDirecto() {
-        String tipo = cmbTipoAnalisis.getValue();
-        String contenido = txtNuevoAnalisis.getText().trim();
-        if (tipo == null || contenido.isEmpty()) {
-            showAlert("Error", "Completa tipo y contenido.");
-            return;
-        }
+    private void abrirAgregarAnalisis() {
+        abrirModal("/com/polygraph/vista/AnalisisAgregarView.fxml", "Agregar Análisis",
+            c -> ((AnalisisAgregarController) c).setDatos(servicio.getIdServicio(), this::cargarTablas));
+    }
+
+    private void abrirModal(String fxmlPath, String titulo, Consumer<Object> configurador) {
         try {
-            Analisis a = new Analisis();
-            a.setIdServicio(servicio.getIdServicio());
-            a.setTipoAnalisis(tipo);
-            a.setContenido(contenido);
-            analisisDAO.insertar(a);
-            txtNuevoAnalisis.clear();
-            cargarTablas();
-            showAlert("Éxito", "Análisis agregado.");
-        } catch (SQLException e) {
-            showAlert("Error", "Error al guardar análisis: " + e.getMessage());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Stage modal = new Stage();
+            modal.setScene(new Scene(loader.load()));
+            modal.setTitle(titulo);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(lblId1.getScene().getWindow());
+            modal.setResizable(false);
+
+            Object controller = loader.getController();
+            configurador.accept(controller);
+
+            modal.showAndWait();
+
+        } catch (IOException e) {
+            mostrarError("Error", "No se pudo abrir la ventana: " + e.getMessage());
         }
     }
 
@@ -233,12 +157,12 @@ public class GestServicioControlador {
     private void cancelar() {
         if (mainController != null) {
             mainController.popBreadcrumb();
-            mainController.cargarServicio(null);
         }
     }
 
-    private void showAlert(String titulo, String mensaje) {
-        Alert alert = new Alert(titulo.contains("Éxito") ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR);
+    // === UTILIDADES ===
+    private void mostrarError(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);

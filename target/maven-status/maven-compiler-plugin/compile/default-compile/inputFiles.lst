@@ -1,6 +1,7 @@
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\ProcesosDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\DocumentoDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Servicio.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\util\UsuarioSesion.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\AnalisisDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\VisitadoresController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\UsuarioDAO.java
@@ -11,7 +12,9 @@ C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Vi
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\AplicacionPrincipal.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\ConServicioControlador.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\TipoProgresoController.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\ProgresoAgregarController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\listeners\TipoProgresoAgregadoListener.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\AnalisisAgregarController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Sucursales.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\ProcesoTipoProgresoDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\CiudadesController.java
@@ -26,6 +29,9 @@ C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\util\Emai
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\ProgresoDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\listeners\ProcesoAgregadoListener.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Progreso.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\listeners\AnalisisAgregadoListener.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\listeners\ProgresoAgregadoListener.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\PoligrafiasControlador.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\PermisosDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Ciudades.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\VisitasDAO.java
@@ -45,12 +51,18 @@ C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlad
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Usuarios.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Poligrafistas.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\PerfilController.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\listeners\PoligrafistaAgregadoListener.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\DocumentoAgregarController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\ProcesoController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\PerfilesDAO.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\PoligrafistasDAO.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\PoligrafistasController.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\PoligrafiasDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Permisos.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\VisitasControlador.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\CiudadesDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\MainController.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\listeners\DocumentoAgregadoListener.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\listeners\VisitadorAgregadoListener.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\TiposProgresoDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\GestServicioControlador.java

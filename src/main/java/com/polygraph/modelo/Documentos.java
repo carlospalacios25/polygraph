@@ -1,13 +1,14 @@
 package com.polygraph.modelo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Documentos {
     private int idDocumento;
     private int idServicio;
     private String tipoDocumento;
     private String nombreArchivo;
-    private LocalDate fechaCarga;
+    private LocalDateTime fechaCarga;
     private String descripcion;
     private long tamanoArchivo;
     private String estadoDocumento;
@@ -23,7 +24,7 @@ public class Documentos {
 
     // ✅ Constructor completo (opcional, si lo quieres usar)
     public Documentos(int idDocumento, int idServicio, String tipoDocumento, String nombreArchivo,
-                      LocalDate fechaCarga, String descripcion, long tamanoArchivo,
+                      LocalDateTime fechaCarga, String descripcion, long tamanoArchivo,
                       String estadoDocumento, LocalDate fechaSolicitud, LocalDate fechaRecibido,
                       String habesData, String comunicados, String rutaArchivo) {
         this.idDocumento = idDocumento;
@@ -73,11 +74,11 @@ public class Documentos {
         this.nombreArchivo = nombreArchivo;
     }
 
-    public LocalDate getFechaCarga() {          
+    public LocalDateTime getFechaCarga() {          
         return fechaCarga;
     }
 
-    public void setFechaCarga(LocalDate fechaCarga) {   
+    public void setFechaCarga(LocalDateTime fechaCarga) {   
         this.fechaCarga = fechaCarga;
     }
 

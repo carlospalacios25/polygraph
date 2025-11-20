@@ -5,7 +5,14 @@ public class Poligrafistas {
     private int idPoligrafista;
     private String nombrePoligrafista;
     private String salaEncargada;
-
+    
+    public Poligrafistas() {}
+    
+    public Poligrafistas(String nombrePoligrafista, String salaEncargada) {
+        this.nombrePoligrafista = nombrePoligrafista;
+        this.salaEncargada = salaEncargada;
+    }
+    
     public Poligrafistas(int idPoligrafista, String nombrePoligrafista, String salaEncargada) {
         this.idPoligrafista = idPoligrafista;
         this.nombrePoligrafista = nombrePoligrafista;

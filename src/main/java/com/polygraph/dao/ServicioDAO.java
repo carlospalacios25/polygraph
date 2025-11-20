@@ -173,4 +173,74 @@ public class ServicioDAO {
             }
         }
     }
+    
+    public boolean servicioRequierePoligrafia(int idServicio) throws SQLException {
+        String sql = """
+            SELECT 
+                1
+            FROM servicios s
+            LEFT JOIN proceso_tipos_progreso tp ON s.Id_Proceso  = tp.Id_Proceso
+            LEFT JOIN tipos_progreso tpr       ON tp.Id_Tipo_Progreso = tpr.Id_Tipo_Progreso
+            WHERE  s.Id_Servicio = ?
+               AND tpr.Nombre_Progreso LIKE '%poligrafia%'
+               AND tp.Habilitado = 1
+            LIMIT 1
+            """;
+
+        try (Connection conn = ConexionBD.getInstancia().getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idServicio);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next(); // true si encontró al menos 1 registro
+            }
+        }
+    }
+    
+    public List<Servicio> listarServiciosPoligrafia() throws SQLException {
+        List<Servicio> servicios = new ArrayList<>();
+
+        String sql = """
+            SELECT 
+            	s.Id_Servicio,
+            	s.Fecha_Solicitud,
+            	s.Hora_Solicitud,
+            	cli.Nombre_Cliente,
+            	can.Nombre_Candidato,
+            	can.Apellido_Candidato,
+            	p.Nombre_Proceso,
+            	s.Estado,
+            	s.Resultado
+            FROM servicios s
+            LEFT JOIN clientes cli     ON s.Nit_Cliente      = cli.Nit_Cliente
+            LEFT JOIN candidatos can   ON s.Cedula_Candidato = can.Cedula_Candidato
+            LEFT JOIN procesos p       ON s.Id_Proceso       = p.Id_Proceso
+            LEFT JOIN proceso_tipos_progreso tp ON s.Id_Proceso  = tp.Id_Proceso
+            LEFT JOIN tipos_progreso tpr ON tp.Id_Tipo_Progreso = tpr.Id_Tipo_Progreso
+            WHERE  tpr.Nombre_Progreso LIKE '%poligrafia%' and TP.Habilitado = 1
+            ORDER BY s.Fecha_Solicitud ASC, s.Hora_Solicitud ASC
+            """;
+
+        try (Connection conn = ConexionBD.getInstancia().getConexion();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                Servicio s = new Servicio(
+                    rs.getInt("Id_Servicio"),
+                    rs.getObject("Fecha_Solicitud", LocalDate.class),
+                    rs.getObject("Hora_Solicitud", LocalTime.class),
+                    rs.getString("Nombre_Cliente"),
+                    rs.getString("Nombre_Candidato"),
+                    rs.getString("Apellido_Candidato"),
+                    rs.getString("Nombre_Proceso"),
+                    rs.getString("Estado"),
+                    rs.getString("Resultado")
+                );
+                servicios.add(s);
+            }
+        }
+        return servicios;
+    }
 }

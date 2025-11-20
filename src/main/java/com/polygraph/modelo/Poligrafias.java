@@ -1,23 +1,45 @@
-
 package com.polygraph.modelo;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Poligrafias {
     private int idPoligrafia;
     private int idServicio;
     private int idPoligrafista;
     private LocalDate fechaAsignacion;
-    private boolean asistencia;
+    private LocalTime horaProgramacion;
+    // En BD es enum('Si','No') -> lo manejamos como String "Si"/"No"
+    private String asistencia;
     private LocalDate fechaEntrega;
 
-    public Poligrafias(int idPoligrafia, int idServicio, int idPoligrafista, LocalDate fechaAsignacion, boolean asistencia, LocalDate fechaEntrega) {
+    // Campos de apoyo para mostrar en UI
+    private String nombrePoligrafista;
+    private String nombreServicio;
+
+    public Poligrafias(int idPoligrafia,
+                       int idServicio,
+                       int idPoligrafista,
+                       LocalDate fechaAsignacion,
+                       LocalTime horaProgramacion,
+                       String asistencia,
+                       LocalDate fechaEntrega) {
         this.idPoligrafia = idPoligrafia;
         this.idServicio = idServicio;
         this.idPoligrafista = idPoligrafista;
         this.fechaAsignacion = fechaAsignacion;
+        this.horaProgramacion = horaProgramacion;
         this.asistencia = asistencia;
         this.fechaEntrega = fechaEntrega;
+    }
+
+    public Poligrafias(int idServicio,
+                       int idPoligrafista,
+                       LocalDate fechaAsignacion,
+                       LocalTime horaProgramacion,
+                       String asistencia,
+                       LocalDate fechaEntrega) {
+        this(0, idServicio, idPoligrafista, fechaAsignacion, horaProgramacion, asistencia, fechaEntrega);
     }
 
     public int getIdPoligrafia() {
@@ -52,11 +74,19 @@ public class Poligrafias {
         this.fechaAsignacion = fechaAsignacion;
     }
 
-    public boolean isAsistencia() {
+    public LocalTime getHoraProgramacion() {
+        return horaProgramacion;
+    }
+
+    public void setHoraProgramacion(LocalTime horaProgramacion) {
+        this.horaProgramacion = horaProgramacion;
+    }
+
+    public String getAsistencia() {
         return asistencia;
     }
 
-    public void setAsistencia(boolean asistencia) {
+    public void setAsistencia(String asistencia) {
         this.asistencia = asistencia;
     }
 
@@ -68,5 +98,19 @@ public class Poligrafias {
         this.fechaEntrega = fechaEntrega;
     }
 
-    
+    public String getNombrePoligrafista() {
+        return nombrePoligrafista;
+    }
+
+    public void setNombrePoligrafista(String nombrePoligrafista) {
+        this.nombrePoligrafista = nombrePoligrafista;
+    }
+
+    public String getNombreServicio() {
+        return nombreServicio;
+    }
+
+    public void setNombreServicio(String nombreServicio) {
+        this.nombreServicio = nombreServicio;
+    }
 }

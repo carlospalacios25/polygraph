@@ -4,6 +4,7 @@ import com.polygraph.dao.UsuarioDAO;
 import com.polygraph.modelo.Usuarios;
 import com.polygraph.util.ConexionBD;
 import com.polygraph.util.EmailUtil;
+import com.polygraph.util.UsuarioSesion;
 import jakarta.mail.MessagingException;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
@@ -109,6 +110,7 @@ public class LoginController {
         }
 
         if (authenticate(username, password)) {
+            UsuarioSesion.setUsuarioActual(username);
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/MainView.fxml"));
                 Parent root = loader.load();

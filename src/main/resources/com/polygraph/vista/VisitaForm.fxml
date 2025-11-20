@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -8,84 +7,80 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox spacing="20" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.VisitasControlador">
     <children>
-    <!-- Formulario -->
-    <VBox prefHeight="362.0" prefWidth="984.0" spacing="15" styleClass="form-container">
-        <Label styleClass="title-label" text="Módulo de Visitas" />
 
-        <GridPane hgap="15" prefHeight="230.0" prefWidth="944.0" style="-fx-padding: 20; -fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8;" vgap="12">
-            <!-- Fila 1 -->
-            <Label text="ID Servicio:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="idServicioField" prefHeight="38.0" prefWidth="189.0" promptText="Servicio" GridPane.columnIndex="1" />
+        <!-- ====================== FORMULARIO ====================== -->
+        <VBox prefHeight="480.0" prefWidth="984.0" spacing="15" styleClass="form-container">
+            <Label styleClass="title-label" text="Módulo de Visitas" />
 
-            <Label text="ID Visitador:" GridPane.columnIndex="2" />
-            <ComboBox fx:id="visitadorCombo" promptText="Visitador" styleClass="text-field" GridPane.columnIndex="3" />
+            <!-- Contenedor blanco (igual que antes, pero ahora los botones van dentro) -->
+            <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #e2e8f0; -fx-padding: 20;">
+                
+                <!-- GridPane con filas perfectas -->
+                <GridPane hgap="15" vgap="15">
+                    <!-- Fila 0 -->
+                    <Label text="ID Servicio:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="idServicioField" promptText="Servicio" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Label text="ID Visitador:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <ComboBox fx:id="visitadorCombo" promptText="Visitador" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                    <Label text="Tipo Prueba:" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+                    <ComboBox fx:id="tipoPruebaCombo" promptText="Prueba" styleClass="text-field" GridPane.columnIndex="5" GridPane.rowIndex="0" />
 
-            <!-- Fila 2 -->
-            <Label text="Tipo Prueba:" GridPane.columnIndex="4" />
-            <ComboBox fx:id="tipoPruebaCombo" promptText="Prueba" styleClass="text-field" GridPane.columnIndex="5" />
+                    <!-- Fila 1 -->
+                    <Label text="Tipo Visita:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="tipoVisitaCombo" promptText="Tipo visita" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Label text="Fecha Solicitud:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <DatePicker fx:id="fechaSolicitudPicker" promptText="Fecha solicitud" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                    <Label text="Fecha Visita:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                    <DatePicker fx:id="fechaVisitaPicker" promptText="Fecha visita" GridPane.columnIndex="5" GridPane.rowIndex="1" />
 
-            <Label text="Tipo Visita:" GridPane.rowIndex="1" />
-            <ComboBox fx:id="tipoVisitaCombo" promptText="Tipo visita" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <!-- Fila 2 -->
+                    <Label text="Hora Visita:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <TextField fx:id="horaVisitaField" promptText="HH:MM" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label text="Fecha Envío Informe:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    <DatePicker fx:id="fechaEnvioInformePicker" promptText="Fecha informe" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                    <Label text="Novedad:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                    <TextField fx:id="novedadField" promptText="Novedades visita" GridPane.columnIndex="5" GridPane.rowIndex="2" />
 
-            <!-- Fila 3 -->
-            <Label text="Fecha Solicitud:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <DatePicker fx:id="fechaSolicitudPicker" promptText="Fecha solicitud" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                    </rowConstraints>
+                </GridPane>
 
-            <Label text="Fecha Visita:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-            <DatePicker fx:id="fechaVisitaPicker" promptText="Fecha visita" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                <!-- Botones AHORA DENTRO del recuadro blanco (sin estilo extra) -->
+                <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-padding: 20 0 10 0;">
+                    <children>
+                        <Button fx:id="btnGuardarVisita" text="Crear visita" onAction="#guardarVisita" />
+                        <Button text="Limpiar" onAction="#limpiarCampos" styleClass="button" />
+                        <Button text="Insertar Visitar" onAction="#cargarForVisitador" styleClass="button" />
+                    </children>
+                </HBox>
 
-            <!-- Fila 4 -->
-            <Label text="Hora Visita:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <TextField fx:id="horaVisitaField" promptText="HH:MM" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            </VBox>
+        </VBox>
 
-            <Label text="Fecha Envío Informe:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <DatePicker fx:id="fechaEnvioInformePicker" promptText="Fecha informe" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+        <!-- ====================== BUSCADOR ====================== -->
+        <TextField fx:id="buscadorField" prefWidth="300" promptText="Buscar visita por ID, servicio, tipo..." />
 
-            <!-- Fila 5 -->
-            <Label text="Novedad:" GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="3" />
-            <TextField fx:id="novedadField" promptText="Novedades visita" GridPane.columnIndex="5" GridPane.rowIndex="3" />
-            
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
-                <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
-                <ColumnConstraints hgrow="ALWAYS" />
-               <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" />
-               <ColumnConstraints hgrow="ALWAYS" />
-               <ColumnConstraints hgrow="ALWAYS" />
-               <ColumnConstraints hgrow="ALWAYS" />
-               <ColumnConstraints hgrow="ALWAYS" />
-            </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
-        </GridPane>
-         <Pane prefHeight="66.0" prefWidth="944.0">
-            <children>
-               <Button fx:id="btnGuardarVisita" layoutX="14.0" layoutY="-5.0" onAction="#guardarVisita" text="Crear visita" />
-               <Button layoutX="204.0" layoutY="-5.0" onAction="#limpiarCampos" styleClass="button" text="Limpiar" />
-               <Button layoutX="307.0" layoutY="-5.0" onAction="#cargarForVisitador" styleClass="button" text="Insertar Visitar" />
-            </children>
-         </Pane>
-    </VBox>
+        <!-- ====================== CONTENEDOR DE TARJETAS (EXACTAMENTE IGUAL QUE ANTES) ====================== -->
+        <ScrollPane fitToWidth="true" prefHeight="345.0" prefWidth="984.0" styleClass="form-container">
+            <GridPane fx:id="serviciosContainer" hgap="25" styleClass="form-container" vgap="25" />
+        </ScrollPane>
 
-    <!-- Buscador -->
-    <TextField fx:id="buscadorField" prefWidth="300" promptText="Buscar visita por ID, servicio, tipo..." />
-
-    <!-- Contenedor de Tarjetas -->
-    <ScrollPane fitToWidth="true" prefHeight="282.0" prefWidth="984.0" styleClass="form-container">
-        <GridPane fx:id="serviciosContainer" hgap="25" styleClass="form-container" vgap="25" />
-    </ScrollPane>
     </children>
-</VBox>
+</VBox> 

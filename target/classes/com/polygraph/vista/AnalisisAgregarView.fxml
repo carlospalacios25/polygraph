@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.polygraph.controlador.AnalisisAgregarController"
+      alignment="CENTER" prefHeight="500.0" prefWidth="520.0" spacing="20"
+      styleClass="root" stylesheets="@../styles.css">
+
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <VBox alignment="CENTER" spacing="20" styleClass="form-container">
+
+        <Label text="Agregar Análisis" styleClass="title-label"/>
+
+        <!-- TIPO DE ANÁLISIS -->
+        <VBox alignment="CENTER_LEFT" spacing="8">
+            <Label text="Tipo de análisis:" styleClass="label"/>
+            <ComboBox fx:id="cmbTipoAnalisis" prefWidth="400" styleClass="text-field"/>
+        </VBox>
+
+        <!-- CONTENIDO -->
+        <VBox alignment="CENTER_LEFT" spacing="8">
+            <Label text="Contenido del análisis:" styleClass="label"/>
+            <TextArea fx:id="txtContenido" prefHeight="180" prefWidth="400" 
+                      promptText="Escribe aquí el análisis completo..." 
+                      wrapText="true" styleClass="text-field"/>
+        </VBox>
+
+        <!-- BOTONES -->
+        <HBox alignment="CENTER" spacing="20">
+            <Button text="Cancelar" onAction="#cancelar" styleClass="button"/>
+            <Button text="Guardar Análisis" onAction="#guardar" styleClass="button primary"/>
+        </HBox>
+
+        <Label fx:id="
+```errorLabel" styleClass="error-label" text="" 
+               style="-fx-padding: 5 0 0 0; -fx-min-height: 20;"/>
+
+    </VBox>
+</VBox>

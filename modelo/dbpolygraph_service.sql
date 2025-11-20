@@ -249,8 +249,9 @@ CREATE TABLE `poligrafias` (
   `Id_Servicio` int NOT NULL COMMENT 'Servicio asociado a la poligrafía.',
   `Id_Poligrafista` int NOT NULL COMMENT 'Poligrafista asignado a la prueba.',
   `Fecha_Asignacion` date NOT NULL COMMENT 'Fecha de asignación de la prueba.',
-  `Asistencia` enum('Si','No') NOT NULL COMMENT 'Indica si el candidato asistió a la prueba.',
-  `Fecha_Entrega` date NOT NULL COMMENT 'Fecha de entrega del informe de la prueba.',
+  `Hora_Programacion` time NOT NULL COMMENT 'Hora programada de la prueba.',
+  `Asistencia` enum('Si','No')COMMENT 'Indica si el candidato asistió a la prueba.',
+  `Fecha_Entrega` date COMMENT 'Fecha de entrega del informe de la prueba.',
   PRIMARY KEY (`Id_Poligrafia`),
   KEY `Id_Servicio` (`Id_Servicio`),
   KEY `Id_Poligrafista` (`Id_Poligrafista`),
@@ -505,7 +506,7 @@ CREATE TABLE `usuarios` (
 -- Dumping data for table `usuarios`
 --
 
-LOCK TABLES ` ` WRITE;
+LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
