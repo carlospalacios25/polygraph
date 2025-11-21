@@ -34,7 +34,7 @@ public class ClienteController {
     @FXML private ComboBox<Ciudades> cidadesComboBox;
     @FXML private TableView<Clientes> tablaClientes;
     @FXML private TextField buscadorField;
-    @FXML private Button btnCrearUsuario;                // ← Asegúrate de que exista este fx:id en el FXML
+    @FXML private Button btnCrearCliente;                // ← Asegúrate de que exista este fx:id en el FXML
 
     @FXML private TableColumn<Clientes, Long> colNitCliente;
     @FXML private TableColumn<Clientes, String> colNomCliente;
@@ -111,11 +111,11 @@ public class ClienteController {
 
     private void actualizarTextoBotonCrear(boolean seleccionado) {
         if (seleccionado) {
-            btnCrearUsuario.setText("Limpiar");
-            btnCrearUsuario.setStyle("-fx-background-color: #ff6666; -fx-text-fill: white; -fx-font-weight: bold;");
+            btnCrearCliente.setText("Limpiar");
+           // btnCrearCliente.setStyle("-fx-background-color: #ff6666; -fx-text-fill: white; -fx-font-weight: bold;");
         } else {
-            btnCrearUsuario.setText("Crear Usuario");
-            btnCrearUsuario.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white; -fx-font-weight: bold;");
+            btnCrearCliente.setText("Crear Usuario");
+           // btnCrearCliente.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white; -fx-font-weight: bold;");
         }
     }
 

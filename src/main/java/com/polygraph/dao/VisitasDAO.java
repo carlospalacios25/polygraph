@@ -16,11 +16,13 @@ public class VisitasDAO {
                      "VALUES (?, ?, ?, ?, ?)";
         try (Connection c = ConexionBD.getInstancia().getConexion();
              PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
             p.setInt(1, v.getIdServicio());
             p.setInt(2, v.getIdVisitador());
             p.setString(3, v.getTipo_Prueba());
             p.setString(4, v.getTipo_Visita());
-            p.setObject(5, v.getFechaSolicitud());
+            p.setObject(5, v.getFechaSolicitud()); // LocalDate → se mapea automáticamente en drivers modernos
+
             p.executeUpdate();
 
             try (ResultSet rs = p.getGeneratedKeys()) {
@@ -30,7 +32,7 @@ public class VisitasDAO {
             }
         }
     }
-    
+
     public void actualizarVisita(Visitas v) throws SQLException {
         String sql = "UPDATE visitas SET " +
                      "Id_Servicio = ?, Id_Visitador = ?, Tipo_Prueba = ?, Tipo_Visita = ?, " +
@@ -45,17 +47,48 @@ public class VisitasDAO {
             p.setInt(2, v.getIdVisitador());
             p.setString(3, v.getTipo_Prueba());
             p.setString(4, v.getTipo_Visita());
-            p.setDate(5, Date.valueOf(v.getFechaSolicitud()));
-            p.setDate(6, Date.valueOf(v.getFechaVisita()));
-            p.setTime(7, Time.valueOf(v.getHoraVisita()));
-            p.setDate(8, Date.valueOf(v.getFechaeInforme()));
-            p.setString(9, v.getNovedadVisita());
+
+            // Fecha_Solicitud (puede ser NOT NULL en BD, pero igual lo hacemos seguro)
+            if (v.getFechaSolicitud() != null) {
+                p.setDate(5, Date.valueOf(v.getFechaSolicitud()));
+            } else {
+                p.setNull(5, Types.DATE);
+            }
+
+            // Fecha_Visita (OPCIONAL)
+            if (v.getFechaVisita() != null) {
+                p.setDate(6, Date.valueOf(v.getFechaVisita()));
+            } else {
+                p.setNull(6, Types.DATE);
+            }
+
+            // Hora_Visita (OPCIONAL)
+            if (v.getHoraVisita() != null) {
+                p.setTime(7, Time.valueOf(v.getHoraVisita()));
+            } else {
+                p.setNull(7, Types.TIME);
+            }
+
+            // Fecha_Envio_Informe (OPCIONAL)
+            if (v.getFechaeInforme() != null) {
+                p.setDate(8, Date.valueOf(v.getFechaeInforme()));
+            } else {
+                p.setNull(8, Types.DATE);
+            }
+
+            // Novedad_Visita (OPCIONAL)
+            if (v.getNovedadVisita() != null && !v.getNovedadVisita().isBlank()) {
+                p.setString(9, v.getNovedadVisita());
+            } else {
+                p.setNull(9, Types.VARCHAR);
+            }
+
             p.setInt(10, v.getIdVisita());
 
             p.executeUpdate();
         }
     }
-    
+
     public List<Visitas> listarVisitas() throws SQLException {
         List<Visitas> lista = new ArrayList<>();
         String sql = """
@@ -68,6 +101,7 @@ public class VisitasDAO {
         try (Connection c = ConexionBD.getInstancia().getConexion();
              PreparedStatement p = c.prepareStatement(sql);
              ResultSet rs = p.executeQuery()) {
+
             while (rs.next()) {
                 Visitas v = new Visitas(
                     rs.getInt("Id_Visita"),
@@ -75,10 +109,10 @@ public class VisitasDAO {
                     rs.getInt("Id_Visitador"),
                     rs.getString("Tipo_Prueba"),
                     rs.getString("Tipo_Visita"),
-                    rs.getDate("Fecha_Solicitud").toLocalDate(),
-                    rs.getDate("Fecha_Visita").toLocalDate(),
-                    rs.getTime("Hora_Visita").toLocalTime(),
-                    rs.getDate("Fecha_Envio_Informe").toLocalDate(),
+                    toLocalDate(rs.getDate("Fecha_Solicitud")),
+                    toLocalDate(rs.getDate("Fecha_Visita")),
+                    toLocalTime(rs.getTime("Hora_Visita")),
+                    toLocalDate(rs.getDate("Fecha_Envio_Informe")),
                     rs.getString("Novedad_Visita")
                 );
                 v.setNombreVisitador(rs.getString("Nombre_Visitador"));
@@ -87,7 +121,7 @@ public class VisitasDAO {
         }
         return lista;
     }
-    
+
     public Visitas obtenerVisitaPorServicio(int idServicio) throws SQLException {
         String sql = "SELECT v.Id_Visita, v.Id_Servicio, v.Id_Visitador, " +
                      " v.Tipo_Prueba, v.Tipo_Visita, " +
@@ -112,10 +146,10 @@ public class VisitasDAO {
                         rs.getInt("Id_Visitador"),
                         rs.getString("Tipo_Prueba"),
                         rs.getString("Tipo_Visita"),
-                        toLocalDate(rs.getDate("Fecha_Solicitud")),      // Seguro
-                        toLocalDate(rs.getDate("Fecha_Visita")),         // Seguro (aunque sea NULL)
-                        toLocalTime(rs.getTime("Hora_Visita")),          // Seguro
-                        toLocalDate(rs.getDate("Fecha_Envio_Informe")),  // Seguro
+                        toLocalDate(rs.getDate("Fecha_Solicitud")),
+                        toLocalDate(rs.getDate("Fecha_Visita")),
+                        toLocalTime(rs.getTime("Hora_Visita")),
+                        toLocalDate(rs.getDate("Fecha_Envio_Informe")),
                         rs.getString("Novedad_Visita")
                     );
                     v.setNombreVisitador(rs.getString("Nombre_Visitador"));
@@ -125,8 +159,8 @@ public class VisitasDAO {
         }
         return null;
     }
-    
-        // Convierte java.sql.Date a LocalDate de forma segura
+
+    // Convierte java.sql.Date a LocalDate de forma segura
     private LocalDate toLocalDate(java.sql.Date sqlDate) {
         return sqlDate != null ? sqlDate.toLocalDate() : null;
     }

@@ -21,10 +21,34 @@ public class PoligrafiasDAO {
 
             ps.setInt(1, p.getIdServicio());
             ps.setInt(2, p.getIdPoligrafista());
-            ps.setDate(3, Date.valueOf(p.getFechaAsignacion()));
-            ps.setTime(4, Time.valueOf(p.getHoraProgramacion()));
-            ps.setString(5, p.getAsistencia());
-            ps.setDate(6, Date.valueOf(p.getFechaEntrega()));
+
+            // Fecha_Asignacion (obligatoria en tu validación, pero igual null-safe)
+            if (p.getFechaAsignacion() != null) {
+                ps.setDate(3, Date.valueOf(p.getFechaAsignacion()));
+            } else {
+                ps.setNull(3, Types.DATE);
+            }
+
+            // Hora_Programacion (obligatoria en tu validación, pero null-safe)
+            if (p.getHoraProgramacion() != null) {
+                ps.setTime(4, Time.valueOf(p.getHoraProgramacion()));
+            } else {
+                ps.setNull(4, Types.TIME);
+            }
+
+            // Asistencia (opcional)
+            if (p.getAsistencia() != null && !p.getAsistencia().isBlank()) {
+                ps.setString(5, p.getAsistencia());
+            } else {
+                ps.setNull(5, Types.VARCHAR);
+            }
+
+            // Fecha_Entrega (opcional)
+            if (p.getFechaEntrega() != null) {
+                ps.setDate(6, Date.valueOf(p.getFechaEntrega()));
+            } else {
+                ps.setNull(6, Types.DATE);
+            }
 
             ps.executeUpdate();
 
@@ -47,10 +71,35 @@ public class PoligrafiasDAO {
 
             ps.setInt(1, p.getIdServicio());
             ps.setInt(2, p.getIdPoligrafista());
-            ps.setDate(3, Date.valueOf(p.getFechaAsignacion()));
-            ps.setTime(4, Time.valueOf(p.getHoraProgramacion()));
-            ps.setString(5, p.getAsistencia());
-            ps.setDate(6, Date.valueOf(p.getFechaEntrega()));
+
+            // Fecha_Asignacion
+            if (p.getFechaAsignacion() != null) {
+                ps.setDate(3, Date.valueOf(p.getFechaAsignacion()));
+            } else {
+                ps.setNull(3, Types.DATE);
+            }
+
+            // Hora_Programacion
+            if (p.getHoraProgramacion() != null) {
+                ps.setTime(4, Time.valueOf(p.getHoraProgramacion()));
+            } else {
+                ps.setNull(4, Types.TIME);
+            }
+
+            // Asistencia (opcional)
+            if (p.getAsistencia() != null && !p.getAsistencia().isBlank()) {
+                ps.setString(5, p.getAsistencia());
+            } else {
+                ps.setNull(5, Types.VARCHAR);
+            }
+
+            // Fecha_Entrega (opcional)
+            if (p.getFechaEntrega() != null) {
+                ps.setDate(6, Date.valueOf(p.getFechaEntrega()));
+            } else {
+                ps.setNull(6, Types.DATE);
+            }
+
             ps.setInt(7, p.getIdPoligrafia());
 
             ps.executeUpdate();
@@ -86,14 +135,11 @@ public class PoligrafiasDAO {
                     rs.getString("Asistencia"),
                     toLocalDate(rs.getDate("Fecha_Entrega"))
                 );
-                // Si tu modelo NO tiene nombreServicio ni nombrePoligrafista,
-                // simplemente NO llames a setNombreServicio / setNombrePoligrafista
                 lista.add(p);
             }
         }
         return lista;
     }
-
 
     public Poligrafias obtenerPoligrafiaPorServicio(int idServicio) throws SQLException {
         String sql = """
@@ -128,7 +174,6 @@ public class PoligrafiasDAO {
                             rs.getString("Asistencia"),
                             toLocalDate(rs.getDate("Fecha_Entrega"))
                     );
-                    // 👉 AQUÍ llenamos el nombre del poligrafista
                     p.setNombrePoligrafista(rs.getString("Nombre_Poligrafista"));
                     return p;
                 }
@@ -140,16 +185,17 @@ public class PoligrafiasDAO {
     /**
      * Valida si existe otra poligrafía para el mismo poligrafista y fecha
      * con menos de 60 minutos de diferencia.
-     *
-     * @param idPoligrafista id del poligrafista
-     * @param fecha fecha asignación
-     * @param hora hora programada
-     * @param idPoligrafiaActual id actual (para edición) o 0 si es nueva
      */
     public boolean hayConflictoHorario(int idPoligrafista,
                                        LocalDate fecha,
                                        LocalTime hora,
                                        int idPoligrafiaActual) throws SQLException {
+
+        // ✅ Si por alguna razón llega fecha u hora null, no hacemos la validación (evitamos Date.valueOf(null))
+        if (fecha == null || hora == null) {
+            return false;
+        }
+
         String sql = """
                 SELECT COUNT(*) AS total
                 FROM poligrafias

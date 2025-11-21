@@ -117,10 +117,10 @@ public class CandidatoController {
     private void actualizarTextoBotonCrear(boolean seleccionado) {
         if (seleccionado) {
             btnCrearCandidato.setText("Limpiar");
-            btnCrearCandidato.setStyle("-fx-background-color: #ff6666; -fx-text-fill: white; -fx-font-weight: bold;");
+           // btnCrearCandidato.setStyle("-fx-background-color: #ff6666; -fx-text-fill: white; -fx-font-weight: bold;");
         } else {
             btnCrearCandidato.setText("Crear Candidato");
-            btnCrearCandidato.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white; -fx-font-weight: bold;");
+           // btnCrearCandidato.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white; -fx-font-weight: bold;");
         }
     }
 

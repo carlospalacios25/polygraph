@@ -17,6 +17,9 @@ public class Poligrafias {
     private String nombrePoligrafista;
     private String nombreServicio;
 
+    public Poligrafias() {
+    }
+    
     public Poligrafias(int idPoligrafia,
                        int idServicio,
                        int idPoligrafista,
@@ -33,13 +36,12 @@ public class Poligrafias {
         this.fechaEntrega = fechaEntrega;
     }
 
-    public Poligrafias(int idServicio,
-                       int idPoligrafista,
-                       LocalDate fechaAsignacion,
-                       LocalTime horaProgramacion,
-                       String asistencia,
-                       LocalDate fechaEntrega) {
-        this(0, idServicio, idPoligrafista, fechaAsignacion, horaProgramacion, asistencia, fechaEntrega);
+    public Poligrafias(int idServicio, int idPoligrafista, LocalDate fechaAsignacion, LocalTime horaProgramacion) {
+        this.idPoligrafia = idPoligrafia;
+        this.idServicio = idServicio;
+        this.idPoligrafista = idPoligrafista;
+        this.fechaAsignacion = fechaAsignacion;
+        this.horaProgramacion = horaProgramacion;
     }
 
     public int getIdPoligrafia() {

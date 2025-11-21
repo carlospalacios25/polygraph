@@ -34,7 +34,7 @@ import javafx.util.StringConverter;
 public class PoligrafiasControlador {
 
     // === CAMPOS DEL FORMULARIO (coinciden con tu FXML actual) ===
-    @FXML private TextField idServicioField;           // ← fx:id="idServicioField"
+    @FXML private TextField idServicioField;
     @FXML private ComboBox<Poligrafistas> poligrafistaCombo;
     @FXML private DatePicker fechaAsignacionPicker;
     @FXML private TextField horaProgramacionField;
@@ -42,12 +42,12 @@ public class PoligrafiasControlador {
     @FXML private DatePicker fechaEntregaPicker;
 
     // === BUSCADOR Y CONTENEDOR DE TARJETAS ===
-    @FXML private TextField buscadorField;             // ← fx:id="buscadorField"
-    @FXML private GridPane poligrafiasContainer;       // ← fx:id="poligrafiasContainer" o el que uses en FXML
+    @FXML private TextField buscadorField;
+    @FXML private GridPane poligrafiasContainer;
 
     // === BOTONES ===
     @FXML private Button btnGuardarPoligrafia;
-    @FXML private Button btnLimpiarPoligrafia;         // opcional, si lo tienes
+    @FXML private Button btnLimpiarPoligrafia;
 
     private final PoligrafiasDAO poligrafiasDAO = new PoligrafiasDAO();
     private final ServicioDAO servicioDAO = new ServicioDAO();
@@ -75,6 +75,7 @@ public class PoligrafiasControlador {
 
     private void configurarHoraField() {
         if (horaProgramacionField == null) return;
+
         horaProgramacionField.setTextFormatter(new TextFormatter<>(change -> {
             String text = change.getControlNewText();
             if (text.isEmpty()) return change;
@@ -88,6 +89,7 @@ public class PoligrafiasControlador {
             }
             return change;
         }));
+
         horaProgramacionField.textProperty().addListener((obs, oldV, newV) -> {
             if (newV.length() == 2 && !newV.contains(":")) {
                 horaProgramacionField.setText(newV + ":");
@@ -121,6 +123,7 @@ public class PoligrafiasControlador {
         }
     }
 
+    // ✅ Validación básica (obligatorios)
     private boolean validarCampos() {
         if (idServicioField == null || idServicioField.getText().isEmpty()) {
             showAlert("Error", "ID Servicio requerido.");
@@ -138,14 +141,7 @@ public class PoligrafiasControlador {
             showAlert("Error", "Hora de programación inválida (HH:MM).");
             return false;
         }
-        if (asistenciaCombo == null || asistenciaCombo.getValue() == null) {
-            showAlert("Error", "Selecciona asistencia (Si/No).");
-            return false;
-        }
-        if (fechaEntregaPicker == null || fechaEntregaPicker.getValue() == null) {
-            showAlert("Error", "Fecha de entrega requerida.");
-            return false;
-        }
+        // asistencia y fechaEntrega las dejas opcionales (comentadas)
         return true;
     }
 
@@ -156,37 +152,56 @@ public class PoligrafiasControlador {
         try {
             int idServicio = Integer.parseInt(idServicioField.getText());
             Poligrafistas poligrafistaSel = poligrafistaCombo.getValue();
-            LocalDate fechaAsignacion = fechaAsignacionPicker.getValue();
-            LocalTime horaProgramacion = LocalTime.parse(horaProgramacionField.getText());
-            String asistencia = asistenciaCombo.getValue();
-            LocalDate fechaEntrega = fechaEntregaPicker.getValue();
+            LocalDate fechaAsignacion = fechaAsignacionPicker.getValue();           // obligatorio
+            LocalTime horaProgramacion = LocalTime.parse(horaProgramacionField.getText()); // obligatorio
 
+            // ✅ Opcionales: pueden ser null
+            String asistencia = (asistenciaCombo != null) ? asistenciaCombo.getValue() : null;
+            LocalDate fechaEntrega = (fechaEntregaPicker != null) ? fechaEntregaPicker.getValue() : null;
+
+            // Validar que el servicio requiera poligrafía
             boolean requierePoligrafia = servicioDAO.servicioRequierePoligrafia(idServicio);
             if (!requierePoligrafia) {
                 showAlert("Error", "El servicio " + idServicio + " no está configurado para realizar poligrafía.");
                 return;
             }
 
+            // Validar conflicto horario SOLO si tenemos fecha y hora (por seguridad extra)
             int idActual = (poligrafiaActual != null) ? poligrafiaActual.getIdPoligrafia() : 0;
             boolean conflicto = poligrafiasDAO.hayConflictoHorario(
-                    poligrafistaSel.getIdPoligrafista(), fechaAsignacion, horaProgramacion, idActual);
+                    poligrafistaSel.getIdPoligrafista(),
+                    fechaAsignacion,
+                    horaProgramacion,
+                    idActual
+            );
             if (conflicto) {
                 showAlert("Error", "El poligrafista ya tiene una prueba programada en un horario muy cercano.");
                 return;
             }
 
             if (poligrafiaActual == null) {
-                Poligrafias nueva = new Poligrafias(idServicio, poligrafistaSel.getIdPoligrafista(),
-                        fechaAsignacion, horaProgramacion, asistencia, fechaEntrega);
+                // CREAR
+                Poligrafias nueva = new Poligrafias(
+                        idServicio,
+                        poligrafistaSel.getIdPoligrafista(),
+                        fechaAsignacion,
+                        horaProgramacion
+                );
+                // Campos opcionales
+                nueva.setAsistencia(asistencia);
+                nueva.setFechaEntrega(fechaEntrega);
+
                 poligrafiasDAO.insertarPoligrafia(nueva);
                 showAlert("Éxito", "Poligrafía creada con ID: " + nueva.getIdPoligrafia());
             } else {
+                // EDITAR
                 poligrafiaActual.setIdServicio(idServicio);
                 poligrafiaActual.setIdPoligrafista(poligrafistaSel.getIdPoligrafista());
                 poligrafiaActual.setFechaAsignacion(fechaAsignacion);
                 poligrafiaActual.setHoraProgramacion(horaProgramacion);
                 poligrafiaActual.setAsistencia(asistencia);
                 poligrafiaActual.setFechaEntrega(fechaEntrega);
+
                 poligrafiasDAO.actualizarPoligrafia(poligrafiaActual);
                 showAlert("Éxito", "Poligrafía actualizada correctamente.");
             }
@@ -226,21 +241,14 @@ public class PoligrafiasControlador {
     }
 
     private VBox crearTarjetaServicio(Servicio s) {
-        VBox card = new VBox(12);
+        // VBox con menos espacio interno
+        VBox card = new VBox(4);               // menos espacio vertical
         card.getStyleClass().add("service-card-modern");
-        card.setAlignment(Pos.CENTER);
+        card.setAlignment(Pos.CENTER_LEFT);    // coherente con el CSS
+        card.setPrefWidth(260);
+        card.setMaxWidth(260);
 
-        ImageView icon = new ImageView();
-        icon.getStyleClass().add("card-icon");
-        Image img = new Image(getClass().getResourceAsStream("/com/polygraph/imgs/incos-service.png"));
-        if (!img.isError()) {
-            icon.setImage(img);
-            icon.setFitHeight(36);
-            icon.setFitWidth(36);
-            icon.setPreserveRatio(true);
-            icon.setSmooth(true);
-        }
-
+        // 👉 SIN IMAGEN: solo título y texto
         Label title = new Label("Servicio #" + s.getIdServicio());
         title.getStyleClass().add("card-title");
 
@@ -257,6 +265,7 @@ public class PoligrafiasControlador {
         String horaProgStr = "";
         String nombrePoligrafistaTxt = "Sin poligrafía";
         String asistenciaTxt = "";
+
         try {
             poli = poligrafiasDAO.obtenerPoligrafiaPorServicio(s.getIdServicio());
             if (poli != null) {
@@ -274,30 +283,32 @@ public class PoligrafiasControlador {
                 asistenciaTxt = poli.getAsistencia() != null ? poli.getAsistencia() : "";
             }
         } catch (SQLException e) {
-            // silencioso
+            // puedes loguear si quieres
         }
 
+        // Texto central de la tarjeta (similar a la cita médica)
         Label subtitle = new Label(
                 "Fecha solicitud: " + fechaSol + " a las " + horaSol + "\n" +
                 "Cliente: " + (s.getNombreCliente() != null ? s.getNombreCliente() : "N/A") + "\n" +
                 "Candidato: " + (s.getNombreCandidato() != null ? s.getNombreCandidato() + " " : "") +
                                (s.getApellidoCandidato() != null ? s.getApellidoCandidato() : "") + "\n" +
-                "Fecha asignación: " + fechaAsigStr + " " + horaProgStr + "\n" +
+                "Fecha asignación: " + fechaAsigStr + (horaProgStr.isEmpty() ? "" : " " + horaProgStr) + "\n" +
                 "Poligrafista: " + nombrePoligrafistaTxt + "\n" +
                 "Asistencia: " + asistenciaTxt
         );
         subtitle.getStyleClass().add("card-subtitle");
         subtitle.setWrapText(true);
-        subtitle.setMaxWidth(260);
+        subtitle.setMaxWidth(280);
 
         Button btnCargar = new Button("Cargar");
-        btnCargar.getStyleClass().addAll("card-button", "btnCrearPoligrafia");
-        
+        btnCargar.getStyleClass().addAll("card-button", "btn-detalle");
+
         btnCargar.setOnAction(e -> {
             limpiarCampos();
-            idServicioField.setText(String.valueOf(s.getIdServicio()));
+            if (idServicioField != null) {
+                idServicioField.setText(String.valueOf(s.getIdServicio()));
+            }
 
-            // Forzamos que el botón diga "Crear poligrafía" por si acaso
             if (btnGuardarPoligrafia != null) {
                 btnGuardarPoligrafia.setText("Crear poligrafía");
             }
@@ -309,8 +320,6 @@ public class PoligrafiasControlador {
                     poligrafiaActual = p;
                     cargarCamposPoligrafia(p);
 
-                    // AHORA SÍ: CAMBIAMOS EL TEXTO CON Platform.runLater
-                    // Esto asegura que se ejecute DESPUÉS de que JavaFX termine de renderizar todo
                     javafx.application.Platform.runLater(() -> {
                         if (btnGuardarPoligrafia != null) {
                             btnGuardarPoligrafia.setText("Guardar cambios");
@@ -337,17 +346,22 @@ public class PoligrafiasControlador {
             }
         });
 
-        HBox botones = new HBox(10, btnCargar);
+        HBox botones = new HBox(8, btnCargar);
         botones.setAlignment(Pos.CENTER);
-        botones.setStyle("-fx-padding: 12 0 0 0;");
 
-        card.getChildren().addAll(icon, title, subtitle, botones);
+        // 👉 Ya solo agregamos título, texto y botón (sin ImageView)
+        card.getChildren().addAll(title, subtitle, botones);
         return card;
     }
-    
+
+
     private void cargarCamposPoligrafia(Poligrafias p) {
         if (p == null) return;
-        if (idServicioField != null) idServicioField.setText(String.valueOf(p.getIdServicio()));
+
+        if (idServicioField != null) {
+            idServicioField.setText(String.valueOf(p.getIdServicio()));
+        }
+
         if (poligrafistaCombo != null && poligrafistaCombo.getItems() != null) {
             for (Poligrafistas po : poligrafistaCombo.getItems()) {
                 if (po.getIdPoligrafista() == p.getIdPoligrafista()) {
@@ -356,16 +370,27 @@ public class PoligrafiasControlador {
                 }
             }
         }
-        if (fechaAsignacionPicker != null) fechaAsignacionPicker.setValue(p.getFechaAsignacion());
+
+        if (fechaAsignacionPicker != null) {
+            fechaAsignacionPicker.setValue(p.getFechaAsignacion());
+        }
+
         if (horaProgramacionField != null && p.getHoraProgramacion() != null) {
             horaProgramacionField.setText(p.getHoraProgramacion().format(DateTimeFormatter.ofPattern("HH:mm")));
         }
-        if (asistenciaCombo != null) asistenciaCombo.setValue(p.getAsistencia());
-        if (fechaEntregaPicker != null) fechaEntregaPicker.setValue(p.getFechaEntrega());
+
+        if (asistenciaCombo != null) {
+            asistenciaCombo.setValue(p.getAsistencia());
+        }
+
+        if (fechaEntregaPicker != null) {
+            fechaEntregaPicker.setValue(p.getFechaEntrega());
+        }
     }
 
     private void configurarBuscador() {
         if (buscadorField == null || poligrafiasContainer == null) return;
+
         buscadorField.textProperty().addListener((obs, oldV, newV) -> {
             String filtro = newV == null ? "" : newV.toLowerCase().trim();
             poligrafiasContainer.getChildren().clear();
@@ -394,8 +419,7 @@ public class PoligrafiasControlador {
             }
         });
     }
-    
-        // ==================== FORMULARIO POLIGRAFIAS ====================
+
     @FXML
     private void cargarForPoligrafista(ActionEvent e) {
         try {
@@ -414,16 +438,16 @@ public class PoligrafiasControlador {
         }
     }
 
-
     private void showAlert(String titulo, String mensaje) {
-        Alert.AlertType tipo = titulo.toLowerCase().contains("error") ? Alert.AlertType.ERROR : Alert.AlertType.INFORMATION;
+        Alert.AlertType tipo = titulo.toLowerCase().contains("error")
+                ? Alert.AlertType.ERROR
+                : Alert.AlertType.INFORMATION;
         Alert a = new Alert(tipo);
         a.setTitle(titulo);
         a.setContentText(mensaje);
         a.showAndWait();
     }
 
-    // MÉTODO LIMPIAR 100% SEGURO
     @FXML
     private void limpiarCampos() {
         if (idServicioField != null) idServicioField.clear();

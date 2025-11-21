@@ -8,63 +8,84 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="618.0" prefWidth="847.0" spacing="15" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.CandidatoController">
+<VBox alignment="CENTER" spacing="20" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.CandidatoController">
+
     <children>
-        <VBox fx:id="formContainer" prefHeight="367.0" prefWidth="871.0" styleClass="form-container">
-            <Label styleClass="title-label" text="Modulo de Candidato" />
-            <GridPane alignment="CENTER" hgap="15" style="-fx-padding: 20; -fx-background-color: white; -fx-border-color: #d1d5db; -fx-border-radius: 8; -fx-background-radius: 8;" vgap="15">
-                <Label styleClass="label" text="Cedula Candidato:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="cedulaCanField" prefHeight="37.0" promptText="Cedula Candidato" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Label styleClass="label" text="Nombre Candidato::" GridPane.columnIndex="2" />
-                <TextField fx:id="nombreCanField" promptText="Nombre Candidato" styleClass="text-field" GridPane.columnIndex="3" />
-                <Label styleClass="label" text="Apellido Candidato:" GridPane.rowIndex="1" />
-                <TextField fx:id="apellidoCanField" promptText="Apellido Candidato" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label styleClass="label" text="Telefono Candidato:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <TextField fx:id="telefonoCanField" promptText="Telefono Candidato" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />   
-                <Label prefHeight="15.0" prefWidth="128.0" styleClass="label" text="Direccion Candidato::" GridPane.rowIndex="2" />
-                <TextField fx:id="direccionCanField" promptText="Direccion Candidato" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Label styleClass="label" text="Ciudad Candidato:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <ComboBox fx:id="cidadesComboBox" prefHeight="31.0" prefWidth="177.0" promptText="Ciudad Candidato" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                
-                <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" prefWidth="150.0" />
-                    <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" minWidth="200.0" />
-               <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" minWidth="200.0" />
-               <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" minWidth="200.0" />
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints minHeight="40" prefHeight="40" vgrow="SOMETIMES" />
-                    <RowConstraints minHeight="40" prefHeight="40" vgrow="SOMETIMES" />
-                    <RowConstraints minHeight="40" prefHeight="40" vgrow="SOMETIMES" />
-                </rowConstraints>
-            </GridPane>
-            <Pane prefHeight="76.0" prefWidth="434.0">
-                <children>
-                    <Button fx:id="btnCrearCandidato" layoutX="14.0" layoutY="10.0" onAction="#insertarCandidato" styleClass="button" text="Crear Candidato" />
-                </children>
-                <children>
-                    <Button layoutX="182.0" layoutY="13.0" onAction="#cargarForCiudades" styleClass="button" text="Agregar Ciudad" />
-                </children>
-            </Pane>
+
+        <!-- ====================== FORMULARIO ====================== -->
+        <VBox prefHeight="368.0" prefWidth="984.0" spacing="15" styleClass="form-container">
+            <Label styleClass="title-label" text="Módulo de Candidato" />
+
+            <!-- Recuadro blanco bonito con sombra (igual que los otros módulos) -->
+            <VBox style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-radius: 15;                         -fx-border-color: #e2e8f0; -fx-padding: 25;                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);">
+
+                <GridPane hgap="18" vgap="18">
+                    <!-- Fila 1 -->
+                    <Label style="-fx-font-weight: bold;" text="Cédula Candidato:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <TextField fx:id="cedulaCanField" promptText="Cédula Candidato" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                    <Label style="-fx-font-weight: bold;" text="Nombre Candidato:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <TextField fx:id="nombreCanField" promptText="Nombre Candidato" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+                    <!-- Fila 2 -->
+                    <Label style="-fx-font-weight: bold;" text="Apellido Candidato:" GridPane.columnIndex="4" />
+                    <TextField fx:id="apellidoCanField" promptText="Apellido Candidato" styleClass="text-field" GridPane.columnIndex="5" />
+
+                    <Label style="-fx-font-weight: bold;" text="Teléfono Candidato:" GridPane.rowIndex="1" />
+                    <TextField fx:id="telefonoCanField" promptText="Teléfono Candidato" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                    <!-- Fila 3 -->
+                    <Label style="-fx-font-weight: bold;" text="Dirección Candidato:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <TextField fx:id="direccionCanField" promptText="Dirección Candidato" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                    <Label style="-fx-font-weight: bold;" text="Ciudad Candidato:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="cidadesComboBox" promptText="Ciudad" styleClass="text-field" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                    </rowConstraints>
+                </GridPane>
+
+                <!-- BOTONES DENTRO del recuadro (los mismos que tenías, solo reubicados) -->
+                <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 25 0 10 0;">
+                    <children>
+                        <Button fx:id="btnCrearCandidato" onAction="#insertarCandidato" styleClass="button primary" text="Crear Candidato" />
+                        <Button onAction="#cargarForCiudades" text="Agregar Ciudad" />
+                    </children>
+                </HBox>
+            </VBox>
         </VBox>
-        <TextField fx:id="buscadorField" layoutX="10" layoutY="10" prefWidth="150" promptText="Buscar..." />
-      <VBox prefHeight="200.0" prefWidth="100.0" styleClass="form-container">
-         <children>
-              <TableView fx:id="tablaCandidato" prefHeight="183.0" prefWidth="498.0" styleClass="table-view">
-                  <columns>
-                      <TableColumn fx:id="colCeduCandidato" prefWidth="150" text="Cedula Cliente" />
-                      <TableColumn fx:id="colNomCandidato" prefWidth="200" text="Nombre Candidato" />
-                      <TableColumn fx:id="colTelCandidato" prefWidth="150" text="Teléfono Candidato" />
-                      <TableColumn fx:id="colDirCandidato" prefWidth="150" text="Direccion Candidato" />
-                      <TableColumn fx:id="colCiuCandidato" prefWidth="150" text="Ciudad" />
-                      <TableColumn fx:id="colAcciones" prefWidth="100" text="Acciones" />
-                  </columns>
-              </TableView>
-         </children>
-      </VBox>
+
+        <!-- ====================== BUSCADOR ====================== -->
+        <TextField fx:id="buscadorField" prefWidth="400.0" promptText="Buscar candidato por cédula, nombre, ciudad..." styleClass="text-field" />
+
+        <!-- ====================== TABLA ====================== -->
+        <VBox styleClass="form-container">
+            <TableView fx:id="tablaCandidato" prefHeight="300.0" prefWidth="200.0" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="colCeduCandidato" prefWidth="130" text="Cédula" />
+                    <TableColumn fx:id="colNomCandidato" prefWidth="200" text="Nombre" />
+                    <TableColumn fx:id="colTelCandidato" prefWidth="120" text="Teléfono" />
+                    <TableColumn fx:id="colDirCandidato" prefWidth="200" text="Dirección" />
+                    <TableColumn fx:id="colCiuCandidato" prefWidth="120" text="Ciudad" />
+                    <TableColumn fx:id="colAcciones" prefWidth="100" text="Acciones" />
+                </columns>
+            </TableView>
+        </VBox>
+
     </children>
 </VBox>

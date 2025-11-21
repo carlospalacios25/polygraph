@@ -15,50 +15,63 @@
 <VBox alignment="CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.ServiciosControlador">
     <children>
 
-        <!-- FORMULARIO -->
-        <VBox spacing="10" styleClass="form-container">
+        <!-- ====================== FORMULARIO ====================== -->
+        <VBox spacing="15" styleClass="form-container">
             <Label styleClass="title-label" text="Módulo de Servicios" />
-            <GridPane hgap="15" style="-fx-padding: 20; -fx-background-color: white; -fx-background-radius: 12; -fx-border-radius: 12; -fx-border-color: #e2e8f0;" vgap="12">
-                <!-- FILA 1 -->
-                <Label styleClass="label" text="Fecha Solicitud:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <DatePicker fx:id="fechaSolField" promptText="Fecha Solicitud" styleClass="date-picker" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Label styleClass="label" text="Hora Solicitud:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                <TextField fx:id="horaSolField" promptText="HH:MM" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-                <!-- FILA 2 -->
-                <Label styleClass="label" text="Cédula Cliente:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Label styleClass="label" text="Cedula Candidato:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <ComboBox fx:id="cedulaCanField" prefHeight="32.0" prefWidth="203.0" promptText="Candidato" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <!-- Recuadro blanco con sombra (igual que en Poligrafías) -->
+            <VBox style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-radius: 15;                          -fx-border-color: #e2e8f0; -fx-padding: 25;                          -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);">
 
-                <!-- FILA 3 -->
-                <Label styleClass="label" text="Proceso" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <ComboBox fx:id="cedulaClieField" prefHeight="32.0" prefWidth="210.0" promptText="Cliente" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <ComboBox fx:id="procesoField" prefHeight="32.0" prefWidth="211.0" promptText="Proceso" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <GridPane hgap="15" vgap="18">
+                    <!-- FILA 1 -->
+                    <Label style="-fx-font-weight: bold;" text="Fecha Solicitud:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <DatePicker fx:id="fechaSolField" promptText="Fecha Solicitud" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    
+                    <Label style="-fx-font-weight: bold;" text="Hora Solicitud:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <TextField fx:id="horaSolField" promptText="HH:MM" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-                <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="140" />
-                    <ColumnConstraints hgrow="ALWAYS" minWidth="180" />
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="100" />
-                    <ColumnConstraints hgrow="ALWAYS" minWidth="180" />
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints minHeight="45" />
-                    <RowConstraints minHeight="45" />
-                    <RowConstraints minHeight="45" />
-                </rowConstraints>
-            </GridPane>
+                    <!-- FILA 2 -->
+                    <Label style="-fx-font-weight: bold;" text="Cédula Cliente:" GridPane.columnIndex="4" />
+                    <ComboBox fx:id="cedulaClieField" promptText="Cliente" styleClass="text-field" GridPane.columnIndex="5" />
+                    
+                    <Label style="-fx-font-weight: bold;" text="Cédula Candidato:" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="cedulaCanField" promptText="Candidato" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <HBox alignment="CENTER_LEFT" spacing="15">
-                <Button onAction="#insertarServicio" styleClass="button primary" text="Crear Servicio" />
-            </HBox>
+                    <!-- FILA 3 -->
+                    <Label style="-fx-font-weight: bold;" text="Proceso:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <ComboBox fx:id="procesoField" promptText="Proceso" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="-Infinity" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints vgrow="SOMETIMES" />
+                    </rowConstraints>
+                </GridPane>
+
+                <!-- BOTONES DENTRO del recuadro blanco (igual que en Poligrafías) -->
+                <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 25 0 10 0;">
+                    <children>
+                        <Button fx:id="btnCrearServicio" onAction="#insertarServicio" styleClass="button primary" text="Crear Servicio" />
+                    </children>
+                </HBox>
+            </VBox>
         </VBox>
 
-        <!-- BUSCADOR -->
-        <TextField fx:id="buscadorField" prefWidth="300" promptText="Buscar por cédula, nombre, ciudad..." styleClass="text-field search" />
+        <!-- ====================== BUSCADOR ====================== -->
+        <TextField fx:id="buscadorField" prefWidth="400.0" promptText="Buscar por cédula, nombre, cliente, proceso..." styleClass="text-field" />
 
-        <!-- TARJETAS BONITAS -->
-        <ScrollPane fitToWidth="true" prefHeight="500" styleClass="form-container">
+        <!-- ====================== TARJETAS ====================== -->
+        <ScrollPane fitToWidth="true" prefHeight="500.0" styleClass="form-container">
             <GridPane fx:id="serviciosContainer" hgap="25" styleClass="form-container" vgap="25" />
         </ScrollPane>
+
     </children>
 </VBox>

@@ -176,21 +176,12 @@ public class ServiciosControlador {
     }
 
     private VBox crearTarjeta(Servicio s) {
-        VBox card = new VBox(12);
+        VBox card = new VBox(4);               // menos espacio vertical
         card.getStyleClass().add("service-card-modern");
-
-        // 🔥 CENTRA TODO EL CONTENIDO
-        card.setAlignment(Pos.CENTER);
-
-        ImageView icon = new ImageView();
-        icon.getStyleClass().add("card-icon");
-        Image img = new Image(getClass().getResourceAsStream("/com/polygraph/imgs/incos-service.png"));
-        if (!img.isError()) {
-            icon.setImage(img);
-            icon.setFitHeight(36); icon.setFitWidth(36);
-            icon.setPreserveRatio(true); icon.setSmooth(true);
-        }
-
+        card.setAlignment(Pos.CENTER_LEFT);    // coherente con el CSS
+        card.setPrefWidth(260);
+        card.setMaxWidth(260);
+        
         Label title = new Label("Servicio #" + s.getIdServicio());
         title.getStyleClass().add("card-title");
 
@@ -227,7 +218,7 @@ public class ServiciosControlador {
         botones.setAlignment(Pos.CENTER);
         botones.setStyle("-fx-padding: 12 0 0 0;");
 
-        card.getChildren().addAll(icon, title, subtitle, botones);
+        card.getChildren().addAll(title, subtitle, botones);
         return card;
     }
 

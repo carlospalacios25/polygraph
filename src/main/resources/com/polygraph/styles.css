@@ -391,100 +391,88 @@
     -fx-background-color: transparent; /* para que se vea el gradiente de fondo */
 }
 
-
 /* ============================================= */
 /*           TARJETAS DE SERVICIO (CARDS)        */
 /* ============================================= */
 
-/* Contenedor donde van las cards (VBox / FlowPane) */
 .cards-grid {
-    -fx-padding: 20 40 20 40;
+    -fx-padding: 10 10 10 10;
     -fx-background-color: transparent;
-    -fx-hgap: 24;
-    -fx-vgap: 24;
-    -fx-alignment: CENTER;   /* tarjetas centradas en el contenedor */
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+    -fx-alignment: TOP_LEFT;   /* que no queden tan al centro gigante */
 }
 
-/* Tarjeta individual */
+/* Tarjeta pequeña */
 .service-card-modern {
-    /* Mismo color que ya tenías */
     -fx-background-color: linear-gradient(to bottom right, #ffffff, #ffecec);
-    -fx-background-radius: 16;
-    -fx-border-radius: 16;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
 
-    -fx-padding: 18 20 16 20;
-    -fx-spacing: 10;
+    -fx-padding: 8 10 8 10;    /* MENOS padding */
+    -fx-spacing: 4;            /* MENOS espacio entre controles */
 
-    /* 🔥 Centra el contenido dentro de la tarjeta */
-    -fx-alignment: CENTER;
-    -fx-text-alignment: CENTER;
+    -fx-alignment: CENTER_LEFT;   /* como la cita médica: texto más de lado */
+    -fx-text-alignment: LEFT;
 
-    -fx-border-color: #ffe0e0;
+    -fx-border-color: #f5bcbc;
     -fx-border-width: 1;
 
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0, 0, 4);
-    -fx-pref-width: 320;
-    -fx-max-width: 340;
+    /* sombra muy ligera */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 4, 0, 0, 1);
+
+    -fx-pref-width: 260;   /* MÁS angosta */
+    -fx-max-width: 260;
     -fx-font-family: "System";
 }
 
+/* Hover: un poquito más rojo pero sin crecer visualmente */
 .service-card-modern:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.20), 18, 0, 0, 6);
-    -fx-translate-y: -3;
+    -fx-background-color: linear-gradient(to bottom right, #fff5f5, #ffd3d3);
+    -fx-border-color: #f29b9b;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0, 0, 2);
     -fx-cursor: hand;
 }
 
-/* Icono (si lo usas) */
-.card-icon {
-    -fx-alignment: CENTER;
-    -fx-padding: 0 0 4 0;
-}
-
-/* Título: grande y centrado, mismo color rojo */
+/* Título más pequeño */
 .card-title {
-    -fx-font-size: 18px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #e33939;
-    -fx-alignment: CENTER;
-    -fx-text-alignment: CENTER;
-    -fx-padding: 2 0 6 0;
+    -fx-alignment: CENTER_LEFT;
+    -fx-text-alignment: LEFT;
+    -fx-padding: 0 0 2 0;
 }
 
-/* Texto descriptivo: centrado, sin cambiar color */
+/* Texto descriptivo compacto */
 .card-subtitle {
-    -fx-font-size: 13px;
-    -fx-text-fill: #444444;
-    -fx-line-spacing: 2;
-    -fx-alignment: CENTER;
-    -fx-text-alignment: CENTER;
+    -fx-font-size: 11px;
+    -fx-text-fill: #333333;
+    -fx-line-spacing: 1;
+    -fx-alignment: CENTER_LEFT;
+    -fx-text-alignment: LEFT;
 }
 
 /* Botones dentro de la tarjeta */
 .card-button {
-    -fx-background-radius: 14;
-    -fx-font-size: 13px;
+    -fx-background-radius: 16;
+    -fx-font-size: 11px;
     -fx-font-weight: bold;
     -fx-cursor: hand;
 
     -fx-alignment: CENTER;
-    -fx-padding: 8 24;
+    -fx-padding: 6 16;
 
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 4, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 2, 0, 0, 1);
 }
 
 .card-button:hover {
-    -fx-translate-y: -1;
     -fx-opacity: 0.95;
 }
 
-/* Botón Detalle (naranja, como lo tenías) */
+/* Botón en rojo */
 .btn-detalle {
-    -fx-background-color: #e67e22;
+    -fx-background-color: #e74c3c;
     -fx-text-fill: white;
 }
 
-/* Botón Editar (verde, como lo tenías) */
-.btn-editar {
-    -fx-background-color: #2ecc71;
-    -fx-text-fill: white;
-}

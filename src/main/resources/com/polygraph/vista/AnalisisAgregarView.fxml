@@ -36,8 +36,7 @@
             <Button text="Guardar Análisis" onAction="#guardar" styleClass="button primary"/>
         </HBox>
 
-        <Label fx:id="
-```errorLabel" styleClass="error-label" text="" 
+        <Label fx:id="errorLabel" styleClass="error-label" text="" 
                style="-fx-padding: 5 0 0 0; -fx-min-height: 20;"/>
 
     </VBox>

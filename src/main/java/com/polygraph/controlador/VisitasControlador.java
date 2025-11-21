@@ -44,13 +44,13 @@ public class VisitasControlador {
     @FXML private TextField novedadField;
     @FXML private TextField buscadorField;
     @FXML private GridPane serviciosContainer;
-    @FXML private Button btnGuardarVisita;   // 🔹 Botón del formulario (Crear / Guardar cambios)
+    @FXML private Button btnGuardarVisita;   // Botón del formulario (Crear / Guardar cambios)
 
     private final VisitasDAO visitasDAO = new VisitasDAO();
     private final ServicioDAO servicioDAO = new ServicioDAO();
     private final VisitadoresDAO visitadoresDAO = new VisitadoresDAO();
 
-    // 🔹 Referencia a la visita que se está editando (null si es nueva)
+    // Referencia a la visita que se está editando (null si es nueva)
     private Visitas visitaActual = null;
 
     @FXML
@@ -122,8 +122,8 @@ public class VisitasControlador {
             showAlert("Error", "Error al cargar visitadores: " + e.getMessage());
         }
     }
-    
-        @FXML
+
+    @FXML
     private void cargarForVisitador(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/AgregarVisitador.fxml"));
@@ -132,16 +132,16 @@ public class VisitasControlador {
             // Obtener el controlador
             VisitadoresController controller = loader.getController();
 
-            // Pasar el callback: "cuando agregues una ciudad, avísame"
-            controller.setOnVisitadorAgregadoListener(()-> {
-                cargarVisitadores();  // ← ¡Actualiza el ComboBox!
+            // Callback: cuando agregue un visitador, recargar combo
+            controller.setOnVisitadorAgregadoListener(() -> {
+                cargarVisitadores();
             });
 
             Stage stage = new Stage();
             stage.setTitle("Formulario de Visitador");
-            stage.initModality(Modality.APPLICATION_MODAL); // Bloquea el principal
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
-            stage.showAndWait(); // ← ¡ESPERA A QUE SE CIERRE!
+            stage.showAndWait();
 
         } catch (IOException e) {
             showAlert("Error", "No se pudo cargar el formulario de visitador: " + e.getMessage());
@@ -154,13 +154,11 @@ public class VisitasControlador {
         if (tipoPruebaCombo.getValue() == null) { showAlert("Error", "Selecciona tipo de prueba."); return false; }
         if (tipoVisitaCombo.getValue() == null) { showAlert("Error", "Selecciona tipo de visita."); return false; }
         if (fechaSolicitudPicker.getValue() == null) { showAlert("Error", "Fecha solicitud requerida."); return false; }
-        //if (fechaVisitaPicker.getValue() == null) { showAlert("Error", "Fecha visita requerida."); return false; }
-        //if (!horaVisitaField.getText().matches("\\d{2}:\\d{2}")) { showAlert("Error", "Hora inválida (HH:MM)."); return false; }
-        //if (fechaEnvioInformePicker.getValue() == null) { showAlert("Error", "Fecha envío informe requerida."); return false; }
+        // Los demás campos son opcionales al modificar:
+        // fechaVisitaPicker, horaVisitaField, fechaEnvioInformePicker, novedadField
         return true;
     }
 
-    // 🔹 ÚNICO método público para el botón del formulario
     @FXML
     private void guardarVisita() {
         if (!validarCampos()) return;
@@ -169,7 +167,7 @@ public class VisitasControlador {
             int idServicio = Integer.parseInt(idServicioField.getText());
             Visitadores visitadorSel = visitadorCombo.getValue();
 
-            // 1️⃣ VALIDAR QUE EL SERVICIO REQUIERA VISITA
+            // 1) Validar que el servicio requiera visita
             boolean requiereVisita = servicioDAO.servicioRequiereVisita(idServicio);
             if (!requiereVisita) {
                 showAlert("Error",
@@ -179,12 +177,11 @@ public class VisitasControlador {
                 return;
             }
 
-            // 2️⃣ VALIDAR QUE NO EXISTA YA UNA VISITA PARA ESTE SERVICIO (si no estamos editando)
+            // 2) Validar que no exista ya una visita (si no estamos en modo edición)
             if (visitaActual == null) {
                 Visitas existente = visitasDAO.obtenerVisitaPorServicio(idServicio);
                 if (existente != null) {
                     showAlert("Error", "Ya existe una visita para este servicio. Solo puedes modificarla.");
-                    // Cargarla al formulario para que la edites
                     cargarCamposVisita(existente);
                     visitaActual = existente;
                     if (btnGuardarVisita != null) btnGuardarVisita.setText("Guardar cambios");
@@ -193,7 +190,7 @@ public class VisitasControlador {
             }
 
             if (visitaActual == null) {
-                // 👉 CREAR
+                // CREAR
                 Visitas nueva = new Visitas(
                         0,
                         idServicio,
@@ -202,19 +199,38 @@ public class VisitasControlador {
                         tipoVisitaCombo.getValue(),
                         fechaSolicitudPicker.getValue()
                 );
+                // Otros campos opcionales se podrían añadir luego si quieres
                 visitasDAO.insertarVisita(nueva);
                 showAlert("Éxito", "Visita creada con ID: " + nueva.getIdVisita());
             } else {
-                // 👉 EDITAR (UPDATE)
+                // EDITAR (UPDATE) – campos opcionales manejados con null
                 visitaActual.setIdServicio(idServicio);
                 visitaActual.setIdVisitador(visitadorSel.getIdVisitador());
                 visitaActual.setTipo_Prueba(tipoPruebaCombo.getValue());
                 visitaActual.setTipo_Visita(tipoVisitaCombo.getValue());
                 visitaActual.setFechaSolicitud(fechaSolicitudPicker.getValue());
+
+                // Fecha visita (opcional)
                 visitaActual.setFechaVisita(fechaVisitaPicker.getValue());
-                visitaActual.setHoraVisita(LocalTime.parse(horaVisitaField.getText()));
+
+                // Hora visita (opcional)
+                String horaTexto = horaVisitaField.getText();
+                if (horaTexto == null || horaTexto.isBlank()) {
+                    visitaActual.setHoraVisita(null);
+                } else {
+                    visitaActual.setHoraVisita(LocalTime.parse(horaTexto));
+                }
+
+                // Fecha envío informe (opcional)
                 visitaActual.setFechaeInforme(fechaEnvioInformePicker.getValue());
-                visitaActual.setNovedadVisita(novedadField.getText());
+
+                // Novedad (opcional)
+                String novedad = novedadField.getText();
+                if (novedad != null && !novedad.isBlank()) {
+                    visitaActual.setNovedadVisita(novedad);
+                } else {
+                    visitaActual.setNovedadVisita(null);
+                }
 
                 visitasDAO.actualizarVisita(visitaActual);
                 showAlert("Éxito", "Visita actualizada correctamente.");
@@ -256,20 +272,12 @@ public class VisitasControlador {
     }
 
     private VBox crearTarjeta(Servicio s) {
-        VBox card = new VBox(12);
-        card.getStyleClass().add("service-card-modern");
         
-        card.setAlignment(Pos.CENTER);
-        ImageView icon = new ImageView();
-        icon.getStyleClass().add("card-icon");
-        Image img = new Image(getClass().getResourceAsStream("/com/polygraph/imgs/incos-service.png"));
-        if (!img.isError()) {
-            icon.setImage(img);
-            icon.setFitHeight(36);
-            icon.setFitWidth(36);
-            icon.setPreserveRatio(true);
-            icon.setSmooth(true);
-        }
+        VBox card = new VBox(4);               // menos espacio vertical
+        card.getStyleClass().add("service-card-modern");
+        card.setAlignment(Pos.CENTER_LEFT);    // coherente con el CSS
+        card.setPrefWidth(260);
+        card.setMaxWidth(260);
 
         Label title = new Label("Servicio #" + s.getIdServicio());
         title.getStyleClass().add("card-title");
@@ -354,7 +362,7 @@ public class VisitasControlador {
         botones.setAlignment(Pos.CENTER);
         botones.setStyle("-fx-padding: 12 0 0 0;");
 
-        card.getChildren().addAll(icon, title, subtitle, botones);
+        card.getChildren().addAll(title, subtitle, botones);
         return card;
     }
 
@@ -448,4 +456,3 @@ public class VisitasControlador {
         novedadField.clear();
     }
 }
-

@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `analisis`;
 CREATE TABLE `analisis` (
   `Id_Analisis` int NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del análisis.',
   `Id_Servicio` int NOT NULL COMMENT 'Servicio asociado al análisis.',
-  `Tipo_Analisis` enum('Visita','Final') NOT NULL COMMENT 'Tipo de análisis (Visita o Final).',
+  `Tipo_Analisis` enum('Visita','Poligrafia','Final') NOT NULL COMMENT 'Tipo de análisis (Visita o Final).',
   `Contenido` varchar(300) NOT NULL COMMENT 'Contenido del análisis.',
   PRIMARY KEY (`Id_Analisis`),
   KEY `Id_Servicio` (`Id_Servicio`),
@@ -182,6 +182,7 @@ CREATE TABLE `perfiles` (
 --
 
 LOCK TABLES `perfiles` WRITE;
+INSERT INTO `perfiles` (`Nombre_Perfil`, `Descripcion`) VALUES ('Invitado', 'Usuario por defecto para el registro');
 /*!40000 ALTER TABLE `perfiles` DISABLE KEYS */;
 /*!40000 ALTER TABLE `perfiles` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -249,8 +250,8 @@ CREATE TABLE `poligrafias` (
   `Id_Servicio` int NOT NULL COMMENT 'Servicio asociado a la poligrafía.',
   `Id_Poligrafista` int NOT NULL COMMENT 'Poligrafista asignado a la prueba.',
   `Fecha_Asignacion` date NOT NULL COMMENT 'Fecha de asignación de la prueba.',
-  `Hora_Programacion` time NOT NULL COMMENT 'Hora programada de la prueba.',
-  `Asistencia` enum('Si','No')COMMENT 'Indica si el candidato asistió a la prueba.',
+  `Hora_Programacion` time COMMENT 'Hora programada de la prueba.',
+  `Asistencia` enum('Si','No') COMMENT 'Indica si el candidato asistió a la prueba.',
   `Fecha_Entrega` date COMMENT 'Fecha de entrega del informe de la prueba.',
   PRIMARY KEY (`Id_Poligrafia`),
   KEY `Id_Servicio` (`Id_Servicio`),

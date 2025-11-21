@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import javafx.collections.FXCollections;
 
 public class AnalisisAgregarController {
 
@@ -18,6 +19,15 @@ public class AnalisisAgregarController {
     private int idServicio;
     private final AnalisisDAO dao = new AnalisisDAO();
 
+    @FXML
+    public void initialize() {
+        configurarCombos();
+    }
+    
+    private void configurarCombos() {
+        cmbTipoAnalisis.setItems(FXCollections.observableArrayList("Visita","Poligrafia","Final"));
+    }
+    
     public void setDatos(int idServicio, AnalisisAgregadoListener listener) {
         this.idServicio = idServicio;
         this.listener = listener;
@@ -26,7 +36,9 @@ public class AnalisisAgregarController {
     @FXML
     private void guardar() {
         String tipo = cmbTipoAnalisis.getValue();
-        String contenido = txtContenido.getText().trim();
+        String contenido = txtContenido.getText() != null
+                ? txtContenido.getText().trim()
+                : "";
 
         if (tipo == null || tipo.isEmpty()) {
             alerta("Error", "Selecciona el tipo de análisis.");
@@ -34,6 +46,10 @@ public class AnalisisAgregarController {
         }
         if (contenido.isEmpty() || contenido.length() < 10) {
             alerta("Error", "El contenido debe tener al menos 10 caracteres.");
+            return;
+        }
+        if (contenido.length() > 300) { // según VARCHAR(300)
+            alerta("Error", "El contenido no puede superar los 300 caracteres.");
             return;
         }
 
@@ -46,7 +62,9 @@ public class AnalisisAgregarController {
             dao.insertar(a);
 
             mostrarExito("Análisis guardado correctamente");
-            if (listener != null) listener.onAnalisisAgregado();
+            if (listener != null) {
+                listener.onAnalisisAgregado();
+            }
             cerrarVentana();
 
         } catch (SQLException e) {
@@ -60,17 +78,23 @@ public class AnalisisAgregarController {
     }
 
     private void cerrarVentana() {
-        Stage stage = (Stage) txtContenido.getScene().getWindow();
-        stage.close();
+        if (txtContenido != null && txtContenido.getScene() != null) {
+            Stage stage = (Stage) txtContenido.getScene().getWindow();
+            if (stage != null) {
+                stage.close();
+            }
+        }
     }
 
     private void alerta(String titulo, String mensaje) {
-        new Alert(Alert.AlertType.ERROR, mensaje, ButtonType.OK)
-            .showAndWait();
+        Alert a = new Alert(Alert.AlertType.ERROR, mensaje, ButtonType.OK);
+        a.setTitle(titulo);
+        a.showAndWait();
     }
 
     private void mostrarExito(String mensaje) {
-        new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK)
-            .showAndWait();
+        Alert a = new Alert(Alert.AlertType.INFORMATION, mensaje, ButtonType.OK);
+        a.setTitle("Información");
+        a.showAndWait();
     }
 }

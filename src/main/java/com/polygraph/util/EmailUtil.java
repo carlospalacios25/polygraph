@@ -57,7 +57,7 @@ public class EmailUtil {
             <div style="background-color:#b0202a;padding:18px 0;text-align:center;">
                 <!-- Si tienes logo, reemplaza el texto por una imagen -->
                 <span style="color:#ffffff;font-size:20px;font-weight:bold;letter-spacing:0.08em;">
-                    POLYGRAPH
+                    POLYGRAPH SERVICE
                 </span>
             </div>
 
