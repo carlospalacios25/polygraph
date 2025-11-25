@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import javafx.stage.Modality;
 
 public class LoginController {
 
@@ -469,4 +470,29 @@ public class LoginController {
         }
         return hexString.toString();
     }
+    
+    @FXML
+    private void abrirRecuperarContrasena(MouseEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/polygraph/vista/RecuperarContrasenaView.fxml")
+            );
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Recuperar contraseña");
+            stage.setScene(new Scene(root));
+            stage.initOwner(usernameField.getScene().getWindow());
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            if (errorLabel != null) {
+                errorLabel.setText("No se pudo abrir la recuperación de contraseña.");
+            }
+        }
+    }
+
 }

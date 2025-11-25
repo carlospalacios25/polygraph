@@ -7,26 +7,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
-import javafx.scene.input.KeyCombination;
-import javafx.stage.StageStyle;
+import java.net.ServerSocket;
 
 public class AplicacionPrincipal extends Application {
+
+    private static ServerSocket bloqueo;   // 🔒 Para permitir solo una instancia
 
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/polygraph/vista/LoginView.fxml"));
+            FXMLLoader loader =
+                    new FXMLLoader(getClass().getResource("/com/polygraph/vista/LoginView.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Polygraph - Login");
 
-            // QUITA ESTO:
-            // primaryStage.initStyle(StageStyle.UNDECORATED);
-
-            primaryStage.setResizable(true); // Permite maximizar
+            primaryStage.setResizable(true);
             primaryStage.centerOnScreen();
             primaryStage.show();
 
@@ -34,31 +34,27 @@ public class AplicacionPrincipal extends Application {
             e.printStackTrace();
         }
     }
-        // MÉTODO PÚBLICO PARA ABRIR MAIN DESDE LOGIN
+
+    // ==============================
+    // ABRIR MAIN DESDE LOGIN
+    // ==============================
     public static void abrirMain(Stage stage) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                AplicacionPrincipal.class.getResource("/com/polygraph/vista/Main.fxml")
+                    AplicacionPrincipal.class.getResource("/com/polygraph/vista/Main.fxml")
             );
             Parent root = loader.load();
-            MainController mainController = loader.getController();
 
-            // GUARDAR EN USERDATA
+            MainController mainController = loader.getController();
             root.setUserData(mainController);
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setTitle("Polygraph - Sistema Principal");
 
-            // OCUPA TODA LA PANTALLA (CON BARRA DE TÍTULO)
             stage.setMaximized(true);
-
-            // ASEGURAR QUE NO ESTÉ MINIMIZADA
             stage.setIconified(false);
-
-            // MOSTRAR
             stage.show();
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,7 +66,25 @@ public class AplicacionPrincipal extends Application {
         ConexionBD.getInstancia().cerrarConexion();
     }
 
+    // ==============================
+    //   MAIN → BLOQUEO UNA INSTANCIA
+    // ==============================
     public static void main(String[] args) {
+
+        if (!bloquearInstancia()) {
+            System.out.println("⚠ La aplicación ya está abierta.");
+            return;   // ⛔ NO abrimos otra copia
+        }
+
         launch(args);
+    }
+
+    private static boolean bloquearInstancia() {
+        try {
+            bloqueo = new ServerSocket(45999);  // Puerto libre cualquiera
+            return true;  // Primera instancia
+        } catch (IOException e) {
+            return false;  // Ya hay otra instancia corriendo
+        }
     }
 }

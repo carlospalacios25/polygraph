@@ -78,7 +78,7 @@ public class EmailUtil {
 
                 <!-- DESCRIPCIÓN INICIAL -->
                 <p style="margin:0 0 10px 0;color:#555555;font-size:14px;line-height:1.5;">
-                    Te enviamos este correo porque estás realizando un proceso de registro o inicio de sesión en
+                    Te enviamos este correo porque estás realizando un proceso de registro y/o recuperacion de contraseña inicio de sesión en
                     <strong>Polygraph</strong>.
                 </p>
 

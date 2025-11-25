@@ -46,6 +46,7 @@ com\polygraph\dao\CandidatoDAO.class
 com\polygraph\AplicacionPrincipal.class
 com\polygraph\listeners\ProgresoAgregadoListener.class
 com\polygraph\controlador\ServiciosControlador$3.class
+com\polygraph\controlador\RecuperarContrasenaController.class
 com\polygraph\controlador\VisitadoresController.class
 com\polygraph\listeners\VisitadorAgregadoListener.class
 com\polygraph\modelo\ProcesoTipoProgreso.class

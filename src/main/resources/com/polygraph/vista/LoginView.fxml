@@ -94,12 +94,18 @@
                               styleClass="login-checkbox"
                               text="Mostrar contraseña" />
 
+                    <!-- 🔹 Enlace para recuperar contraseña -->
+                    <Label text="¿Olvidaste tu contraseña?"
+                           onMouseClicked="#abrirRecuperarContrasena"
+                           styleClass="login-forgot-link" />
+
                     <HBox alignment="CENTER" spacing="12">
                         <Button onAction="#login" styleClass="btn-login" text="Entrar" />
                         <Button onAction="#cancelar" styleClass="btn-cancelar" text="Cancelar" />
                     </HBox>
 
                     <Label fx:id="errorLabel" styleClass="login-error" text="" />
+
                 </VBox>
 
                 <!-- FORMULARIO DE REGISTRO -->

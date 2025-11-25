@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.polygraph.controlador.RecuperarContrasenaController"
+      alignment="CENTER"
+      spacing="18"
+      prefWidth="380"
+      prefHeight="420"
+      styleClass="root login-bg"
+      stylesheets="@../styles_login.css">
+
+    <padding>
+        <Insets top="20" right="30" bottom="20" left="30"/>
+    </padding>
+
+    <!-- PANEL BLANCO – versión compacta -->
+    <VBox alignment="CENTER"
+          spacing="14"
+          styleClass="login-panel"
+          style="-fx-pref-width: 300; -fx-max-width: 300; -fx-padding: 25 28;">
+
+        <!-- TÍTULO -->
+        <VBox alignment="CENTER" spacing="2">
+            <Label text="Recuperar contraseña" styleClass="login-title" style="-fx-font-size: 22;"/>
+            <Label text="Ingresa tu correo para recuperar"
+                   styleClass="login-subtitle"
+                   style="-fx-font-size: 11;"/>
+        </VBox>
+
+        <!-- FORMULARIO COMPACTO -->
+        <VBox spacing="10" alignment="CENTER_LEFT" prefWidth="260">
+
+            <!-- CORREO -->
+            <VBox spacing="4">
+                <Label text="Correo electrónico:" styleClass="login-label"/>
+                <TextField fx:id="txtCorreo"
+                           promptText="correo@ejemplo.com"
+                           styleClass="login-input"
+                           style="-fx-pref-height: 34;"/>
+            </VBox>
+
+            <!-- CÓDIGO -->
+            <VBox spacing="4">
+                <Label text="Código de verificación:" styleClass="login-label"/>
+                <TextField fx:id="txtCodigo"
+                           promptText="Código"
+                           disable="true"
+                           styleClass="login-input"
+                           style="-fx-pref-height: 34;"/>
+            </VBox>
+
+            <!-- NUEVA CONTRASEÑA -->
+            <VBox spacing="4">
+                <Label text="Nueva contraseña:" styleClass="login-label"/>
+                <PasswordField fx:id="txtNuevaPass"
+                               promptText="Nueva contraseña"
+                               disable="true"
+                               styleClass="login-input"
+                               style="-fx-pref-height: 34;"/>
+            </VBox>
+
+            <!-- CONFIRMAR CONTRASEÑA -->
+            <VBox spacing="4">
+                <Label text="Confirmar contraseña:" styleClass="login-label"/>
+                <PasswordField fx:id="txtConfirmPass"
+                               promptText="Confirmar contraseña"
+                               disable="true"
+                               styleClass="login-input"
+                               style="-fx-pref-height: 34;"/>
+            </VBox>
+
+            <!-- MOSTRAR CONTRASEÑAS -->
+            <CheckBox fx:id="chkMostrarPass"
+                      text="Mostrar contraseñas"
+                      onAction="#toggleMostrarContrasenas"
+                      styleClass="login-checkbox"/>
+
+            <!-- BOTONES -->
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="btnAccion"
+                        text="Enviar código"
+                        onAction="#accionRecuperar"
+                        styleClass="btn-login"
+                        style="-fx-pref-width: 120; -fx-font-size: 10.5;"/>
+                <Button text="Cerrar"
+                        onAction="#cerrar"
+                        styleClass="btn-cancelar"
+                        style="-fx-pref-width: 120; -fx-font-size: 10.5;"/>
+            </HBox>
+
+            <!-- MENSAJE -->
+            <Label fx:id="lblMensaje"
+                   text=""
+                   wrapText="true"
+                   styleClass="login-error"
+                   style="-fx-font-size: 10.5;"/>
+
+        </VBox>
+
+    </VBox>
+
+</VBox>

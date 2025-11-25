@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -44,4 +45,26 @@ public class UsuarioDAO {
         }
         return hexString.toString();
     }
+    
+    public boolean existeCorreo(String correo) throws SQLException {
+        String sql = "SELECT 1 FROM usuarios WHERE Correo_Usu = ?";
+        try (Connection c = ConexionBD.getInstancia().getConexion();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, correo);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public void actualizarContrasenaPorCorreo(String correo, String hashContrasena) throws SQLException {
+        String sql = "UPDATE usuarios SET Contrasena_Usu = ? WHERE Correo_Usu = ?";
+        try (Connection c = ConexionBD.getInstancia().getConexion();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, hashContrasena);
+            ps.setString(2, correo);
+            ps.executeUpdate();
+        }
+    }
+
 }

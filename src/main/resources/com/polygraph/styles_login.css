@@ -181,3 +181,13 @@
 .btn-login-registro:pressed {
     -fx-background-color: #e6e6e6;
 }
+
+.login-forgot-link {
+    -fx-text-fill: #e74c3c;
+    -fx-underline: true;
+    -fx-cursor: hand;
+    -fx-font-size: 11px;
+}
+.login-forgot-link:hover {
+    -fx-text-fill: #c0392b;
+}
