@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,13 +26,14 @@ public class MainController {
     @FXML private AnchorPane contentArea;
     @FXML private HBox breadcrumbBar;
     @FXML private HBox dynamicCrumbs;
-    @FXML private Label lblHome; 
+    @FXML private Label lblHome;
     @FXML private Label lblDashboard;
     @FXML private Label lblSeparator1;
     @FXML private Label lblSeparator2;
-    
+
     @FXML public void irAHome() { irANivel(0); }
     @FXML public void irADashboard() { irANivel(1); }
+
     // === HISTORIA DE NAVEGACIÓN ===
     private final List<String> breadcrumbHistory = new ArrayList<>();
     private final Map<Integer, String> vistaPorNivel = new HashMap<>();
@@ -41,18 +43,14 @@ public class MainController {
         try {
             profileImage.setImage(new Image("/com/polygraph/imgs/profile-placeholder.png"));
         } catch (Exception e) {
-            //System.err.println("Imagen no encontrada: " + e.getMessage());
+            // Silencioso
         }
 
-        // INICIAR BREADCRUMB
         breadcrumbHistory.clear();
         breadcrumbHistory.add("Home");
         breadcrumbHistory.add("Dashboard");
-   //    vistaPorNivel.put(0, "/com/polygraph/vista/Dashboard.fxml");
-   //     vistaPorNivel.put(1, "/com/polygraph/vista/Dashboard.fxml");
         actualizarBreadcrumbVisual();
     }
-
 
     private void irANivel(int nivel) {
         if (nivel >= breadcrumbHistory.size()) return;
@@ -76,7 +74,7 @@ public class MainController {
     @FXML public void cargarConfServicio(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/ConfiguracionSerForm.fxml", (Node)e.getSource(), "Configuracion Servicio"); }
     @FXML public void cargarVisita(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/VisitaForm.fxml", (Node)e.getSource(), "Visita"); }
     @FXML public void cargarPoligrafia(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/PoligrafiasForm.fxml", (Node)e.getSource(), "Poligrafia"); }
-    @FXML public void loadDiscovery(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/VistaServicio.fxml", (Node)e.getSource(), "Discovery"); }
+    @FXML public void cargargestionProServicio(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/GestionProgresoForm.fxml", (Node)e.getSource(), "Progreso"); }
     @FXML public void loadReports(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Reports.fxml", (Node)e.getSource(), "Reports"); }
     @FXML public void loadNotifications(ActionEvent e) { navegarConCrumb("/com/polygraph/vista/Notifications.fxml", (Node)e.getSource(), "Notifications"); }
 
@@ -90,8 +88,17 @@ public class MainController {
 
     // === ABRIR MODIFICAR SERVICIO ===
     public void abrirModificarServicio(Servicio servicio) {
-        pushBreadcrumb("Servicio #" + servicio.getIdServicio(), "/com/polygraph/vista/ModificarServicio.fxml");
-        loadView("/com/polygraph/vista/ModificarServicio.fxml", null, ctrl -> {
+        pushBreadcrumb("Servicio #" + servicio.getIdServicio(), "/com/polygraph/vista/ProgresoServicio.fxml");
+        loadView("/com/polygraph/vista/ProgresoServicio.fxml", null, ctrl -> {
+            if (ctrl instanceof GestServicioControlador modCtrl) {
+                modCtrl.setServicio(servicio);
+            }
+        });
+    }
+    
+    public void abrirExpedienteServicio(Servicio servicio) {
+        pushBreadcrumb("Servicio #" + servicio.getIdServicio(), "/com/polygraph/vista/ExpedienteServicioForm.fxml");
+        loadView("/com/polygraph/vista/ExpedienteServicioForm.fxml", null, ctrl -> {
             if (ctrl instanceof GestServicioControlador modCtrl) {
                 modCtrl.setServicio(servicio);
             }
@@ -105,7 +112,6 @@ public class MainController {
         actualizarBreadcrumbVisual();
     }
 
-    // === QUITAR ÚLTIMO ===
     public void popBreadcrumb() {
         if (breadcrumbHistory.size() > 2) {
             breadcrumbHistory.remove(breadcrumbHistory.size() - 1);
@@ -114,14 +120,12 @@ public class MainController {
         }
     }
 
-    // === ACTUALIZAR VISUAL ===
     private void actualizarBreadcrumbVisual() {
         dynamicCrumbs.getChildren().clear();
         for (int i = 2; i < breadcrumbHistory.size(); i++) {
             Label crumb = new Label(breadcrumbHistory.get(i));
             crumb.getStyleClass().add("breadcrumb-item");
             if (i == breadcrumbHistory.size() - 1) crumb.getStyleClass().add("active");
-
             final int nivel = i;
             crumb.setOnMouseClicked(e -> irANivel(nivel));
             crumb.setOnMouseEntered(e -> crumb.setStyle("-fx-text-fill: #0d6efd; -fx-font-weight: 600;"));
@@ -130,7 +134,6 @@ public class MainController {
                     crumb.setStyle("-fx-text-fill: #6c757d;");
                 }
             });
-
             if (i > 2) {
                 Label sep = new Label(" > ");
                 sep.getStyleClass().add("breadcrumb-separator");
@@ -141,12 +144,11 @@ public class MainController {
         }
     }
 
-    // === LOADVIEW CON Consumer ===
+    // === LOADVIEW CON CALLBACK (AQUÍ ESTABA EL ERROR) ===
     private <T> void loadView(String fxmlPath, Node source, Consumer<T> postLoad) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-
             contentArea.getChildren().clear();
             contentArea.getChildren().add(root);
             AnchorPane.setTopAnchor(root, 0.0);
@@ -165,16 +167,21 @@ public class MainController {
             }
 
             T ctrl = loader.getController();
+
+            // AQUÍ ESTABA FALTANDO ESTA LÍNEA
+            if (ctrl instanceof GestionProgresoControlador gc) {
+                gc.setMainController(this);
+            }
+            // Las otras ya las tenías
             if (ctrl instanceof ServiciosControlador sc) sc.setMainController(this);
             if (ctrl instanceof GestServicioControlador mc) mc.setMainController(this);
 
             if (postLoad != null) postLoad.accept(ctrl);
 
             String css = getClass().getResource("/com/polygraph/styles.css").toExternalForm();
-            if (!contentArea.getScene().getStylesheets().contains(css)) {
+            if (css != null && !contentArea.getScene().getStylesheets().contains(css)) {
                 contentArea.getScene().getStylesheets().add(css);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
             showError("Error", "No se pudo cargar: " + fxmlPath);

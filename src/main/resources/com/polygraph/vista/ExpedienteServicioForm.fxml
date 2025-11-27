@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.polygraph.controlador.ExpedienteServicioControlador"
+      spacing="20" styleClass="root" stylesheets="@../styles.css">
+
+    <Label text="Expediente del Servicio" styleClass="title-label"/>
+
+    <GridPane hgap="15" vgap="15">
+        <Label text="Estado Actual:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="estadoCombo" prefWidth="300" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="¿Asistió a poligrafía?" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <CheckBox fx:id="asistioCheck" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Dirección de la casa:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="direccionField" prefWidth="400" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Subir Documentos:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <Button text="Seleccionar Archivos" onAction="#subirDocumentos" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+        
+        <Label fx:id="archivosLabel" text="Ningún archivo seleccionado" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="15">
+      <!-- <Button text="Guardar Cambios" onAction="#guardar" styleClass="btn-success"/>-->
+        <Button text="Cancelar" onAction="#cancelar" styleClass="btn-secondary"/>
+    </HBox>
+</VBox>

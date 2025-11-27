@@ -18,11 +18,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.function.Consumer;
 
-/**
- * Controlador principal para la gestión detallada de un servicio.
- * Muestra información del servicio y permite agregar progreso, documentos y análisis
- * mediante ventanas modales limpias y profesionales.
- */
 public class GestServicioControlador {
 
     // === COMPONENTES FXML (UNA POR LÍNEA - BUENA PRÁCTICA) ===

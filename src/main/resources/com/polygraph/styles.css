@@ -476,3 +476,7 @@
     -fx-text-fill: white;
 }
 
+.card-pending { -fx-background-color: #f8d7da; -fx-background-radius: 12; -fx-padding: 15; }
+.card-warning { -fx-background-color: #fff3cd; -fx-background-radius: 12; -fx-padding: 15; }
+.card-primary { -fx-background-color: #d1ecf1; -fx-background-radius: 12; -fx-padding: 15; }
+.card-success { -fx-background-color: #d4edda; -fx-background-radius: 12; -fx-padding: 15; }

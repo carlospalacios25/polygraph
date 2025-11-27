@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="670.0" prefWidth="1125.0" spacing="25" styleClass="root" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.polygraph.controlador.GestServicioControlador">
+
+    <padding>
+        <Insets bottom="30" left="40" right="40" top="20" />
+    </padding>
+
+    <!-- PANEL DE INFORMACIÓN GENERAL -->
+    <VBox prefHeight="97.0" prefWidth="1046.0" spacing="15" styleClass="form-container">
+   
+       <!-- TÍTULO PRINCIPAL -->
+       <Label fx:id="lblId1" alignment="CENTER" styleClass="title-label" text="GESTIÓN DEL SERVICIO # —" />
+        <Label fx:id="lblInfoGeneral" alignment="CENTER" text="Cargando datos..." wrapText="true" />
+    </VBox>
+
+    <!-- SECCIÓN PROGRESO -->
+    <VBox prefHeight="384.0" prefWidth="1020.0" spacing="18" styleClass="form-container">
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Label styleClass="title-label" text="Progreso" />
+            <Button onAction="#abrirAgregarProgreso" styleClass="button primary" text="+ Agregar Progreso" />
+        </HBox>
+
+        <TableView fx:id="tblProgreso" prefHeight="220" styleClass="table-view">
+            <columns>
+                <TableColumn fx:id="colProgFecha" prefWidth="110" text="Fecha" />
+                <TableColumn fx:id="colProgTipo" prefWidth="170" text="Tipo" />
+                <TableColumn fx:id="colProgObservacion" prefWidth="550" text="Observación" />
+                <TableColumn fx:id="colProgUsuario" prefWidth="120" text="Usuario" />
+            </columns>
+        </TableView>
+    </VBox>
+
+    <!-- DOCUMENTOS Y ANÁLISIS (DOS COLUMNAS) -->
+    <GridPane hgap="30" vgap="25">
+        <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" />
+            <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+
+        <!-- DOCUMENTOS -->
+        <VBox spacing="18" styleClass="form-container" GridPane.columnIndex="0">
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label styleClass="title-label" text="Documentos" />
+                <Button onAction="#abrirAgregarDocumento" styleClass="button primary" text="+ Subir Documento" />
+            </HBox>
+            <TableView fx:id="tblDocumentos" prefHeight="220" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="colDocTipo" prefWidth="160" text="Tipo" />
+                    <TableColumn fx:id="colDocNombre" prefWidth="260" text="Archivo" />
+                    <TableColumn fx:id="colDocFecha" prefWidth="110" text="Fecha" />
+                    <TableColumn fx:id="colDocEstado" prefWidth="100" text="Estado" />
+                </columns>
+            </TableView>
+        </VBox>
+
+        <!-- ANÁLISIS -->
+        <VBox spacing="18" styleClass="form-container" GridPane.columnIndex="1">
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label styleClass="title-label" text="Análisis" />
+                <Button onAction="#abrirAgregarAnalisis" styleClass="button primary" text="+ Agregar Análisis" />
+            </HBox>
+            <TableView fx:id="tblAnalisis" prefHeight="220" styleClass="table-view">
+                <columns>
+                    <TableColumn fx:id="colAnaTipo" prefWidth="120" text="Tipo" />
+                    <TableColumn fx:id="colAnaContenido" prefWidth="480" text="Contenido" />
+                </columns>
+            </TableView>
+        </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+</VBox>

@@ -45,6 +45,7 @@ C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\Candi
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\ClienteController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\dao\ServicioDAO.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Candidatos.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\ExpedienteServicioControlador.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\UsuarioController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\TiposProgreso.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\util\ConexionBD.java
@@ -52,6 +53,7 @@ C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlad
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Usuarios.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\modelo\Poligrafistas.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\PerfilController.java
+C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\GestionProgresoControlador.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\listeners\PoligrafistaAgregadoListener.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\DocumentoAgregarController.java
 C:\Users\carlo\Desktop\Practicas\polygraph\src\main\java\com\polygraph\controlador\ProcesoController.java

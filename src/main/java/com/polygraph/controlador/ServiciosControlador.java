@@ -176,49 +176,48 @@ public class ServiciosControlador {
     }
 
     private VBox crearTarjeta(Servicio s) {
-        VBox card = new VBox(4);               // menos espacio vertical
-        card.getStyleClass().add("service-card-modern");
-        card.setAlignment(Pos.CENTER_LEFT);    // coherente con el CSS
-        card.setPrefWidth(260);
-        card.setMaxWidth(260);
-        
+        VBox card = new VBox(8);
+        card.setPrefWidth(280);
+        card.setMaxWidth(280);
+        card.getStyleClass().add("service-card");
+
+        // Color según estado
+        String estado = s.getEstado() != null ? s.getEstado().toLowerCase() : "pendiente";
+        switch (estado) {
+            case "finalizado", "entregado" -> card.getStyleClass().add("card-success");
+            case "poligrafía realizada", "realizada" -> card.getStyleClass().add("card-primary");
+            case "en progreso", "programada" -> card.getStyleClass().add("card-warning");
+            default -> card.getStyleClass().add("card-pending");
+        }
+
         Label title = new Label("Servicio #" + s.getIdServicio());
         title.getStyleClass().add("card-title");
 
-        String fecha = s.getFechaSolicitud() != null ? s.getFechaSolicitud().format(DateTimeFormatter.ofPattern("dd MMM yyyy")) : "Sin fecha";
-        String hora = s.getHoraSolicitud() != null ? s.getHoraSolicitud().format(DateTimeFormatter.ofPattern("HH:mm")) : "Sin hora";
+        String fecha = s.getFechaSolicitud() != null 
+            ? s.getFechaSolicitud().format(DateTimeFormatter.ofPattern("dd MMM yyyy")) 
+            : "Sin fecha";
 
-        Label subtitle = new Label(
-            "Fecha: " + fecha + " a las " + hora + "\n" +
-            "Cliente: " + (s.getNombreCliente() != null ? s.getNombreCliente() : "N/A") + "\n" +
-            "Candidato: " + (s.getNombreCandidato() != null ? s.getNombreCandidato() + " " : "") +
-                          (s.getApellidoCandidato() != null ? s.getApellidoCandidato() : "") + "\n" +
-            "Proceso: " + (s.getNombreProceso() != null ? s.getNombreProceso() : "N/A") + "\n" +
-            "Estado: " + (s.getEstado() != null ? s.getEstado() : "Pendiente")
-        );
-        subtitle.getStyleClass().add("card-subtitle");
-        subtitle.setWrapText(true);
-        subtitle.setMaxWidth(260);  // 🔥 mejora el centrado visual del texto
+        Label info = new Label("""
+            Cliente: %s
+            Candidato: %s %s
+            Proceso: %s
+            Fecha: %s
+            Estado: %s
+            """.formatted(
+                s.getNombreCliente() != null ? s.getNombreCliente() : "N/A",
+                s.getNombreCandidato() != null ? s.getNombreCandidato() : "",
+                s.getApellidoCandidato() != null ? s.getApellidoCandidato() : "",
+                s.getNombreProceso() != null ? s.getNombreProceso() : "N/A",
+                fecha,
+                s.getEstado() != null ? s.getEstado() : "Pendiente"
+            ));
+        info.getStyleClass().add("card-text");
 
-        Button btnDetalle = new Button("Detalle");
-        btnDetalle.getStyleClass().addAll("card-button", "btn-detalle");
-        btnDetalle.setOnAction(e -> mostrarDetalle(s));
+        Button btnEditar = new Button("Abrir Expediente");
+        btnEditar.getStyleClass().add("btn-primary");
+        btnEditar.setOnAction(e -> mainController.abrirExpedienteServicio(s));
 
-        Button btnEditar = new Button("Editar");
-        btnEditar.getStyleClass().addAll("card-button", "btn-editar");
-        btnEditar.setOnAction(e -> {
-            if (mainController != null) {
-                mainController.abrirModificarServicio(s);
-            } else {
-                showAlert("Error", "Sistema principal no disponible.");
-            }
-        });
-
-        HBox botones = new HBox(12, btnDetalle, btnEditar);
-        botones.setAlignment(Pos.CENTER);
-        botones.setStyle("-fx-padding: 12 0 0 0;");
-
-        card.getChildren().addAll(title, subtitle, botones);
+        card.getChildren().addAll(title, info, btnEditar);
         return card;
     }
 
