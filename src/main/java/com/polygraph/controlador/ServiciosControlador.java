@@ -176,10 +176,11 @@ public class ServiciosControlador {
     }
 
     private VBox crearTarjeta(Servicio s) {
-        VBox card = new VBox(8);
-        card.setPrefWidth(280);
-        card.setMaxWidth(280);
-        card.getStyleClass().add("service-card");
+        VBox card = new VBox(4);               // menos espacio vertical
+        card.getStyleClass().add("service-card-modern");
+        card.setAlignment(Pos.CENTER_LEFT);    // coherente con el CSS
+        card.setPrefWidth(260);
+        card.setMaxWidth(260);
 
         // Color según estado
         String estado = s.getEstado() != null ? s.getEstado().toLowerCase() : "pendiente";
@@ -190,36 +191,52 @@ public class ServiciosControlador {
             default -> card.getStyleClass().add("card-pending");
         }
 
+        // Título
         Label title = new Label("Servicio #" + s.getIdServicio());
         title.getStyleClass().add("card-title");
 
-        String fecha = s.getFechaSolicitud() != null 
-            ? s.getFechaSolicitud().format(DateTimeFormatter.ofPattern("dd MMM yyyy")) 
-            : "Sin fecha";
+        // Fecha formateada
+        String fecha = s.getFechaSolicitud() != null
+                ? s.getFechaSolicitud().format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
+                : "Sin fecha";
 
+        // Texto informativo
         Label info = new Label("""
-            Cliente: %s
-            Candidato: %s %s
-            Proceso: %s
-            Fecha: %s
-            Estado: %s
-            """.formatted(
+                Cliente: %s
+                Candidato: %s %s
+                Proceso: %s
+                Fecha: %s
+                Estado: %s
+                """.formatted(
                 s.getNombreCliente() != null ? s.getNombreCliente() : "N/A",
                 s.getNombreCandidato() != null ? s.getNombreCandidato() : "",
                 s.getApellidoCandidato() != null ? s.getApellidoCandidato() : "",
                 s.getNombreProceso() != null ? s.getNombreProceso() : "N/A",
                 fecha,
                 s.getEstado() != null ? s.getEstado() : "Pendiente"
-            ));
+        ));
         info.getStyleClass().add("card-text");
+//        info.setWrapText(true);
+//        info.setMaxWidth(280);
+        
+   /*     info.getStyleClass().add("card-subtitle");
+        info.setWrapText(true);
+        info.setMaxWidth(280);*/
 
+        // Botón Abrir Expediente
         Button btnEditar = new Button("Abrir Expediente");
-        btnEditar.getStyleClass().add("btn-primary");
         btnEditar.setOnAction(e -> mainController.abrirExpedienteServicio(s));
-
-        card.getChildren().addAll(title, info, btnEditar);
+        btnEditar.getStyleClass().addAll("card-button");
+        
+        // Contenedor de botones
+        HBox botones = new HBox(8, btnEditar);
+        botones.setAlignment(Pos.CENTER);
+        
+        // Agregamos todo a la tarjeta
+        card.getChildren().addAll(title, info, botones);
         return card;
     }
+
 
 
     private void mostrarDetalle(Servicio s) {
@@ -227,10 +244,10 @@ public class ServiciosControlador {
         alert.setTitle("Servicio #" + s.getIdServicio());
         alert.setHeaderText("Detalles del Servicio");
 
-        VBox content = new VBox(10);
-        content.setStyle("-fx-padding: 10; -fx-background-color: #f9f9f9; -fx-background-radius: 8;");
-
-        content.getChildren().addAll(
+        VBox card = new VBox(4);  
+        card.getStyleClass().add("service-card-modern");
+        
+        card.getChildren().addAll(
             crearLabelDetalle("Fecha", s.getFechaSolicitud() != null ? s.getFechaSolicitud().format(DateTimeFormatter.ofPattern("dd MMM yyyy")) : "N/A"),
             crearLabelDetalle("Hora", s.getHoraSolicitud() != null ? s.getHoraSolicitud().format(DateTimeFormatter.ofPattern("HH:mm")) : "N/A"),
             crearLabelDetalle("Cliente", s.getNombreCliente() != null ? s.getNombreCliente() : "Desconocido"),
@@ -239,7 +256,7 @@ public class ServiciosControlador {
             crearLabelDetalle("Estado", s.getEstado() != null ? s.getEstado() : "Pendiente")
         );
 
-        alert.getDialogPane().setContent(content);
+        alert.getDialogPane().setContent(card);
         alert.getDialogPane().setMinWidth(500);
         alert.showAndWait();
     }

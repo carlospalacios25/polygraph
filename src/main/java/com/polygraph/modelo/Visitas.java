@@ -16,6 +16,10 @@ public class Visitas {
     private String novedadVisita;
     private String nombreVisitador;
 
+    public Visitas() {
+    }
+    
+    
     public Visitas(int idVisita, int idServicio, int idVisitador, String Tipo_Prueba, String Tipo_Visita,
                    LocalDate fechaSolicitud, LocalDate fechaVisita, LocalTime horaVisita,
                    LocalDate FechaeInforme, String novedadVisita) {

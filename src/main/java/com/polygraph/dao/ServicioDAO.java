@@ -174,6 +174,41 @@ public class ServicioDAO {
         }
     }
     
+    public static void actualizarEstadoAutomatico(int idServicio) {
+        String sql = """
+            UPDATE servicios s
+            SET Estado = CASE
+                WHEN EXISTS (
+                    SELECT 1 FROM poligrafias p WHERE p.Id_Servicio = s.Id_Servicio
+                    UNION ALL
+                    SELECT 1 FROM visitas v WHERE v.Id_Servicio = s.Id_Servicio
+                ) AND s.Estado = 'Pendiente' THEN 'Agendado'
+
+                WHEN (
+                    SELECT COUNT(*) FROM documentos d 
+                    WHERE d.Id_Servicio = s.Id_Servicio 
+                      AND d.Estado_Documento = 'Activo'
+                      AND d.Tipo_Documento IN ('Informe Poligrafía','Reporte Visita')
+                ) >= 2 
+                AND EXISTS (SELECT 1 FROM analisis a WHERE a.Id_Servicio = s.Id_Servicio AND a.Tipo_Analisis = 'Final')
+                AND s.Estado NOT IN ('Publicado','Cancelado') THEN 'Finalizado'
+
+                WHEN s.Estado = 'Finalizado' THEN 'Publicado'  -- o cuando el cliente lo marque como publicado
+
+                ELSE s.Estado
+            END
+            WHERE s.Id_Servicio = ?;
+            """;
+
+        try (Connection conn = ConexionBD.getInstancia().getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idServicio);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public boolean servicioRequierePoligrafia(int idServicio) throws SQLException {
         String sql = """
             SELECT 
@@ -243,4 +278,71 @@ public class ServicioDAO {
         }
         return servicios;
     }
+    
+    public Servicio obtenerServicioCompletoPorId(Long idServicio) {
+        String sql = """
+            SELECT
+                s.Id_Servicio,
+                s.Fecha_Solicitud,
+                s.Hora_Solicitud,
+                s.Estado,
+                c.Nit_Cliente,
+                c.Nombre_Cliente,
+                p.Id_Proceso,
+                p.Nombre_Proceso,
+                s.Cedula_Candidato,                    -- ← Siempre trae la cédula del servicio
+                can.Nombre_Candidato,                  -- ← Puede ser NULL si no existe
+                can.Apellido_Candidato,               -- ← Puede ser NULL
+                can.Telefono_Candidato,                -- ← Puede ser NULL
+                can.Direccion_Candidato,               -- ← Puede ser NULL
+                ciu.Nombre_Ciudad                      -- ← Puede ser NULL
+            FROM servicios s
+            JOIN clientes c ON s.Nit_Cliente = c.Nit_Cliente
+            JOIN procesos p ON s.Id_Proceso = p.Id_Proceso
+            LEFT JOIN candidatos can ON s.Cedula_Candidato = can.Cedula_Candidato
+            LEFT JOIN ciudades ciu ON can.Id_Ciudad = ciu.Id_Ciudad
+            WHERE s.Id_Servicio = ?
+            """;
+
+        try (Connection conn = ConexionBD.getInstancia().getConexion();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setLong(1, idServicio);  // ← Usa Long, no int (mejor práctica)
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Servicio s = new Servicio();
+                    s.setIdServicio(rs.getInt("Id_Servicio"));
+                    s.setFechaSolicitud(rs.getObject("Fecha_Solicitud", LocalDate.class));
+                    s.setHoraSolicitud(rs.getObject("Hora_Solicitud", LocalTime.class));
+                    s.setEstado(rs.getString("Estado"));
+
+                    // Cliente
+                    s.setNitCliente(rs.getLong("Nit_Cliente"));
+                    s.setNombreCliente(rs.getString("Nombre_Cliente"));
+
+                    // Proceso
+                    s.setIdProceso(rs.getInt("Id_Proceso"));
+                    s.setNombreProceso(rs.getString("Nombre_Proceso"));
+
+                    // Candidato (puede ser NULL)
+                    Long cedula = rs.getObject("Cedula_Candidato", Long.class);
+                    s.setCedulaCandidato(cedula);  // ← Siempre trae la cédula del servicio
+
+                    // Estos campos pueden ser NULL si el candidato no existe
+                    s.setNombreCandidato(rs.getString("Nombre_Candidato"));
+                    s.setApellidoCandidato(rs.getString("Apellido_Candidato"));
+                    s.setTelefonoCandidato(rs.getString("Telefono_Candidato"));
+                    s.setDireccionCandidato(rs.getString("Direccion_Candidato"));
+                    s.setNombreCiudad(rs.getString("Nombre_Ciudad"));
+
+                    return s;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
 }

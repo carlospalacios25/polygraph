@@ -8,6 +8,7 @@ com\polygraph\controlador\CandidatoController.class
 com\polygraph\modelo\Documentos.class
 com\polygraph\controlador\ProgresoAgregarController.class
 com\polygraph\util\EmailUtil$1.class
+com\polygraph\controlador\ExpedienteServicioControlador$1.class
 com\polygraph\controlador\PerfilController.class
 com\polygraph\controlador\VisitasControlador$1.class
 com\polygraph\controlador\MainController.class
@@ -25,6 +26,7 @@ com\polygraph\util\ConexionBD.class
 com\polygraph\modelo\Visitas.class
 com\polygraph\dao\TiposProgresoDAO.class
 com\polygraph\dao\VisitadoresDAO.class
+com\polygraph\controlador\ExpedienteServicioControlador$2.class
 com\polygraph\controlador\GestionProgresoControlador.class
 module-info.class
 com\polygraph\listeners\PoligrafistaAgregadoListener.class
@@ -57,6 +59,7 @@ com\polygraph\controlador\CandidatoController$1.class
 com\polygraph\dao\UsuarioDAO.class
 com\polygraph\listeners\ProcesoAgregadoListener.class
 com\polygraph\listeners\TipoProgresoAgregadoListener.class
+com\polygraph\controlador\ExpedienteServicioControlador$3.class
 com\polygraph\dao\ProgresoDAO.class
 com\polygraph\controlador\PoligrafistasController.class
 com\polygraph\controlador\ConServicioControlador$1.class

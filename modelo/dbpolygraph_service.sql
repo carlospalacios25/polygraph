@@ -334,6 +334,7 @@ DROP TABLE IF EXISTS `procesos`;
 CREATE TABLE `procesos` (
   `Id_Proceso` int NOT NULL AUTO_INCREMENT COMMENT 'Identificador único del proceso.',
   `Nombre_Proceso` varchar(100) NOT NULL COMMENT 'Nombre del proceso (ej. Selección de Personal).',
+  `Solicitud_Documentos` varchar(100) NOT NULL COMMENT 'Identificacion que docuemntos necesita).',
   PRIMARY KEY (`Id_Proceso`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Tabla para almacenar tipos de procesos.';
 /*!40101 SET character_set_client = @saved_cs_client */;

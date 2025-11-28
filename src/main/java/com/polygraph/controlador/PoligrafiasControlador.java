@@ -349,7 +349,6 @@ public class PoligrafiasControlador {
         HBox botones = new HBox(8, btnCargar);
         botones.setAlignment(Pos.CENTER);
 
-        // 👉 Ya solo agregamos título, texto y botón (sin ImageView)
         card.getChildren().addAll(title, subtitle, botones);
         return card;
     }

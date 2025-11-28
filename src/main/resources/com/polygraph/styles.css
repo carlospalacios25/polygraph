@@ -480,3 +480,40 @@
 .card-warning { -fx-background-color: #fff3cd; -fx-background-radius: 12; -fx-padding: 15; }
 .card-primary { -fx-background-color: #d1ecf1; -fx-background-radius: 12; -fx-padding: 15; }
 .card-success { -fx-background-color: #d4edda; -fx-background-radius: 12; -fx-padding: 15; }
+
+
+/* TABPANE MODERNO - ELIMINA EL ESTILO FEO POR DEFECTO */
+.modern-tabpane .tab-header-area {
+    -fx-padding: 0 10 0 10;
+    -fx-background-color: transparent;
+}
+
+.modern-tabpane .tab-header-background {
+    -fx-background-color: #f5f7fa;
+}
+
+.modern-tabpane .tab {
+    -fx-background-color: #e4e8ed;
+    -fx-background-radius: 12 12 0 0;
+    -fx-padding: 10 24;
+    -fx-pref-height: 45;
+    -fx-font-size: 14;
+    -fx-fontśl-weight: bold;
+    -fx-text-fill: #555;
+}
+
+.modern-tabpane .tab:selected {
+    -fx-background-color: #c62828;
+    -fx-text-fill: white;
+}
+
+.modern-tabpane .tab:hover {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.modern-tabpane .tab-pane:top *.tab-header-area {
+    -fx-background-insets: 0, 0;
+    -fx-padding: 0 20 0 20;
+}

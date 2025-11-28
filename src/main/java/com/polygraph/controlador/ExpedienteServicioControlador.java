@@ -1,156 +1,357 @@
 package com.polygraph.controlador;
 
-import com.polygraph.dao.ServicioDAO;
-import com.polygraph.modelo.Servicio;
+import com.polygraph.dao.*;
+import com.polygraph.modelo.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.util.StringConverter;
 import java.sql.SQLException;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class ExpedienteServicioControlador {
 
-    @FXML private ComboBox<String> estadoCombo;
-    @FXML private CheckBox asistioCheck;
-    @FXML private TextField direccionField;
-    @FXML private Label archivosLabel;
+    // === ESTADO Y SERVICIO ===
+    @FXML private Label lblServicioId, lblEstado, lblStatusPoli, lblStatusVisita;
+    @FXML private Circle circleEstado;
 
-    private Servicio servicio;
-    private MainController mainController;
+    // === DATOS DEL SERVICIO ===
+    @FXML private TextField txtCliente, txtProceso, txtFechaSolicitud;
+
+    // === DATOS DEL CANDIDATO ===
+    @FXML private TextField txtCedula, txtNombreCand, txtApellidoCand;
+    @FXML private TextField txtTelefono, txtDireccion;
+    @FXML private ComboBox<Ciudades> cbCiudad;
+
+    // === POLIGRAFÍA ===
+    @FXML private ComboBox<Poligrafistas> cbPoligrafista;
+    @FXML private DatePicker dpFechaPoligrafia;
+    @FXML private TextField txtHoraPoligrafia;
+
+    // === VISITA (por ahora vacía) ===
+    @FXML private ComboBox<Visitadores> cbVisitador;
+    @FXML private ComboBox<String> cbTipoPrueba, cbTipoVisita;
+    @FXML private DatePicker dpFechaVisita;
+    @FXML private TextField txtHoraVisita;
+    @FXML private TextArea txtNovedades;
+
+    // === DAOs ===
     private final ServicioDAO servicioDAO = new ServicioDAO();
-    private List<File> archivosSeleccionados;
+    private final CandidatoDAO candidatoDAO = new CandidatoDAO();
+    private final CiudadesDAO ciudadesDAO = new CiudadesDAO();
+    private final PoligrafistasDAO poligrafistasDAO = new PoligrafistasDAO();
+    private final VisitadoresDAO visitadoresDAO = new VisitadoresDAO();
+    private final PoligrafiasDAO poligrafiasDAO = new PoligrafiasDAO();
+    private final VisitasDAO visitasDAO = new VisitasDAO();
 
-    // === ESTADOS POSIBLES ===
-    private static final String[] ESTADOS = {
-        "Pendiente",
-        "En Progreso",
-        "Poligrafía Programada",
-        "Poligrafía Realizada",
-        "Informe Entregado",
-        "Finalizado"
-    };
+    // === DATOS EN MEMORIA ===
+    private Servicio servicio;
+    private Candidatos candidato;
+    private Poligrafias poligrafia;
 
-    // === REFERENCIA AL MAIN CONTROLLER ===
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
-
-    // === RECIBIR EL SERVICIO A EDITAR ===
-    public void setServicio(Servicio servicio) {
-        this.servicio = servicio;
-        cargarDatosEnFormulario();
-    }
-
+    // ==================== INICIALIZACIÓN ====================
     @FXML
-    public void initialize() {
-        estadoCombo.setItems(FXCollections.observableArrayList(ESTADOS));
-        asistioCheck.setSelected(false);
-        archivosLabel.setText("Ningún archivo seleccionado");
+    private void initialize() {
+        cargarCiudades();
+        cargarPoligrafistasYVisitadores();
+        configurarCombosFijos();
+        configurarHoraField();
     }
 
-    private void cargarDatosEnFormulario() {
-        if (servicio == null) return;
-
-        // Cargar estado
-        estadoCombo.setValue(servicio.getEstado() != null ? servicio.getEstado() : "Pendiente");
-
-        // Cargar asistencia (puedes tener un campo en Servicio o usar lógica)
-        asistioCheck.setSelected("Poligrafía Realizada".equalsIgnoreCase(servicio.getEstado()));
-
-        // Cargar dirección (puedes tener un campo en Servicio o en Candidato)
-        direccionField.setText("Calle 123, Bogotá"); // <-- Reemplaza con dato real si lo tienes
-
-        // Mostrar documentos ya subidos (opcional)
-        archivosLabel.setText("3 documentos adjuntos");
+    public void setServicio(Servicio s) {
+        this.servicio = s;
+        cargarDatosServicio();
+        cargarCandidatoCompleto();
+        cargarPoligrafia();  // ← carga si existe
     }
 
-    // === SUBIR DOCUMENTOS ===
-    @FXML
-    private void subirDocumentos() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccionar Documentos del Candidato");
-        fileChooser.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Documentos", "*.pdf", "*.docx", "*.jpg", "*.png"),
-            new FileChooser.ExtensionFilter("Todos los archivos", "*.*")
-        );
+    // ==================== CARGA DE DATOS ====================
+    private void cargarDatosServicio() {
+        lblServicioId.setText("Servicio #" + servicio.getIdServicio());
+        txtCliente.setText(servicio.getNombreCliente() != null ? servicio.getNombreCliente() : "");
+        txtProceso.setText(servicio.getNombreProceso() != null ? servicio.getNombreProceso() : "");
+        txtFechaSolicitud.setText(servicio.getFechaSolicitud() != null ? servicio.getFechaSolicitud().toString() : "");
+        actualizarEstadoVisual(servicio.getEstado());
+    }
 
-        List<File> seleccionados = fileChooser.showOpenMultipleDialog(getStage());
-        if (seleccionados != null && !seleccionados.isEmpty()) {
-            this.archivosSeleccionados = seleccionados;
-            archivosLabel.setText(seleccionados.size() + " archivo(s) seleccionado(s)");
+    private void cargarCandidatoCompleto() {
+        try {
+            candidato = candidatoDAO.obtenerCandidatoDesdeServicio(servicio.getIdServicio());
+            if (candidato != null) {
+                txtCedula.setText(String.valueOf(candidato.getCedulaCandidato()));
+                txtNombreCand.setText(candidato.getNombreCandidato() != null ? candidato.getNombreCandidato() : "");
+                txtApellidoCand.setText(candidato.getApellidoCandidato() != null ? candidato.getApellidoCandidato() : "");
+                txtTelefono.setText(candidato.getTelefonoCandidato() != null ? candidato.getTelefonoCandidato() : "");
+                txtDireccion.setText(candidato.getDireccionCandidato() != null ? candidato.getDireccionCandidato() : "");
+
+                if (candidato.getIdCiudad() > 0) {
+                    cbCiudad.getItems().stream()
+                        .filter(c -> c.getIdCiudad() == candidato.getIdCiudad())
+                        .findFirst()
+                        .ifPresent(cbCiudad.getSelectionModel()::select);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    // === GUARDAR CAMBIOS ===
-   /* @FXML
-    private void guardar() {
-        if (servicio == null) {
-            showAlert("Error", "No hay servicio seleccionado.");
-            return;
+    private void cargarCiudades() {
+        try {
+            cbCiudad.setItems(FXCollections.observableArrayList(ciudadesDAO.obtenerCiudades()));
+            cbCiudad.setConverter(new StringConverter<Ciudades>() {
+                @Override public String toString(Ciudades c) { return c == null ? "" : c.getNombreCiudad(); }
+                @Override public Ciudades fromString(String s) { return null; }
+            });
+        } catch (SQLException e) {
+            mostrarError("Error", "No se pudieron cargar las ciudades");
+        }
+    }
+
+    private void configurarCombosFijos() {
+        cbTipoPrueba.setItems(FXCollections.observableArrayList("VALI. RESI.", "VDV", "VDP"));
+        cbTipoVisita.setItems(FXCollections.observableArrayList(
+            "PRE EMPLEO", "ENFASIS EN TELETRABAJO", "TIPO OEA", "PRE - ENFASIS VEHICULAR", "RUTINA"
+        ));
+    }
+
+    private void cargarPoligrafistasYVisitadores() {
+        try {
+            cbPoligrafista.setItems(FXCollections.observableArrayList(poligrafistasDAO.obtenerPoligrafistas()));
+            cbPoligrafista.setConverter(new StringConverter<Poligrafistas>() {
+                @Override public String toString(Poligrafistas p) {
+                    return p != null ? p.getNombrePoligrafista() + (p.getSalaEncargada() != null ? " (" + p.getSalaEncargada() + ")" : "") : "";
+                }
+                @Override public Poligrafistas fromString(String s) { return null; }
+            });
+
+            cbVisitador.setItems(FXCollections.observableArrayList(visitadoresDAO.obtenerVisitadores()));
+            cbVisitador.setConverter(new StringConverter<Visitadores>() {
+                @Override public String toString(Visitadores v) {
+                    return v != null ? v.getNombreVisitador() + (v.getZonasVisitador() != null ? " (" + v.getZonasVisitador() + ")" : "") : "";
+                }
+                @Override public Visitadores fromString(String s) { return null; }
+            });
+        } catch (SQLException e) {
+            mostrarError("Error", "Error al cargar poligrafistas/visitadores");
+        }
+    }
+
+    // ==================== POLIGRAFÍA – CARGA ====================
+    private void configurarHoraField() {
+        if (txtHoraPoligrafia == null) return;
+
+        txtHoraPoligrafia.setTextFormatter(new TextFormatter<>(change -> {
+            String text = change.getControlNewText();
+            if (text.isEmpty()) return change;
+            if (text.length() > 5) return null;
+            if (!text.matches("\\d*:?\\d*")) return null;
+            if (text.length() == 5 && text.matches("\\d{2}:\\d{2}")) {
+                String[] p = text.split(":");
+                int h = Integer.parseInt(p[0]);
+                int m = Integer.parseInt(p[1]);
+                if (h >= 0 && h <= 23 && m >= 0 && m <= 59) return change;
+            }
+            return change;
+        }));
+
+        txtHoraPoligrafia.textProperty().addListener((obs, oldV, newV) -> {
+            if (newV.length() == 2 && !newV.contains(":")) {
+                txtHoraPoligrafia.setText(newV + ":");
+                txtHoraPoligrafia.positionCaret(3);
+            }
+        });
+    }
+    
+    private LocalTime validarYParsearHora(String horaTexto) {
+        if (horaTexto == null || horaTexto.trim().isEmpty()) {
+            return null;
+        }
+
+        String texto = horaTexto.trim();
+
+        // Acepta formatos: 8:00, 08:00, 8:3, 08:30, etc.
+        if (!texto.matches("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$")) {
+            return null;
         }
 
         try {
-            // Actualizar estado
-            servicio.setEstado(estadoCombo.getValue());
-
-            // Actualizar asistencia (lógica de ejemplo)
-            if (asistioCheck.isSelected() && !"Poligrafía Realizada".equals(estadoCombo.getValue())) {
-                servicio.setEstado("Poligrafía Realizada");
-            }
-
-            // Guardar en base de datos
-            servicioDAO.actualizarEstadoServicio(servicio.getIdServicio(), servicio.getEstado());
-
-            // Guardar documentos en carpeta del proyecto
-            if (archivosSeleccionados != null && !archivosSeleccionados.isEmpty()) {
-                Path carpeta = Path.of("documentos", "servicio_" + servicio.getIdServicio());
-                Files.createDirectories(carpeta);
-
-                for (File archivo : archivosSeleccionados) {
-                    Path destino = carpeta.resolve(archivo.getName());
-                    Files.copy(archivo.toPath(), destino, StandardCopyOption.REPLACE_EXISTING);
-                }
-            }
-
-            showAlert("Éxito", "Expediente actualizado correctamente.");
-            if (mainController != null) {
-                mainController.popBreadcrumb(); // Volver a la lista
-            }
-
-        } catch (SQLException | IOException e) {
-            showAlert("Error", "No se pudo guardar: " + e.getMessage());
+            return LocalTime.parse(texto);
+        } catch (Exception e) {
+            return null;
         }
-    }*/
+    }
+    
+    private void cargarPoligrafia() {
+        try {
+            poligrafia = poligrafiasDAO.obtenerPoligrafiaPorServicio(servicio.getIdServicio());
 
-    // === CANCELAR ===
+            if (poligrafia != null) {
+                cbPoligrafista.getSelectionModel().select(
+                    cbPoligrafista.getItems().stream()
+                        .filter(p -> p.getIdPoligrafista() == poligrafia.getIdPoligrafista())
+                        .findFirst().orElse(null)
+                );
+                dpFechaPoligrafia.setValue(poligrafia.getFechaAsignacion());
+                txtHoraPoligrafia.setText(poligrafia.getHoraProgramacion() != null ? poligrafia.getHoraProgramacion().toString() : "");
+
+                lblStatusPoli.setText("Poligrafía agendada: " + poligrafia.getFechaAsignacion() + " " + poligrafia.getHoraProgramacion());
+                lblStatusPoli.setStyle("-fx-text-fill: #2e7d32; -fx-font-weight: bold;");
+            } else {
+                cbPoligrafista.getSelectionModel().clearSelection();
+                dpFechaPoligrafia.setValue(null);
+                txtHoraPoligrafia.clear();
+                lblStatusPoli.setText("Sin poligrafía registrada");
+                lblStatusPoli.setStyle("-fx-text-fill: #d32f2f;");
+            }
+        } catch (SQLException e) {
+            mostrarError("Error", "Error al cargar poligrafía: " + e.getMessage());
+        }
+    }
+    
+    // ==================== GUARDAR POLIGRAFÍA (CREA O ACTUALIZA) ====================
     @FXML
-    private void cancelar() {
-        if (mainController != null) {
-            mainController.popBreadcrumb();
+    private void guardarPoligrafia() {
+        try {
+            Poligrafistas poli = cbPoligrafista.getValue();
+            LocalDate fecha = dpFechaPoligrafia.getValue();
+            String horaTexto = txtHoraPoligrafia.getText().trim();
+
+            // === VALIDACIONES BÁSICAS ===
+            if (poli == null) {
+                mostrarError("Error", "Selecciona un poligrafista");
+                return;
+            }
+            if (fecha == null) {
+                mostrarError("Error", "Selecciona la fecha de la poligrafía");
+                return;
+            }
+            if (horaTexto.isEmpty()) {
+                mostrarError("Error", "Ingresa la hora programada");
+                return;
+            }
+            
+            boolean requierePoligrafia = servicioDAO.servicioRequierePoligrafia(servicio.getIdServicio());
+            if (!requierePoligrafia) {
+                mostrarError("Error", "El servicio " + servicio.getIdServicio() + " no está configurado para realizar poligrafía.");
+                return;
+            }
+            
+            LocalTime hora = validarYParsearHora(horaTexto);
+            if (hora == null) {
+                txtHoraPoligrafia.setStyle("-fx-border-color: #e74c3c; -fx-background-color: #ffeaea;");
+                mostrarError("Formato inválido", "La hora debe estar en formato HH:mm\nEjemplos: 08:30, 14:00, 09:15");
+                return;
+            } else {
+                txtHoraPoligrafia.setStyle(""); // quita rojo
+            }
+
+            // === VALIDACIÓN DE CONFLICTO HORARIO ===
+            int idPoligrafiaActual = (poligrafia != null) ? poligrafia.getIdPoligrafia() : 0;
+
+            boolean hayConflicto = poligrafiasDAO.hayConflictoHorario(
+                    poli.getIdPoligrafista(),
+                    fecha,
+                    hora,
+                    idPoligrafiaActual
+            );
+
+            if (hayConflicto) {
+                mostrarError("Conflicto de horario",
+                        "¡El poligrafista ya tiene otra prueba programada en un horario muy cercano!\n" +
+                        "Debe haber al menos 60 minutos de diferencia entre citas.");
+                return;
+            }
+
+            // === GUARDAR (CREAR O ACTUALIZAR) ===
+            if (poligrafia == null) {
+                poligrafia = new Poligrafias();
+                poligrafia.setIdServicio(servicio.getIdServicio());
+            }
+
+            poligrafia.setIdPoligrafista(poli.getIdPoligrafista());
+            poligrafia.setFechaAsignacion(fecha);
+            poligrafia.setHoraProgramacion(hora);
+
+            if (poligrafia.getIdPoligrafia() == 0) {
+                poligrafiasDAO.insertarPoligrafia(poligrafia);
+                mostrarExito("Éxito", "Poligrafía creada correctamente");
+            } else {
+                poligrafiasDAO.actualizarPoligrafia(poligrafia);
+                mostrarExito("Éxito", "Poligrafía actualizada correctamente");
+            }
+
+            cargarPoligrafia(); // recarga estado visual
+
+        } catch (SQLException e) {
+            mostrarError("Error de base de datos", "No se pudo guardar la poligrafía:\n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    // === ALERTAS ===
-    private void showAlert(String titulo, String mensaje) {
-        Alert alert = new Alert(
-            titulo.equals("Éxito") ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR
-        );
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
+    // ==================== ACTUALIZAR CANDIDATO ====================
+    @FXML
+    private void actualizarCandidato() {
+        try {
+            if (candidato == null) {
+                mostrarError("Error", "No hay candidato asociado");
+                return;
+            }
+            Ciudades ciudad = cbCiudad.getValue();
+            if (ciudad == null) {
+                mostrarError("Error", "Selecciona una ciudad");
+                return;
+            }
+
+            candidato.setNombreCandidato(txtNombreCand.getText().trim());
+            candidato.setApellidoCandidato(txtApellidoCand.getText().trim());
+            candidato.setTelefonoCandidato(txtTelefono.getText().trim().isEmpty() ? null : txtTelefono.getText().trim());
+            candidato.setDireccionCandidato(txtDireccion.getText().trim().isEmpty() ? null : txtDireccion.getText().trim());
+            candidato.setIdCiudad(ciudad.getIdCiudad());
+
+            int filas = candidatoDAO.actualizarCandidato(candidato);
+            if (filas > 0) {
+                mostrarExito("Éxito", "Candidato actualizado correctamente");
+            } else {
+                mostrarError("Error", "No se pudo actualizar");
+            }
+        } catch (Exception e) {
+            mostrarError("Error", "Error: " + e.getMessage());
+        }
     }
 
-    // === OBTENER STAGE ===
-    private Stage getStage() {
-        return (Stage) estadoCombo.getScene().getWindow();
+    // ==================== VISUAL ====================
+    private void actualizarEstadoVisual(String estado) {
+        lblEstado.setText(estado);
+        Color color = switch (estado) {
+            case "Pendiente" -> Color.web("#c62828");
+            case "Agendado" -> Color.web("#ff6d00");
+            case "Finalizado", "Entregado" -> Color.web("#2e7d32");
+            case "Publicado" -> Color.web("#00acc1");
+            case "Cancelado" -> Color.web("#37474f");
+            default -> Color.GRAY;
+        };
+        circleEstado.setFill(color);
     }
+
+    private void mostrarError(String titulo, String msg) {
+        Alert a = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
+        a.setTitle(titulo);
+        a.setHeaderText(null);
+        a.showAndWait();
+    }
+
+    private void mostrarExito(String titulo, String msg) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK);
+        a.setTitle(titulo);
+        a.setHeaderText(null);
+        a.show();
+    }
+
+    // Métodos vacíos por ahora (para que no dé error)
+    private void cargarVisita() { }
+    @FXML private void guardarVisita() { }
 }

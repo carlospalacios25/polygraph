@@ -1,4 +1,3 @@
-// src/com_polygraph/controlador/PoligrafistasController.java
 package com.polygraph.controlador;
 
 import com.polygraph.dao.PoligrafistasDAO;

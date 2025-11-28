@@ -98,9 +98,11 @@ public class MainController {
     
     public void abrirExpedienteServicio(Servicio servicio) {
         pushBreadcrumb("Servicio #" + servicio.getIdServicio(), "/com/polygraph/vista/ExpedienteServicioForm.fxml");
+
         loadView("/com/polygraph/vista/ExpedienteServicioForm.fxml", null, ctrl -> {
-            if (ctrl instanceof GestServicioControlador modCtrl) {
-                modCtrl.setServicio(servicio);
+            // ¡AQUÍ ESTABA EL ERROR!
+            if (ctrl instanceof ExpedienteServicioControlador expedienteCtrl) {
+                expedienteCtrl.setServicio(servicio);  // Ahora sí llega al controlador correcto
             }
         });
     }

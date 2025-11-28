@@ -1,4 +1,3 @@
-
 package com.polygraph.modelo;
 
 public class Candidatos {
@@ -10,7 +9,9 @@ public class Candidatos {
     private int idCiudad;
     private String nombreCiudad;
 
-    public Candidatos(long cedulaCandidato, String nombreCandidato, String apellidoCandidato, String telefonoCandidato, String direccionCandidato, int idCiudad) {
+    // CONSTRUCTOR PARA obtenerCandidatoCompleto() ← ESTE ES EL QUE FALTABA
+    public Candidatos(long cedulaCandidato, String nombreCandidato, String apellidoCandidato,
+                      String telefonoCandidato, String direccionCandidato, int idCiudad) {
         this.cedulaCandidato = cedulaCandidato;
         this.nombreCandidato = nombreCandidato;
         this.apellidoCandidato = apellidoCandidato;
@@ -19,7 +20,9 @@ public class Candidatos {
         this.idCiudad = idCiudad;
     }
 
-    public Candidatos(long cedulaCandidato, String nombreCandidato, String telefonoCandidato, String direccionCandidato, String nombreCiudad) {
+    // Constructor para la tabla (nombre completo)
+    public Candidatos(long cedulaCandidato, String nombreCandidato, String telefonoCandidato,
+                      String direccionCandidato, String nombreCiudad) {
         this.cedulaCandidato = cedulaCandidato;
         this.nombreCandidato = nombreCandidato;
         this.telefonoCandidato = telefonoCandidato;
@@ -27,67 +30,25 @@ public class Candidatos {
         this.nombreCiudad = nombreCiudad;
     }
 
+    // Constructor para combo box
     public Candidatos(long cedulaCandidato, String nombreCandidato) {
         this.cedulaCandidato = cedulaCandidato;
         this.nombreCandidato = nombreCandidato;
     }
-    
-    public long getCedulaCandidato() {
-        return cedulaCandidato;
-    }
 
-    public void setCedulaCandidato(long cedulaCandidato) {
-        this.cedulaCandidato = cedulaCandidato;
-    }
-
-    public String getNombreCandidato() {
-        return nombreCandidato;
-    }
-
-    public void setNombreCandidato(String nombreCandidato) {
-        this.nombreCandidato = nombreCandidato;
-    }
-
-    public String getApellidoCandidato() {
-        return apellidoCandidato;
-    }
-
-    public void setApellidoCandidato(String apellidoCandidato) {
-        this.apellidoCandidato = apellidoCandidato;
-    }
-
-    public String getTelefonoCandidato() {
-        return telefonoCandidato;
-    }
-
-    public void setTelefonoCandidato(String telefonoCandidato) {
-        this.telefonoCandidato = telefonoCandidato;
-    }
-
-    public String getDireccionCandidato() {
-        return direccionCandidato;
-    }
-
-    public void setDireccionCandidato(String direccionCandidato) {
-        this.direccionCandidato = direccionCandidato;
-    }
-
-    public int getIdCiudad() {
-        return idCiudad;
-    }
-
-    public void setIdCiudad(int idCiudad) {
-        this.idCiudad = idCiudad;
-    }
-
-    public String getNombreCiudad() {
-        return nombreCiudad;
-    }
-
-    public void setNombreCiudad(String nombreCiudad) {
-        this.nombreCiudad = nombreCiudad;
-    }
-
-     
-            
+    // Getters y Setters (los tienes bien)
+    public long getCedulaCandidato() { return cedulaCandidato; }
+    public void setCedulaCandidato(long cedulaCandidato) { this.cedulaCandidato = cedulaCandidato; }
+    public String getNombreCandidato() { return nombreCandidato; }
+    public void setNombreCandidato(String nombreCandidato) { this.nombreCandidato = nombreCandidato; }
+    public String getApellidoCandidato() { return apellidoCandidato; }
+    public void setApellidoCandidato(String apellidoCandidato) { this.apellidoCandidato = apellidoCandidato; }
+    public String getTelefonoCandidato() { return telefonoCandidato; }
+    public void setTelefonoCandidato(String telefonoCandidato) { this.telefonoCandidato = telefonoCandidato; }
+    public String getDireccionCandidato() { return direccionCandidato; }
+    public void setDireccionCandidato(String direccionCandidato) { this.direccionCandidato = direccionCandidato; }
+    public int getIdCiudad() { return idCiudad; }
+    public void setIdCiudad(int idCiudad) { this.idCiudad = idCiudad; }
+    public String getNombreCiudad() { return nombreCiudad; }
+    public void setNombreCiudad(String nombreCiudad) { this.nombreCiudad = nombreCiudad; }
 }
