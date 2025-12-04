@@ -206,7 +206,7 @@ public class PoligrafiasDAO {
                         MINUTE,
                         CONCAT(Fecha_Asignacion, ' ', Hora_Programacion),
                         CONCAT(?, ' ', ?)
-                  )) < 60
+                  )) < 90
                 """;
 
         try (Connection c = ConexionBD.getInstancia().getConexion();

@@ -68,16 +68,28 @@ public class ProgresoDAO {
     }
     
     // === NUEVO MÉTODO EN ProgresoDAO.java ===
-    public List<String> listarNombresTiposProgreso() throws SQLException {
+    public List<String> listarNombresTiposProgreso(int idServicio) throws SQLException {
         List<String> lista = new ArrayList<>();
-        String sql = "SELECT Nombre_Progreso FROM tipos_progreso ORDER BY Nombre_Progreso";
+        String sql = """
+            SELECT tp.Nombre_Progreso
+            FROM servicios s
+            JOIN procesos p ON s.Id_Proceso = p.Id_Proceso
+            JOIN proceso_tipos_progreso ptp ON p.Id_Proceso = ptp.Id_Proceso
+            JOIN tipos_progreso tp ON ptp.Id_Tipo_Progreso = tp.Id_Tipo_Progreso
+            WHERE ptp.habilitado = TRUE
+              AND s.Id_Servicio = ?
+            ORDER BY tp.Nombre_Progreso
+            """;
 
         try (Connection c = ConexionBD.getInstancia().getConexion();
-             PreparedStatement ps = c.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+             PreparedStatement ps = c.prepareStatement(sql)) {
 
-            while (rs.next()) {
-                lista.add(rs.getString(1));
+            ps.setInt(1, idServicio);  // AQUÍ ESTABA EL ERROR CLAVE
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(rs.getString("Nombre_Progreso")); // o rs.getString(1)
+                }
             }
         }
         return lista;

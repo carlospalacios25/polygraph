@@ -15,15 +15,23 @@ import java.time.LocalTime;
 public class ExpedienteServicioControlador {
 
     // === ESTADO Y SERVICIO ===
-    @FXML private Label lblServicioId, lblEstado, lblStatusPoli, lblStatusVisita;
+    @FXML private Label lblServicioId;
+    @FXML private Label lblEstado;
+    @FXML private Label lblStatusPoli;
+    @FXML private Label lblStatusVisita;
     @FXML private Circle circleEstado;
 
     // === DATOS DEL SERVICIO ===
-    @FXML private TextField txtCliente, txtProceso, txtFechaSolicitud;
+    @FXML private TextField txtCliente;
+    @FXML private TextField txtProceso;
+    @FXML private TextField txtFechaSolicitud;
 
     // === DATOS DEL CANDIDATO ===
-    @FXML private TextField txtCedula, txtNombreCand, txtApellidoCand;
-    @FXML private TextField txtTelefono, txtDireccion;
+    @FXML private TextField txtCedula;
+    @FXML private TextField txtNombreCand;
+    @FXML private TextField txtApellidoCand;
+    @FXML private TextField txtTelefono;
+    @FXML private TextField txtDireccion;
     @FXML private ComboBox<Ciudades> cbCiudad;
 
     // === POLIGRAFÍA ===
@@ -33,10 +41,11 @@ public class ExpedienteServicioControlador {
 
     // === VISITA (por ahora vacía) ===
     @FXML private ComboBox<Visitadores> cbVisitador;
-    @FXML private ComboBox<String> cbTipoPrueba, cbTipoVisita;
+    @FXML private ComboBox<String> cbTipoPrueba; 
+    @FXML private ComboBox<String> cbTipoVisita;
     @FXML private DatePicker dpFechaVisita;
-    @FXML private TextField txtHoraVisita;
     @FXML private TextArea txtNovedades;
+    @FXML private DatePicker dpFechaSolicitud;
 
     // === DAOs ===
     private final ServicioDAO servicioDAO = new ServicioDAO();
@@ -51,6 +60,7 @@ public class ExpedienteServicioControlador {
     private Servicio servicio;
     private Candidatos candidato;
     private Poligrafias poligrafia;
+    private Visitas visitaActual;
 
     // ==================== INICIALIZACIÓN ====================
     @FXML
@@ -65,7 +75,8 @@ public class ExpedienteServicioControlador {
         this.servicio = s;
         cargarDatosServicio();
         cargarCandidatoCompleto();
-        cargarPoligrafia();  // ← carga si existe
+        cargarPoligrafia();
+        cargarVisita();
     }
 
     // ==================== CARGA DE DATOS ====================
@@ -326,15 +337,26 @@ public class ExpedienteServicioControlador {
     // ==================== VISUAL ====================
     private void actualizarEstadoVisual(String estado) {
         lblEstado.setText(estado);
-        Color color = switch (estado) {
-            case "Pendiente" -> Color.web("#c62828");
-            case "Agendado" -> Color.web("#ff6d00");
-            case "Finalizado", "Entregado" -> Color.web("#2e7d32");
-            case "Publicado" -> Color.web("#00acc1");
-            case "Cancelado" -> Color.web("#37474f");
-            default -> Color.GRAY;
+
+        circleEstado.getStyleClass().removeAll(
+            "estado-pendiente", "estado-agendado", "estado-finalizado"
+        );
+
+        Color fillColor = switch (estado) {
+            case "Pendiente" -> Color.web("#fca5a5");
+            case "Agendado" -> Color.web("#fb923c");
+            case "Finalizado", "Entregado" -> Color.web("#4ade80");
+            case "Publicado" -> Color.web("#60a5fa");
+            case "Cancelado" -> Color.web("#94a3b8");
+            default -> Color.web("#fca5a5");
         };
-        circleEstado.setFill(color);
+
+        circleEstado.setStroke(fillColor);  // Solo borde
+        circleEstado.getStyleClass().add(switch (estado) {
+            case "Pendiente" -> "estado-pendiente";
+            case "Agendado" -> "estado-agendado";
+            default -> "estado-finalizado";
+        });
     }
 
     private void mostrarError(String titulo, String msg) {
@@ -351,7 +373,86 @@ public class ExpedienteServicioControlador {
         a.show();
     }
 
-    // Métodos vacíos por ahora (para que no dé error)
-    private void cargarVisita() { }
-    @FXML private void guardarVisita() { }
+    private void cargarVisita() {
+        try {
+            visitaActual = visitasDAO.obtenerVisitaPorServicio(servicio.getIdServicio());
+            if (visitaActual != null) {
+                // Cargar visitador
+                cbVisitador.getItems().stream()
+                    .filter(v -> v.getIdVisitador() == visitaActual.getIdVisitador())
+                    .findFirst()
+                    .ifPresent(cbVisitador.getSelectionModel()::select);
+
+                cbTipoPrueba.setValue(visitaActual.getTipo_Prueba());
+                cbTipoVisita.setValue(visitaActual.getTipo_Visita());
+                dpFechaSolicitud.setValue(visitaActual.getFechaSolicitud());
+
+                lblStatusVisita.setText("Visita solicitada el " + visitaActual.getFechaSolicitud());
+                lblStatusVisita.setStyle("-fx-text-fill: #2e7d32; -fx-font-weight: bold;");
+            } else {
+                cbVisitador.getSelectionModel().clearSelection();
+                cbTipoPrueba.setValue(null);
+                cbTipoVisita.setValue(null);
+                dpFechaSolicitud.setValue(null);
+                lblStatusVisita.setText("Sin visita registrada");
+                lblStatusVisita.setStyle("-fx-text-fill: #d32f2f;");
+            }
+        } catch (SQLException e) {
+            mostrarError("Error", "No se pudo cargar la visita");
+        }
+    }
+
+    @FXML
+    private void guardarVisita() {
+        try {
+            Visitadores visitador = cbVisitador.getValue();
+            String tipoPrueba = cbTipoPrueba.getValue();
+            String tipoVisita = cbTipoVisita.getValue();
+            LocalDate fechaSolicitud = dpFechaSolicitud.getValue();
+
+            if (visitador == null || tipoPrueba == null || tipoVisita == null || fechaSolicitud == null) {
+                mostrarError("Error", "Todos los campos son obligatorios");
+                return;
+            }
+            
+            // 1) Validar que el servicio requiera visita
+            boolean requiereVisita = servicioDAO.servicioRequiereVisita(servicio.getIdServicio());
+            if (!requiereVisita) {
+                mostrarError("Error",
+                        "El servicio " + servicio.getIdServicio() +
+                        " no está configurado para realizar visita.\n" +
+                        "No es posible registrar una visita para este servicio.");
+                return;
+            }
+
+            // Si ya existe → actualizar
+            if (visitaActual != null) {
+                visitaActual.setIdVisitador(visitador.getIdVisitador());
+                visitaActual.setTipo_Prueba(tipoPrueba);
+                visitaActual.setTipo_Visita(tipoVisita);
+                visitaActual.setFechaSolicitud(fechaSolicitud);
+
+                visitasDAO.actualizarVisita(visitaActual);
+                mostrarExito("Éxito", "Visita actualizada");
+            }
+            // Si no existe → crear
+            else {
+                Visitas nueva = new Visitas();
+                nueva.setIdServicio(servicio.getIdServicio());
+                nueva.setIdVisitador(visitador.getIdVisitador());
+                nueva.setTipo_Prueba(tipoPrueba);
+                nueva.setTipo_Visita(tipoVisita);
+                nueva.setFechaSolicitud(fechaSolicitud);
+
+                visitasDAO.insertarVisita(nueva);
+                visitaActual = nueva;
+                mostrarExito("Éxito", "Visita creada correctamente");
+            }
+
+            cargarVisita(); // actualiza el label
+
+        } catch (SQLException e) {
+            mostrarError("Error BD", e.getMessage());
+        }
+    }
 }

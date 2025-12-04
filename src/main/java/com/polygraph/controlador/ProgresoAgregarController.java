@@ -50,7 +50,7 @@ public class ProgresoAgregarController {
     private void cargarTiposProgreso() {
         try {
             cmbTipoProgreso.setItems(FXCollections.observableArrayList(
-                dao.listarNombresTiposProgreso()
+                dao.listarNombresTiposProgreso(idServicio)
             ));
         } catch (SQLException e) {
             errorLabel.setText("Error al cargar tipos de progreso");
